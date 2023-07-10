@@ -38,7 +38,7 @@ public class TestJava {
 		int ii = 100;
 		int i1 = ii;
 		System.out.println(i1);
-		char iii = '김';
+		char iii = 'i';
 		System.out.println(iii);
 	}
 }
