@@ -18,6 +18,10 @@ public class Array14 {
 
 		Student [] stu3;
 		stu3 = stu; // 얕은 복사
+		stu3[0].grade = 3;
+		System.out.println("2222 : " + stu[0].grade);
+		System.out.println("3333 : " + stu3[0].grade);
+		
 		
 		Student [] stu4 = new Student[3];
 		System.arraycopy(stu, 0, stu4, 0, 3); // 얕은 복사
