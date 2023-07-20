@@ -21,8 +21,5 @@ public class Array16 {
 			if(s == null) break;
 			System.out.println(s.studentName);
 		}
-		
-		
-		
 	}
 }
