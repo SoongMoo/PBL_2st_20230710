@@ -6,7 +6,8 @@ public class Array14 {
 
 	public static void main(String[] args) {
 		Student stu1 = new Student(1000, "이숭무", 1);
-		Student stu2 = stu1; // 얕은 복사
+		// 얕은 복사
+		Student stu2 = stu1; 
 		stu2.grade = 2; // 1000, 이숭무, 2
 		System.out.println(stu1.studentId); // 1000
 		System.out.println(stu1.studentName); // 이숭무
@@ -17,18 +18,17 @@ public class Array14 {
 		System.out.println("1111 : " +stu[0].grade);
 
 		Student [] stu3;
-		stu3 = stu; // 얕은 복사
+		// 얕은 복사
+		stu3 = stu; 
 		stu3[0].grade = 3;
-		System.out.println("2222 : " + stu[0].grade);
-		System.out.println("3333 : " + stu3[0].grade);
-		
+		System.out.println("1111 : " + stu[0].grade);
+		System.out.println("2222 : " + stu3[0].grade);
 		
 		Student [] stu4 = new Student[3];
-		System.arraycopy(stu, 0, stu4, 0, 3); // 얕은 복사
+		// 얕은 복사
+		System.arraycopy(stu, 0, stu4, 0, 3); 
 		stu4[0].grade = 3;
-		System.out.println("2222 : " + stu[0].grade);
-		System.out.println("3333 : " + stu4[0].grade);
-		
-		
+		System.out.println("3333 : " + stu[0].grade);
+		System.out.println("4444 : " + stu4[0].grade);
 	}
 }
