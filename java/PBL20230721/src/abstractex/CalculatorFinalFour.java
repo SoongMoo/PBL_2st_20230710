@@ -1,5 +1,5 @@
 package abstractex;
 
-public class CalculatorFinalFour {
+public class CalculatorFinalFour extends CalculatorFinal {
 
 }
