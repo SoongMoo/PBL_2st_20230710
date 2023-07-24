@@ -40,5 +40,13 @@ public class ArrayMember {
 			System.out.println(m.getMemberId());
 			System.out.println(m.getMemberName());
 		}
+		
+		List<Integer> list2 = new ArrayList<Integer>();
+		list2.add(10);
+		list2.add(20);
+		list2.add(30);
+		
+		
+		
 	}
 }
