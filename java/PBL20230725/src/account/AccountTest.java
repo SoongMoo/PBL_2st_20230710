@@ -49,7 +49,10 @@ public class AccountTest {
 				accNum = sc.nextLine();
 				System.out.println("계좌 번호 \t 계좌주 \t 금액");
 				acc = map.get(accNum);
-				System.out.println(acc.getAccNum()+"\t"
+				if(acc == null )
+					System.out.println("해당계좌가 존재하지 않습니다.");
+				else
+					System.out.println(acc.getAccNum()+"\t"
 				                  +acc.getAccName()+"\t"
 				                  +acc.getBalance());
 				break;
