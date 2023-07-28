@@ -85,4 +85,83 @@ order by member_num asc ;
 
 -- 내림차순
 select  from "member" 
-order by member_num desc ; 
+order by member_num desc; 
+
+insert into "member" -- 모든 컬럼에 컬럼 순서에 맞게 값을 대입
+values('mem100003', 'highland1' , 'qwer1234',
+'이상범', '성남',  null,  12345 , 
+now(), 'F', '010-1234-1234', 'high', '2020-05-22' );
+
+select * from member; 
+
+--- 정렬
+select * from "member" 
+order by member_num desc, member_birth ;
+
+select * from "member" 
+order by member_num , member_birth desc;
+
+select * from "member" 
+order by member_num asc, member_birth asc;
+
+select * from "member" 
+order by 1 asc, 12 asc;
+select * from "member" 
+order by 1 , 12 ;
+
+select * from "member" 
+order by 12 , 1 ;
+
+--- projection : 원하는 열 데이터를 가지고 오는 것
+--- selection : 원하는 행만 가지고 오는 것 , where 절 사용
+select member_num , member_id , member_name  from "member"
+where member_num  = 'mem100001';
+
+select member_num , member_id , member_name  from "member"
+where member_regi_date = '2023-07-28';
+
+select now() ;
+select 1 + 1;
+
+select member_num , member_id , member_name  from "member"
+where member_regi_date <> '2023-07-28';
+
+select * from member;
+
+select * from "member" 
+where member_birth >= '2020-05-14';
+
+select * from "member" 
+where member_birth > '2020-05-14';
+
+--- 컬럼에 별칭 주기
+select member_num as m_num, member_id as m_id , 
+member_pw m_pw, member_name m_nam from "member" 
+
+select member_post * 12 as sal_year  from "member";
+
+select (member_post + 100) * 12 as sal_year from "member"
+
+select member_num || ' ' || member_name as mem from member;
+
+--- 테이블 복사하기
+create table member2
+as
+select * from member;
+
+select * from member2;
+drop table member;
+
+-- select * from member;
+--- 테이블명 변경 하기 
+alter table member2 rename to member;
+select * from member;
+
+
+select * from member where member_addr2 = null; -- X
+
+select * from member where member_ok isnull ;
+
+select * from member where member_ok is not null;
+
+--- 데이터 수정
