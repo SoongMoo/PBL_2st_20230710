@@ -147,10 +147,35 @@ select member_num || ' ' || member_name as mem from member;
 --- 테이블 복사하기
 create table member2
 as
-select * from member;
+select * from member; -- 모두 복사
+
+select * from "member2"
+
+drop table  member2;
+
+create table member2
+as 
+select * from member 
+where 1=1;
 
 select * from member2;
-drop table member;
+
+drop table  member2;
+
+create table member2
+as 
+select * from member 
+where 1<>1;
+
+select * from member2;
+drop table member2;
+
+
+create table member2
+as
+select * from "member" 
+order by 1 , 12 ;
+rollback;
 
 -- select * from member;
 --- 테이블명 변경 하기 
@@ -165,3 +190,56 @@ select * from member where member_ok isnull ;
 select * from member where member_ok is not null;
 
 --- 데이터 수정
+--- selection
+select * from "member" 
+where member_num  = 'mem100001';
+
+update "member" 
+set member_name = '이장범'
+where member_num  = 'mem100001'
+
+select * from "member" 
+
+update "member" 
+set member_name = '김찬중'
+
+
+select * from "member" 
+where member_num ='mem100001' 
+and member_birth  = '2020-05-14';
+
+update "member" 
+set member_name = '이숭무'
+where member_num ='mem100001' 
+and member_birth  = '2020-05-14';
+
+select * from member;
+
+select * from "member" 
+where member_num ='mem100001' 
+and member_birth  = '2020-05-13';
+
+update "member" 
+set member_name = '이상범',
+	member_id = 'high',
+	member_addr ='서울'
+where member_num ='mem100001' 
+and member_birth  = '2020-05-13'
+returning *; -- 수정한 내용 조회
+
+-- 데이터 삭제
+select * from "member" 
+where member_num = 'mem100001';
+
+delete from "member" 
+where member_num = 'mem100001';
+
+select * from "member" 
+where member_num = 'mem100002'
+and member_birth = '2023-05-17';
+
+delete from "member" 
+where member_num = 'mem100002'
+and member_birth = '2023-05-17';
+
+delete from member;
