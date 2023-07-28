@@ -1,0 +1,88 @@
+SELECT oid, datname FROM pg_database;
+
+show data_directory;
+/*
+public class WishVO {
+	String goodsNum;
+	Integer memberNum;
+	Date wishDate;
+}
+create table wish(
+	goodsNum varchar(60) not null,
+	memberNum Integer,
+	wishDate Date
+);
+*/
+-- 만들어진 테이블 확인
+SELECT * FROM PG_TABLES where schemaname ='public';
+
+select *  from member;
+
+insert into "member" (member_num, member_id, member_pw,
+member_name, member_addr, member_addr2, member_post,
+member_regi_date, member_gender, member_phone, member_email,
+member_birth)
+values('mem100003', 'highland1' , 'qwer1234',
+'이상범', '성남',  null,  12345 , 
+now(), 'F', '010-1234-1234', 'high', '2020-05-12' );
+
+
+insert into "member" (member_id, member_name, member_addr, 
+member_addr2, member_num, member_pw, member_post, 
+member_regi_date, member_gender, member_phone, member_email,
+member_birth, member_ok)
+values ('highland4','김찬중','성남', '1111', 'mem100001',
+'12334', 12345, now(), 'M', '010-1234-1234', 'gugu',
+'2020-05-15', 'y');
+
+--- not null인 컬럼은 꼭 값을 입력해야 한다.
+-- null인 컬럼은 값을 입력하지 않아도 된다.
+insert into member (member_num, member_id, member_pw,
+member_name, member_regi_date, member_phone, member_email)
+values('mem10005','highaa','1234','김찬중', now(), 
+'010-1234-1234', 'hihyi');
+
+insert into "member" -- 모든 컬럼에 컬럼 순서에 맞게 값을 대입
+values('mem100003', 'highland1' , 'qwer1234',
+'이상범', '성남',  null,  12345 , 
+now(), 'F', '010-1234-1234', 'high', '2020-05-12' );
+
+delete from member;
+
+--- 컬럼 속성 변경
+alter table "member" 
+alter member_post type integer using member_post::integer;
+
+
+-- 테이블 정보 확인 
+select * from information_schema.columns
+where table_name = 'member' order by column_name;
+
+
+--- 데이터 조회
+select * from member; --- * : 모든 컬럼
+-- 일부 컬럼의 값만 가져오기 -- projection
+select member_num , member_id , member_name  from member;
+
+select member_name , member_addr , member_addr2 from member;
+
+--- Top - n
+select * from "member" 
+limit 3;
+
+--- Top -n에서 시작 점을 지정
+select * from member
+limit 3
+offset 2;
+
+-- 정렬
+--- 오름차순
+select * from member
+order by member_num ; --- asc는 기본값이므로 생략 가능
+
+select * from member
+order by member_num asc ;
+
+-- 내림차순
+select  from "member" 
+order by member_num desc ; 
