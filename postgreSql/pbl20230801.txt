@@ -1,0 +1,296 @@
+drop table if exists member1;
+
+create table member1(
+	mem_num integer not null,
+	mem_name varchar(255) null,
+	mem_addr varchar(255) 
+);
+
+drop table if exists purchase;
+create table purchase(
+	purchase_num integer not null,
+	mem_num integer not null,
+	delivery_addr varchar(255) not null,
+	payment integer 
+);
+
+drop table if exists payments;
+create table payments(
+	pay_num integer not null,
+	purchase_num integer not null,
+	mem_num integer not null,
+	pay_date date
+);
+
+alter table member1
+add constraint mem_num_pk 
+	primary key(mem_num);
+
+alter table purchase 
+add constraint purchase_mem_num_pk
+	primary key(purchase_num, mem_num);
+
+alter table payments 
+add constraint pay_mem_purchase_num_pk
+    primary key(pay_num, purchase_num,
+   				mem_num);
+   			
+   			
+alter table purchase 
+add constraint mem_num_fk foreign key(mem_num)
+	references member1(mem_num) on delete CASCADE;
+
+alter table payments 
+add constraint mem_purchase_num_fk  foreign key(mem_num, purchase_num)
+	references purchase(mem_num,purchase_num) on delete cascade;
+
+drop table if exists member2;
+create table member2(
+	mem_num integer not null,
+	mem_name varchar(25) not null,
+	mem_addr varchar(255) null
+);
+
+drop table if exists purchase1;
+create table purchase1(
+	purchase_num integer not null,
+	delivery_addr varchar(255) not null,
+	payment integer null,
+	mem_num integer
+);
+
+drop table if exists payment1;
+create table payment1(
+	pay_num integer not null,
+	pay_date date,
+	purchase_num integer
+);
+
+alter table member2
+add constraint mem_num_pk 
+	primary key(mem_num);
+
+alter table purchase1
+add constraint purcharse_num_pk 
+	primary key(purchase_num);
+
+alter table payment1
+add constraint pay_num_pk 
+	primary key(pay_num);
+
+alter table purchase1 
+add constraint mem_num_fk 
+	foreign key(mem_num) 
+	references member2(mem_num)
+	on delete set null;
+
+alter table payment1
+add constraint purchase_num_fk 
+	foreign key(purchase_num)
+	references purchase1(purchase_num)
+	on delete set null;
+
+
+-- > , < , >= , <= , != , =
+drop table if exists  example_table;
+create table example_table(
+	num_col integer primary key,
+	bool_col bool,
+	gender char(1)
+);
+insert into example_table 
+values(1, false, 'F');
+
+insert into example_table 
+values(2, true, 'M');
+
+insert into example_table 
+values(3, true, 'Y');
+
+insert into example_table 
+values(4, false, 'N');
+
+select * from example_table;
+select * from example_table where bool_col = false;
+select * from example_table where bool_col = true;
+select * from example_table where bool_col = 'true';
+select * from example_table where bool_col is false;
+select * from example_table where bool_col is true;
+select null = false , null is false;
+
+select 1, '이숭무',  now();
+
+select * from example_table 
+where num_col >= 1 and num_col <= 3;
+
+select * from example_table 
+where num_col >= 1 and num_col < 4;
+
+select * from example_table
+where num_col between 1 and 3;
+
+select * from example_table
+where num_col < 2 or num_col > 3;
+
+select * from example_table
+where num_col not between 2 and 3; 
+
+
+create table student_score(
+	id integer primary key,
+	name varchar(25),
+	score integer,
+	grade char(1)
+);
+
+insert into student_score values(1, '이숭무' , 87, 'B');
+insert into student_score values(2, '이상범' , 75, 'C');
+insert into student_score values(3, 'siobh' , 57, 'F');
+insert into student_score values(4, 'dgbed' , 77, 'C');
+insert into student_score values(5, 'ssfs' , 83, 'B');
+insert into student_score values(6, 'xdvsx' , 97, 'A');
+insert into student_score values(7, 'zfs' , 65, 'D');
+insert into student_score values(8, 'sgfsag' , 66, 'D');
+
+select * from student_score;
+select id, name, 
+	case 
+		when score <= 100 and score >= 90 then 'A'
+		when score <= 89 and score >= 80 then 'B'
+		when score <= 79 and score >= 70 then 'C'
+		when score <= 69 and score >= 60 then 'D'
+		when score <= 59 then 'F'
+	end
+	score_grade , grade
+from student_score;
+
+select id, name, 
+	case 
+		when score <= 100 and score >= 90 then 'A'
+		when score <= 89 and score >= 80 then 'B'
+		when score <= 79 and score >= 70 then 'C'
+		when score <= 69 and score >= 60 then 'D'
+		else 'F'
+	end
+	score_grade , grade
+from student_score;
+
+
+select id , name as nm , score sc, grade
+from student_score;
+
+--- pojection
+select * from student_score;
+select id, name from student_score;
+--- selection 
+select id, name from student_score
+where score >= 70;
+
+
+select id, name, 
+	case 
+		when grade = 'A' then '90점이상입니다.'
+		when grade = 'B' then '80점이상입니다.'
+		when grade = 'C' then '70점이상입니다.'
+		when grade = 'D' then '60점이상입니다.'
+		else '60점미만입니다.'
+	end
+	score_grade , grade
+from student_score;
+
+select id, name, 
+	case 
+		grade when 'A' then '90점이상입니다.'
+		      when 'B' then '80점이상입니다.'
+		      when 'C' then '70점이상입니다.'
+		      when 'D' then '60점이상입니다.'
+		      else '60점미만입니다.'
+	end
+	score_grade , grade
+from student_score;
+
+insert into student_score values(9, 'sgfsag' , null, null);
+insert into student_score values(10, 'sgfsag' , null, null);
+
+select coalesce (1,2,3,4); 
+select coalesce (1,null,3,4); 
+select coalesce (1,null,null,4); 
+select coalesce (null,2,3,4);
+select coalesce (null,2,null,4);
+select coalesce (null,null,3,4);
+select coalesce (null,null,null,4);
+
+select coalesce (null,10);
+
+select id, name, score, grade from student_score;
+
+select id, name, coalesce(score, 0), 
+	   coalesce(grade, 'F') from student_score;
+
+select id , name,
+		case 
+			when score >= 90 and score <= 100 then 'A'
+			when score >= 80 and score <= 89 then 'B'
+			when score >= 70 and score <= 79 then 'C'
+			when score >= 60 and score <= 69 then 'D'
+			when coalesce(score, 0) < 60 then 'F'		
+		end
+		score_grade 
+from student_score;
+
+select nullif(1,1);
+select nullif(1,2);
+
+
+select 12/ 3;
+select 
+	coalesce((12 / nullif(null, 0))::char,'나눌 수 없습니다.');
+select 12 / null;
+
+create table division_by_zero
+(
+	students integer
+);
+insert into division_by_zero values(1),(2),(3),(0);
+select * from division_by_zero;
+
+select 
+	coalesce((12 / nullif(students, 0))::char,'나눌 수 없습니다.')
+from division_by_zero;
+
+select 12 / null;
+----                         1,2,3,0
+
+-- 날자와 시간 연산자와 함수
+select now();
+select current_date;
+select current_time(2);
+select localtime(2); -- 2: 정밀도 , 1 ~ 6
+select date_part('quarter', now());
+
+create table timebox(
+	id integer,
+	times timestamp,
+	dates date
+);
+insert into timebox values(1, now(), now());
+
+select * from timebox;
+insert into timebox values(1, '2023-05-20', '2023-05-20');
+
+select id, date_trunc('month', times) times,
+		   date_trunc('month',dates) dates
+from timebox;
+
+select id, date_trunc('day', times) times,
+		   date_trunc('year',dates) dates
+from timebox;
+
+select date_part('century', now()) ;
+
+select id, date_part('century', times) times,
+		   date_part('century', dates) dates 
+from timebox;
+select id, date_part('quarter', times) times,
+		   date_part('century', dates) dates 
+from timebox;
