@@ -1,1 +1,8 @@
 dltndandltndan
+
+hr_cre.sql
+hr_popul.sql
+hr_idx.sql
+hr_code.sql
+hr_comnt.sql
+hr_analz.sql
