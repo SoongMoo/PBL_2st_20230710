@@ -2363,31 +2363,72 @@ select '{"hello":0,"psql":1,"world":2}'::jsonb
 --병합
 select '{"hello":0,"psql":1}'||'{"world":2}'::jsonb 
 	  as result;	
-
+drop table json_test1;
+create table json_test1(
+	json1 json,
+	json2 json
+);
+insert into json_test1
+values('{"hello":0,"psql":1}', '{"world":2}');
+select * from json_test1;
+select json1::jsonb || json2::jsonb from json_test1;
+	 
 -- 삭제
-select '{"hello":0,"psql":1,"world":2}'::jsonb-'hello' as result;
+select '{"hello":0,"psql":1,"world":2}'::jsonb -'hello' as result;
+
+update json_test1
+set json1 = json1::jsonb - 'hello';
+select * from json_test1;
 
 -- 복수 삭제
-select '{"hello":0,"psql":1,"world":2}'::jsonb-array['hello','psql'] 
-		as result;
+select '{"hello":0,"psql":1,"world":2}'::jsonb 
+		- array['hello','psql'] as result;
+	
+insert into json_test1 (json1)
+values('{"hello":0,"psql":1,"world":2}');
+select * from json_test1;
 
+select json1::jsonb - array['hello','psql'] result
+from json_test1;
+	
+	
+	
 ---배열인 경우 index로 삭제
 select '["hello","psql","world"]'::jsonb - -1 
+---        -3      -2      -1
+		as result;
+	
+select '["hello","psql","world"]'::jsonb - 2
+--          0       1       2
 		as result;
 
 ---  joson 생성 함수
 select json_build_object('a',1,'b',2) as result;
 
+insert into json_test1(json1)
+values(json_build_object('a',1,'b',2));
+select * from json_test1;
 
 --select json_build_object('a',1,'b',2,'c') as result;
 	
 select json_build_array('a',1,'b',2,'c') as result;
+insert into json_test1(json1)
+values(json_build_array('a',1,'b',2,'c'));
+select * from json_test1;
 
 ----갯수 확인
 select json_array_length('["a",1,"b",2,"c",3]') as result;
-	
+delete from json_test1;
+insert into json_test1(json1)values('["a",1,"b",2,"c",3]');
+insert into json_test1(json1)values('["a",1,2,"c",3]');
+insert into json_test1(json1)values('["a",1,2,"c",3,"d",4]');
+select json_array_length(json1) from json_test1;
+
 --- 
 select jsonb_each('{"hello":0,"psql":1,"world":2}');
+insert into json_test1(json2)
+values('{"hello":0,"psql":1,"world":2}');
+select json1, jsonb_each(json2::jsonb) from  json_test1;
 
 select * from jsonb_each('{"hello":0,"psql":1,"world":2}');
 
@@ -2395,3 +2436,148 @@ select json_array_elements('[1,"a",{"b":2},["d",2,3]]');
 
 select * 
 from json_array_elements('[1,"a",{"b":2},["d",2,3]]');
+       
+/*****************************************************/
+/*** 5장 ****/
+select * from employees;
+select last_name , salary from employees;
+
+select * from departments;
+select department_id, location_id from departments;
+
+select last_name, salary, salary + 300 from employees; 
+
+select last_name, salary , salary + 300 * 12 from employees; 
+
+select last_name, salary , (salary + 300) * 12 from employees;
+
+select last_name, salary as sal , (salary + 300) * 12 year_sal
+from employees;
+
+select * from employees;
+
+select last_name, salary, commission_pct from employees;
+
+select last_name, salary, salary + salary * commission_pct,
+		department_id
+from employees;
+
+select last_name, salary, 
+		coalesce (salary + salary * commission_pct, salary),
+		department_id
+from employees;
+
+select last_name, salary, 
+		salary + salary * coalesce(commission_pct, 0),
+		department_id
+from employees;
+
+select * from employees;
+select last_name , job_id from employees;
+select last_name || job_id from employees;
+select last_name || ' ' || job_id from employees;
+select '성은 ' || last_name || '이고 직무는 ' ||  
+		job_id "Employee Detail" from employees;
+select last_name || ' : 1 Month salary = ' || salary monthly
+from employees;
+
+---- 문제] 직원이 속한 부서번호를 한번씩 출력
+--- distinct는 중복제거
+select distinct department_id from employees;
+
+--- 문제2] 각 직원의 부서번호와 직무를 출력
+select department_id , job_id from employees;
+--- 문제3] 부서별 직무가 같은 것은 한번만 출력
+select   distinct department_id,  job_id from employees;
+--- 문제4] 90인 부서의 직원을 출력하시오.
+select * from employees 
+where department_id = 90;
+--- 문제5] 90인 부서의 직원정보 중 성과 직무 그리고 부서번호를 출력하시오.
+select last_name, job_id, department_id from employees 
+where department_id = 90;
+
+
+--- 성이 Whalen인 직원을 출력하시오.
+select * from employees where last_name = 'whalen';
+-- 데이터는 대소문자를 구분한다.
+select * from employees where last_name = 'Whalen';
+
+--- 2003-09-17에 입사한 사원들을 출력하시오.
+select * from employees where hire_date = '2003-09-17';
+
+--- 급여가 3000달라 이상인 사원들을 출력
+select * from employees where salary >= 3000;
+
+--- 급여가 3000달라보다 적게 받는 사원의 성과 급여 그리고 직무를 출력?
+select last_name, salary, job_id from employees 
+where salary  < 3000; 
+
+--- 급여가  2500 달라 이상 받고 3000달라이하로 받는 사원들을 출력
+select * from employees 
+where salary >= 2500 and salary <= 3000;
+
+select * from employees 
+where salary between 2500 and 3000;
+
+--- 부서가 50인 사원과 80인 사원과 30인사원 출력
+select * from employees where department_id = 50;
+select * from employees where department_id = 80;
+select * from employees where department_id = 30;
+
+select * from employees
+where department_id = 50 
+	or department_id = 80
+	or department_id = 30;
+
+select * from employees where department_id in (50,80,30);
+
+-- 50,80,30인 부서에 속해 있지 않은 직원들을 출력
+select * from employees where department_id not in (50,80,30);
+
+--- 성과 이름을 출력
+select last_name, first_name from employees;
+
+--- 성이 S로 시작하는 사원들을 출력 
+select * from employees where last_name like 'S%';
+--- 직무가 'FI'로 시작되는 직무를 가진 사원들?
+select * from employees where job_id like 'FI%';
+--- 직무가 MGR로 끝나는 직무를 가진 사원을 출력하시오.
+select * from employees where job_id like '%MGR';
+--- 10일에 입사한 사원을 출력
+select * from employees where hire_date::varchar like '%10';
+-- 성의 두번째 글자에 o가 있는 사원을 출력
+select * from employees where last_name like '_o%';
+-- 직무가 두번째 글자가 D인 직무를 가진 사원들을 구하시오.
+select * from employees where job_id like '_D%';
+-- 직무가 'IT_'로 시작하는 직무를 가진 사원을 출력
+select * from employees where job_id like 'IT\_%';
+-- 직무가 'IT_'로 시작하지 않는 직무를 가진 사원을 출력
+select * from employees where job_id not like 'IT\_%';
+
+-- 성에 세번째 글자가 o인 직원을 출력하시오.
+select * from employees where last_name like '__o%';
+-- 직무에 MAN을 포함하고 있는 직무를 가진 사원은?
+select * from employees where job_id like '%MAN%';
+
+-- 직무에 MAN이 포함되고 급여가 10000달라 이상인 사원을 출력하시오.
+select * from employees 
+where salary >= 10000 and job_id like '%MAN%';
+--- 직무가 'MAN'을 포함한 사원과 급여가 10000달라인 사원을 구하시오.
+select * from employees where salary >= 10000;
+select * from employees where job_id like '%MAN%';
+select * from employees 
+where salary >= 10000 or job_id like '%MAN%';
+--- 직무가 'SA_REP'이면서 급여가 15000달라이상이고 
+--- 직무가 'AD_PRES'이면서 급여가 15000달라이상인 사원들을 구하시오.
+select * from employees 
+where job_id = 'SA_REP' and salary >= 15000;
+select * from employees 
+where job_id = 'AD_PRES' and salary >= 15000;
+
+select * from employees 
+where job_id = 'SA_REP' and salary >= 15000
+	or job_id = 'AD_PRES' and salary >= 15000;
+
+select * from employees 
+where (job_id = 'SA_REP' 
+   or job_id = 'AD_PRES') and salary >= 15000;
