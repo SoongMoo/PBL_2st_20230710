@@ -2359,3 +2359,39 @@ select '{"hello":0,"psql":1,"world":2}'::jsonb
 --- 모두 존재하는지 
 select '{"hello":0,"psql":1,"world":2}'::jsonb 
 		?& array['hello','psql'] as result;	
+
+--병합
+select '{"hello":0,"psql":1}'||'{"world":2}'::jsonb 
+	  as result;	
+
+-- 삭제
+select '{"hello":0,"psql":1,"world":2}'::jsonb-'hello' as result;
+
+-- 복수 삭제
+select '{"hello":0,"psql":1,"world":2}'::jsonb-array['hello','psql'] 
+		as result;
+
+---배열인 경우 index로 삭제
+select '["hello","psql","world"]'::jsonb - -1 
+		as result;
+
+---  joson 생성 함수
+select json_build_object('a',1,'b',2) as result;
+
+
+--select json_build_object('a',1,'b',2,'c') as result;
+	
+select json_build_array('a',1,'b',2,'c') as result;
+
+----갯수 확인
+select json_array_length('["a",1,"b",2,"c",3]') as result;
+	
+--- 
+select jsonb_each('{"hello":0,"psql":1,"world":2}');
+
+select * from jsonb_each('{"hello":0,"psql":1,"world":2}');
+
+select json_array_elements('[1,"a",{"b":2},["d",2,3]]'); 
+
+select * 
+from json_array_elements('[1,"a",{"b":2},["d",2,3]]');
