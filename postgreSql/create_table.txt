@@ -137,21 +137,3 @@ ALTER TABLE departments
 add  CONSTRAINT dept_loc_fk
        		 FOREIGN KEY (location_id)
         	  REFERENCES locations (location_id);
-
-
-
-
-CREATE SEQUENCE locations_seq
- START WITH     3300
- INCREMENT BY   100
- MAXVALUE       9900
- NOCACHE
- NOCYCLE;
-
-
-CREATE SEQUENCE departments_seq
- START WITH     280
- INCREMENT BY   10
- MAXVALUE       9990
- NOCACHE
- NOCYCLE;
