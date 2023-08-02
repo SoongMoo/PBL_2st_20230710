@@ -240,9 +240,6 @@ INSERT INTO locations VALUES
         );
 
 
-ALTER TABLE departments 
-  DISABLE CONSTRAINT dept_mgr_fk;
-
 INSERT INTO departments VALUES 
         ( 10
         , 'Administration'
