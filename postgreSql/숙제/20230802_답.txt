@@ -264,7 +264,7 @@ select * from employees where email like '%O_';
 select * from employees where email like '_K%O_';
 
 -- 51. IT_로 시작하는 직무를 구하시오
-select * from employees where job_id like 'IT\_%' escape '\';
+select * from employees where job_id like 'IT\_%' ;
 -- 52. 02월에 입사한 사원들을 출력하세요.
 select * from employees where hire_date like '___02%';
 -- null
