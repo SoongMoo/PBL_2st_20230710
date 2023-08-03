@@ -1,0 +1,179 @@
+--- 문자열 함수
+/*
+lower(), upper() , INITCAP(), CONCAT(), SUBSTR(),substring(),
+LENGTH(), REPLACE(), CONCAT(), POSITION(), STRPOS()
+*/
+select lower('SQL Course');
+select upper('SQL Course');
+select INITCAP('sQL course');
+
+SELECT  'The job id for ' || UPPER(last_name) || ' is '
+		   || LOWER(job_id) AS "EMPLOYEE DETAILS"
+FROM	 employees;
+--- 성이 higgins로 비교해야 될 경우
+select * from EMPLOYEES where LAST_NAME = INITCAP('higgins');
+select * from EMPLOYEES where LOWER(LAST_NAME) = 'higgins';
+
+-- 성이 KING로 비교해야되는 경우
+select * from EMPLOYEES where LAST_NAME = INITCAP('KING');
+select * from EMPLOYEES where UPPER(LAST_NAME) = 'KING';
+
+SELECT     employee_id, last_name, department_id
+FROM       employees
+WHERE      last_name = 'higgins';
+
+SELECT     employee_id, last_name, department_id
+FROM       employees
+WHERE      LOWER(last_name) = 'higgins';
+                   
+SELECT	 employee_id, UPPER(last_name), department_id
+FROM	 employees
+WHERE	 INITCAP(last_name) = 'Higgins';
+
+--- 나의 성은 이구요 급여는 1000달라입니다.
+select '나의 성은 ' || LAST_NAME || '구요 금여는 ' || SALARY 
+		||'입니다.'
+from EMPLOYEES;
+
+--- 성과 이름을 붙여 출력
+select LAST_NAME || FIRST_NAME from EMPLOYEES;
+select CONCAT(LAST_NAME, FIRST_NAME) from EMPLOYEES;
+select LAST_NAME || SALARY::VARCHAR from EMPLOYEES;
+select CONCAT(LAST_NAME, SALARY) from EMPLOYEES;
+select COMMISSION_PCT || SALARY from EMPLOYEES;
+select CONCAT(COMMISSION_PCT, SALARY) from EMPLOYEES;
+
+--- 성에 o가 있는 위치(index)를 출력
+--- String str ="hello java";
+----System.out.println(str.indexOf('o'))
+select last_name,POSITION('o' in last_name) from employees;
+---- Kochhar
+---- 1234567
+---- 글자가 없는 경우 : 0 , 자바는 -1
+
+--- 성의 글자수는?
+select last_name, length(last_name), length('이숭무') 
+from employees;
+
+--- 성에서 두번째부터 두글자
+select substr(last_name, 2,2) from employees;
+--- 성에서 두번째글자부터 마지막까지
+select substr(last_name,2) from employees;
+
+
+
+
+
+SELECT   employee_id, CONCAT(first_name, last_name) NAME, 
+		job_id, LENGTH(last_name),
+          POSITION('a' IN last_name) "Contains 'a'?"
+FROM     employees
+WHERE    SUBSTR(job_id, 4) = 'REP';
+
+select last_name , substring(last_name, 2),
+	   substring(last_name from 2),
+	   substring(last_name , 2, 2)
+from employees;
+
+SELECT   employee_id, CONCAT(first_name, last_name) NAME,
+		 job_id, LENGTH(last_name),
+         POSITION('a' IN last_name) "Contains 'a'?"
+FROM     employees
+WHERE    SUBSTRING(job_id FROM 4) = 'REP';
+
+SELECT STRPOS('HelloWorld', 'W'); --- index출력
+ ---           123456789
+SELECT STRPOS('HelloWorld', 'a'); -- 없는 경우 0
+
+select employee_id, first_name, email, 
+	   substr(email, STRPOS(email,'S')),
+	   STRPOS(email,'S') 
+from employees;
+
+select last_name , LENGTH(last_name) from employees;
+
+select last_name , LENGTH(last_name) , 
+	   substring(last_name, LENGTH(last_name))
+from employees;
+
+
+SELECT employee_id, CONCAT(first_name, last_name) AS NAME, 
+       LENGTH(last_name),  
+       POSITION('a' IN last_name) AS "Contains 'a'?",
+       strpos(last_name, 'a') ,
+       SUBSTRING(last_name FROM LENGTH(last_name))
+FROM employees
+WHERE SUBSTRING(last_name FROM LENGTH(last_name)) = 'n';
+
+--- 이름의 길이가 6이상인 직원만 출력하시오.
+select * from employees
+where LENGTH(last_name) >= 6;
+
+-- lpad,  rpad
+select LPAD('Hello',10,'-');
+select RPAD('Hello',10,'*');
+
+select RPAD(first_name, 15, '*'),
+	   LPAD(salary::varchar, 15 , '*')
+from employees;
+
+-- 이메일에서 앞에서 2글자를 출력하고 
+-- 나머지는 오른쪽에 *로 채워서 출력하세요.
+select employee_id, first_name, email, 
+	   rpad(substr(email,1,2), length(email), '*')
+from employees;
+
+-- REPLACE
+select REPLACE('JACK and JUE','J','BL');
+
+-- 직무가 _AS가 있다면 abc로 변경하시오,
+-- 사원번호 , 이름, 직무, 변경된 직무
+select employee_id, first_name, job_id,
+		REPLACE(job_id, '_AS', 'abc')		
+from employees
+where job_id like '%\_AS%';
+
+
+select '  hello world ', trim('  hello world ')
+      ,rtrim('  hello world '),ltrim('  hello world ');
+
+select * from employees
+where first_name = '      Donald   '
+   
+select * from employees
+where first_name = trim('      Donald   ');
+
+select ROUND (45.925, 2), ROUND (45.924, 2) , 
+		ROUND (45.925, 1), ROUND (45.923, 0), 
+		ROUND (45.923, -1);
+
+SELECT TRUNC (45.926, 2) , TRUNC (45.923, 2) , 
+		TRUNC (45.923), TRUNC (45.923, -1);
+
+--- employee_id, job_id, hire_date를 출력할 때
+--- 입사일로부터 몇년이 되었는지, 몇일이 되었는지, 몇주가 되었는지도 같이 출력
+
+
+	
+
+--- mod 나눈 나머지
+SELECT     last_name, salary, MOD(salary, 5000)
+FROM       employees
+where      job_id = 'SA_REP';
+
+SELECT     last_name, hire_date
+FROM       employees
+where      last_name like 'G%';
+
+--- 형변환 함수
+-- 문자열을 날짜로 변환
+SELECT to_date('2017-01-03','YYYY-MM-DD'); --문자열 형식
+select to_date('03-01-2017','DD-MM-YYYY');
+select to_date('01-03-2017','MM-DD-YYYY');
+--- 날짜를 문자로 변환
+select TO_CHAR('2017-01-03'::date, 'DD-MM-YYYY'); -- 변경하고 싶은 형식
+select TO_CHAR('2017-01-03'::date, 'MM-DD-YYYY');
+
+select first_name, hire_date, employee_id, job_id
+from employees
+where hire_date = to_date('08-17-2005', 'MM-DD-YYYY');
