@@ -44,8 +44,9 @@ where STRPOS(lower(email), 's') = 5;
 select salary , rpad(salary::varchar, 10, '*'), lpad(salary::varchar, 10, '*')
 from employees;
 
--- 아이디 찾기 highland0 : high*****
+
 -- 12. 이메일에서 앞에서 2글자를 출력하고 나머지는 오른쪽에 *로 채워서 출력하세요.
+-- 예) 아이디 찾기 highland0 : high*****
 select email, rpad(substr(email,1,2),length(email), '*' )
 from employees;
 
@@ -58,7 +59,7 @@ where hire_date = '03/06/17' and phone_number = '515.123.4567';
 -- 14. 직무가 _AS가 있다면 abc로 변경하시오,
 select replace(job_id, '_AS', 'abc') , job_id
 from employees
-where job_id like '%_AS%';
+where job_id like '%\_AS%';
 
 -- 15.이메일에 'A'가 처음과 끝에 있다면 이메일에서 삭제하여 출력하자.
 select email, trim('A' from email), trim(email)
