@@ -1,0 +1,243 @@
+--- 1. 이름이 'steven'인 사람을  출력하시오.
+select * from employees where lower(first_name) = 'steven';
+
+-- 2. 성이 KING인 직원을 출력하세요.
+select * from employees where upper(last_name) = 'KING';
+select * from employees where last_name = INITCAP('KING');
+
+-- 3. 이름의 글자의 갯수가 5인 사원들을 출력하세요.
+select * from employees where length(first_name) = 5;
+
+-- 4.  급여가 5자리 이상인 사원을 구하시오.
+select * from employees where salary >= 10000; 
+select * from employees where length(salary::integer::varchar) >= 5;  
+
+-- 5. 이름에 's'를 가지 사원들 중 이름에 몇번째에 있는지 출력하세요.
+select first_name, STRPOS(first_name,'s')
+from employees;
+
+-- 6.  이름에 's'가 3번째에 있는 사원들을 출력하세요.
+select * from employees where STRPOS(first_name,'s') = 3;
+
+-- 7. 이름과 성과 급여와 직무를 출력할 때 이메일은 3번째 글자 부터 출력하시오.
+select first_name, last_name, salary, job_id,email, substr(email,3)
+from employees;
+
+-- 8. 이메일에 'S'부터 출력하고, 급여, 입사일, 이름 ,성을 출력하세요.
+select email,substr(email, STRPOS(email, 'S')) ,STRPOS(email, 'S'),  salary, hire_date, 
+    first_name, last_name
+from employees;
+
+--9. 이름 , 급여, 직무, 부서를 출력할 때 이메일은 3번째 부터 4글짜를 출력하시오.
+select  first_name, salary, job_id, department_id, 
+        email, substr(email, 3, 4)
+from employees;
+
+--10. 이메일에 3번째부터 4글자에 'ARTS'가 있는 상원을 출력하세요.
+select * from employees where substr(email, 3,4 ) = 'ARTS';
+
+--11.이메일에 's'가 5번째에 있는 사원을 출력하시오.
+select * from employees 
+where STRPOS(lower(email), 's') = 5;
+
+--12. 나의 나이는(          30)이다 (rpad,lpad 이용 )
+select salary , rpad(salary::varchar, 10, '*'), lpad(salary::varchar, 10, '*')
+from employees;
+
+-- 아이디 찾기 highland0 : high*****
+-- 12. 이메일에서 앞에서 2글자를 출력하고 나머지는 오른쪽에 *로 채워서 출력하세요.
+select email, rpad(substr(email,1,2),length(email), '*' )
+from employees;
+
+-- 13. 입사일이 03/06/17 전화번호가 515.123.4567인 사원의 이메일을 
+--     앞에서 3글자만 출력하고 나머지는 *로 출력하세요
+select rpad(substr(email,1,3), length(email), '*')
+from employees
+where hire_date = '03/06/17' and phone_number = '515.123.4567';
+
+-- 14. 직무가 _AS가 있다면 abc로 변경하시오,
+select replace(job_id, '_AS', 'abc') , job_id
+from employees
+where job_id like '%_AS%';
+
+-- 15.이메일에 'A'가 처음과 끝에 있다면 이메일에서 삭제하여 출력하자.
+select email, trim('A' from email), trim(email)
+from employees;
+
+-- 16. 이메일에서 뒤에서 한글자가지고 오고 또 이메일에서 뒤에서 부터 2글자 가지고 오며,
+--     이메일에서 뒤에서 3번째부터 2글자만 출력하세요.
+select email, substr(email, length(email)-3,3), substr(email, length(email)-2,2), substr(email,length(email)-3, 2)
+from employees;
+
+
+--- 17. 이름, 입사일, 부서번호, 급여, 년봉을 출력하세요.
+select first_name, hire_date, department_id, salary, 
+		salary * 12
+from employees;
+
+-- 18. 이름, 입사일, 부서번호, 급여 그리고 년봉을 출력할 때 
+-- 년봉에는 커미션이 포함되어야 한다.
+select commission_pct, coalesce (commission_pct, 0)
+from employees;
+
+SELECT first_name, hire_date, department_id, salary ,commission_pct,
+       (salary + salary * commission_pct ) * 12
+from employees;
+
+
+-- 19. 이름, 성, 입사일 , 급여를 출력할 때 급여를 400으로 나눈 나머지를 출력하세요.
+select first_name, last_name, hire_date, salary, mod(salary , 400) 
+from employees;
+
+-- 20. 급여를 500으로 나눈 나머지가 400 이상인 사원들을 출력하시오
+select employee_id, first_name, hire_date, job_id, salary, mod(salary , 500)
+from employees
+where mod(salary , 500) >= 400;
+
+==========================================================================================================
+
+--- 19. 성이 모두 소문자인 grant와 모두 대문자인 'GRANT'로 직원테이블에서
+--- 해당 사원을 찾으려 한다.
+select * from employees
+where last_name = initcap('grant') or last_name = initcap('GRANT');
+
+select * from employees
+where lower(last_name) = 'grant' or upper(last_name) = 'GRANT';
+
+---20. 'GranT'로 입력했을때 사원테이블에서 성이 'Grant'인 사원을 찾으시오
+select * from employees where last_name = initcap('GranT');
+select * from employees where lower(last_name) = lower('GranT');
+select * from employees where upper(last_name) = upper('GranT');
+
+
+-- 21. 성은 모두 대문자로 변환하고 이름 모두 소문자로 변환하여
+-- 성과 이름을 붙여 출력할 때 ' 나는 GRANT douglas 입니다'로 
+-- 출력되게 하시오
+select '나는 ' || upper(last_name) || ' ' || lower(first_name) || '입니다.'
+from employees;
+
+-- 22. 성과 이름을 붙여 출력
+select concat(last_name, first_name) from employees;
+
+--- 23. last_name컬럼에서 예와 같이 성이 Davies인경우 av만 출력하시오.
+select SUBSTR(last_name,2,2) from employees;
+
+--- 24. 성이 두번째 글자부터 모두 출력하시오.
+select substr(last_name,2) from employees;
+
+--- 25. 성의 마지막 글자에서 두글자만 가져오시오.
+select substr(last_name,length(last_name)-2,2) from employees;
+
+--- 26. 성의 뒤에 on으로 끝나는 사람을 찾으시오
+select * from employees where last_name like '%on';
+
+-- 27. 성의 뒤에 세번째 글자가 so인 사람을 출력하시오
+select * from employees where last_name like '%so_';
+
+-- 28. 직원 정보를 출력하는데 이메일은 왼쪽에서 3글자만 출력하시오.
+--     직원번호, 성, 급여, 직무, 이메일
+select employee_id, last_name, salary, job_id, substr(email,1,3)
+from employees;
+
+-- 29. 직원 정보를 출력하는데 이메일은 오른쪽에서 3글자만 출력하시오.
+-- 직원번호, 성, 급여, 직무, 이메일
+select employee_id, last_name, salary, job_id, substr(email,-3)
+from employees;
+
+-- 30. 직원 정보를 출력하는데 이메일은 오른쪽에서 3글자만 출력하고 나머지는 ‘-’로 출력
+---    직원번호, 성, 급여, 직무, 이메일
+select employee_id, last_name, salary, job_id, 
+       lpad(substr(email, length(email)-3 ),length(email),'-') email
+from employees;
+
+
+--- 31. o가 있는 성중 o가 몇번째에 있는 위치인지 출력하시오. 
+--      직원번호 성, 성의 위치, 직무
+select employee_id, last_name, POSITION('o' in last_name)
+from employees;
+
+--- 32. oc가 있는 성중 oc가 몇번째에 있는 위치인지 출력하시오.  
+-- 직원번호 성, 성의 위치, 직무
+select employee_id, last_name, POSITION('oc' in last_name)
+from employees;
+
+--33. 직무에 RE가 있는 경우 RE부터 3글자만 출력하시오.
+--    직원번호 성,  직무, 가공된 직무
+select employee_id, last_name, job_id, 
+		substr(job_id, POSITION('RE' in job_id), 3)
+from employees;
+
+--- 34. 직원번호, 성, 입사일 , 급여, 
+--- 급여를 10칸에 출력하고 나머지 공간 앞에 * 표시가 되게 하자.
+select employee_id, last_name, hire_date, lpad(salary::char, 10, '*')
+from employees;
+
+-- 35. 직원번호, 성, 입사일 , 급여, 
+--- 급여를 10칸에 출력하고 나머지 공간 뒤에 * 표시가 되게 하자.
+select employee_id, last_name, hire_date, rpad(salary::char, 10, '*')
+from employees;
+
+-- 36. 직원번호, 성, 입사일, 직무를 출력하는데 
+---    직무에 RE가 있다면 RE를 AB로 변경하여 출력.
+select employee_id, last_name, hire_date, replace(job_id,'RE','AB')
+from employees;
+
+-- 37. 직원번호, 연락처, 커미션, 부서번호,급여
+-- 급여를 3000으로 나누었을 때의 나머지를 출력하시오.
+select employee_id, phone_number, commission_pct, department_id, salary,
+       mod(salary, 3000)
+from employees;
+
+-- 38. 2002년도부터 입사한 직원들을 출력하시오
+select * from employees where to_char(hire_date,'yyyy') >= '2002';
+
+select * from employees where hire_date >= '02/01/01';
+
+-----------------------------------------------------------------------
+--- 42. 예시 : 게시판리스트에서 제목을 5글자****인 것 처럼 
+--- 직원의 성을 3글자만 출력 뒤에 *을 세번찍어서 출력하시오.
+--- 직원번호, 입사일, 성
+select employee_id, hire_date , rpad(substr(last_name,1,3),6, '*')
+from employees;
+-------------------------------------------------------------------------
+--- 43. 홍길동은 몇글자입니까?
+select length('홍길동');
+-------------------------------------------------------------------------
+
+--- 44)"홍길동 \n"으로 되어 있는 것을 html에서 행 바꿈이되도록
+---      "홍길동 <br>"변경하시오.
+select replace('홍길동 \n','\n','<br />');
+
+--- 45) 커미션이 null이라면 커미션 값을 0으로 대입하여 이름, 부서, 입사일, 직무,
+--     급여, 커미션, 그리고 년봉을 출력하세요.
+select first_name, department_id, hire_date, job_id, salary
+      , commission_pct, coalesce (commission_pct,0)
+      , (salary + salary * coalesce(commission_pct,0)) *12
+from employees
+
+---46. 03/06/17이후에 입사한 사람은?
+select * from employees where hire_date > '03/06/17';
+select * from employees where hire_date > to_date('03/06/17','yy-mm-dd');
+
+---47. 17/06/03(일월년)이후에 입사한 사람은?
+--     06/17/03(월일년)이후에 입사한 사람은?
+select * from employees where hire_date > to_date('17/06/03','dd-mm-yy');
+select * from employees where hire_date > to_date('06/17/03', 'mm-dd-yy');
+-- 48. janette또는 JANETTE 또는 jaNette 값을 전달 받았다.
+---   이름이 'Janette'인 사원을 출력하시오.
+SELECT * FROM EMPLOYEES
+WHERE first_name = INITCAP('janette') 
+      OR first_name = INITCAP('JANETTE') 
+      OR first_name = INITCAP('jaNette');
+
+-- 49. --- job_id이 'IT_PROG' 급여를 10%상승
+--                  'ST_CLERK' 급여를 15%상승
+--                  'SA_REP' 급여를 20%상승
+--                   그이외는 급여
+-- 성, 이름, 급여도 같이 출력
+     SELECT LAST_NAME, FIRST_NAME, salary, job_id,
+       CASE job_id when 'IT_PROG' then salary + salary * 0.1
+                   when 'ST_CLERK' then salary + salary * 0.15
+                   when 'SA_REP' then salary + salary * 0.2
+                   else salary end sal
+from employees;
