@@ -177,3 +177,284 @@ select TO_CHAR('2017-01-03'::date, 'MM-DD-YYYY');
 select first_name, hire_date, employee_id, job_id
 from employees
 where hire_date = to_date('08-17-2005', 'MM-DD-YYYY');
+
+-- 성, 이름, 직무, 급여, 급여에 따른 직책도 같이 출력하세요.
+--- 급여가 3000이하이면 사원 
+--        5000이하이면 주임
+--        7000이하이면 대리
+--        9000이하이면 과장
+--       11000이하이면 차장
+--       13000이하이면 부장
+--       그 이상 이면 임원
+select last_name, first_name, job_id, salary,
+      CASE WHEN salary <= 3000 then '사원'
+           when salary <= 5000 then '주임'
+           when salary <= 7000 then '대리'
+           when salary <= 9000 then '과장'
+           when salary <= 11000 then '차장'
+           when salary <= 13000 then '부장'
+           else '임원' END grade
+from employees
+order by salary;
+
+-- 급여에 따른 세금을 출력하고 싶다. 
+-- 이름 , 성, 급여, 직무, 세금을 출력하시오.
+---  급여를 2000으로 나눈 몫이 0이면 급여의 0%
+---                         1이면 급여의 9%
+---                         2이면 급여의 20%
+---                         3이면 급여의 30%
+---                         4이면 급여의 40%
+---                         5이면 급여의 42%
+---                         6이면 급여의 44%
+---                         이외 급여의 45% 세금이다
+-- trunc(salary / 2000)
+select first_name, last_name, salary, 
+   case  when trunc(salary / 2000) = 0 then salary * 0.00
+         when trunc(salary / 2000) = 1 then salary * 0.09 
+         when trunc(salary / 2000) = 2 then salary * 0.10
+         when trunc(salary / 2000) = 3 then salary * 0.20
+         when trunc(salary / 2000) = 4 then salary * 0.40
+         when trunc(salary / 2000) = 5 then salary * 0.42
+         when trunc(salary / 2000) = 6 then salary * 0.44
+         else salary * 0.45 end tex
+from employees;
+select first_name, last_name, salary, 
+   case trunc(salary / 2000) when  0 then salary * 0.00
+                             when  1 then salary * 0.09 
+                             when  2 then salary * 0.10
+                             when  3 then salary * 0.20
+                             when  4 then salary * 0.40
+                             when  5 then salary * 0.42
+                             when  6 then salary * 0.44
+                             else salary * 0.45 end tex
+from employees;
+
+select first_name, last_name, salary,
+       case when salary < 2000 then salary * 0.00
+            when salary < 4000 then salary * 0.09
+            when salary < 6000 then salary * 0.20
+            when salary < 8000 then salary * 0.30
+            when salary < 10000 then salary * 0.40
+            when salary < 12000 then salary * 0.42
+            when salary < 14000 then salary * 0.44
+            else salary * 0.45 end tex
+from hr.employees;
+
+
+
+-- 2003-06-17 ==> 17/06/2003
+select * from employees where hire_date > '2003-06-17';
+
+select * from employees 
+where hire_date > to_date('17/06/2003','DD/MM/YYYY');
+
+-- 06/17/2003이전에 입사한 직원을 조회하세요..
+-- 날짜 
+select * from employees
+where hire_date < to_date('06/17/2003', 'MM/DD/YYYY') ;
+
+--- 사전
+select * from employees
+where to_char(hire_date, 'YYYY/MM/DD') < '2003/06/17';
+
+select * from employees
+where to_char(hire_date, 'MM/DD/YYYY') < '06/17/2003';
+
+
+select * from employees;
+
+select salary from employees;
+
+SELECT   AVG(salary), MAX(salary),  MIN(salary), SUM(salary)
+FROM     employees;
+
+SELECT   AVG(salary), MAX(salary),  MIN(salary), SUM(salary)
+FROM     employees
+WHERE    job_id LIKE '%REP%';
+
+SELECT   MIN(hire_date), MAX(hire_date)
+FROM     employees;
+
+SELECT  MIN(last_name), MAX(last_name)
+FROM    employees;
+
+select * from employees
+WHERE    department_id = 50;
+
+SELECT   COUNT( * )  -- 직원의 수
+FROM     employees
+
+
+SELECT   COUNT( * )  -- 50인 부서의 직원 수
+FROM     employees
+WHERE    department_id = 50;
+
+--- 80부서에서 보너스를 받는 직원
+SELECT   COUNT(commission_pct) --- null는 계산되지 않는다.
+FROM     employees
+WHERE    department_id = 80;
+
+select   COUNT(department_id) -- 부서를 가지고 있는 사원의 수
+FROM    employees;            -- 부서가 없는 사원은 포함되지 않는다.
+
+
+SELECT COUNT(department_id) 
+FROM employees;
+
+SELECT COUNT(distinct department_id) -- 직원이 있는 부서의 수
+FROM employees;
+
+
+SELECT   AVG(commission_pct) /*커미션만 받는 사원의 평균*/
+		,count(*),sum(commission_pct)
+		,sum(commission_pct) / count(*) --커미션을 받지 않은 사원포함
+FROM     employees;
+
+
+SELECT   AVG( coalesce(commission_pct,0) ),
+		 sum(commission_pct) / count(*)
+FROM     employees;
+
+-- 80부서의 급여 평균, 급여 합계 , 최저급여 , 최대급여를 구하시오,
+select avg(salary), avg(salary), max(salary), min(salary)
+from employees
+where department_id = 80;
+
+-- 60부서의 급여 평균, 급여 합계 , 최저급여 , 최대급여를 구하시오,
+select avg(salary), avg(salary), max(salary), min(salary)
+from employees
+where department_id = 60;
+
+select avg(salary), sum(salary), max(salary), min(salary)
+from employees
+where department_id = 50;
+
+--- 부서의 수
+select count(distinct department_id)
+from employees;
+
+-- 11개 부서의 급여 평균, 급여 합계 , 최저급여 , 최대급여를 구하시오,
+select department_id, avg(salary), sum(salary)
+		, max(salary), min(salary)
+from employees
+group by department_id;
+
+-- 각 직무별 급여의 평균, 합계, 최소, 최대를 구하시오.
+select job_id, avg(salary), sum(salary)
+		, max(salary), min(salary)
+from employees
+group by job_id;
+-- 입사일이 같은 사원 급여의 평균, 합계, 최소, 최대를 구하시오
+select hire_date, avg(salary), sum(salary)
+		, max(salary), min(salary)
+from employees
+group by hire_date;
+
+SELECT      department_id, AVG(salary)
+FROM        employees
+GROUP BY    department_id;
+
+SELECT      department_id, AVG(salary)
+FROM        employees
+GROUP BY    1;
+
+SELECT      AVG(salary) , department_id
+FROM        employees
+GROUP BY    2;
+
+SELECT      AVG(salary)
+FROM        employees
+GROUP BY    department_id;
+
+SELECT	  department_id, AVG(salary)
+FROM	  employees
+GROUP BY  department_id
+ORDER BY  department_id;
+
+SELECT	  department_id, AVG(salary)
+FROM	  employees
+GROUP BY  department_id
+ORDER BY  AVG(salary);
+
+SELECT	  department_id, AVG(salary)  --4
+FROM	  employees  -- 1
+GROUP BY  1          -- 2
+ORDER BY  2;         -- 3
+
+select department_id, hire_date, count(*)
+from employees
+group by department_id, hire_date
+order by department_id, hire_date ;
+
+--- 각부서의 직무가 같은 사원수는?
+select department_id, job_id, count(*), avg(salary)
+from employees 
+group by department_id, job_id
+order by department_id;
+
+--각부서에서 직무가 같은 사원들 중 입사일이 같은 사원의 수를 구하시오.
+-- 평균 급여,급여 합계 , 최소 급여, 최대 급여를 구하시오.
+select department_id,job_id,hire_date,sum(salary), avg(salary), 
+        min(salary), max(salary), count(*)
+from employees
+group by department_id, job_id, hire_date;
+
+-- 직무가 'REP'를 가진 각 부서의
+-- 평균 급여, 합계 , 최소 , 최대를 구하시오.
+
+select department_id, avg(salary), sum(salary), max(salary),
+       min(salary), count(*)--- 5
+from employees --- 1
+where job_id like '%REP%'       --- 2
+group by department_id --- 3
+
+
+-- 직무가 'REP'를 가진 각 부서의
+-- 평균 급여, 합계 , 최소 , 최대를 구하시오.
+--- 단 평균 급여가 7000인 부서
+select department_id, avg(salary), sum(salary), max(salary),
+       min(salary), count(*)--- 6
+from employees --- 1
+where job_id like '%REP%'       --- 2
+group by department_id --- 3
+having avg(salary) >= 7000 -- 4;
+order by department_id-- 5; 
+
+-- 부서의 직원 수가 10명 미만이 부서를 출력하시오.
+select department_id , count(*)
+from employees
+group by department_id
+having count(*) < 10;
+
+--- 직무별 급여의 합계를 구하시오. 급여의 합계를 PAYROLL로 이름 부여
+SELECT job_id, SUM(salary) PAYROLL
+FROM employees
+GROUP BY job_id
+order by SUM(salary);
+
+SELECT job_id, SUM(salary) PAYROLL
+FROM employees
+GROUP BY job_id
+order by PAYROLL;
+
+
+
+SELECT      department_id dept_id, job_id, SUM(salary)
+FROM        employees
+GROUP BY    department_id, job_id;
+
+SELECT    department_id, MAX(salary)
+FROM      employees
+GROUP BY  department_id
+HAVING    MAX(salary) > 10000;
+
+SELECT	  department_id, AVG(salary)
+FROM	  employees
+GROUP BY  department_id
+HAVING	  max(salary) > 10000;
+
+SELECT    job_id, SUM(salary) PAYROLL 	  FROM      employees
+WHERE  job_id NOT LIKE '%REP%'
+GROUP BY job_id
+HAVING    SUM(salary) > 13000
+ORDER BY  SUM(salary); 
