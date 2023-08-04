@@ -281,7 +281,7 @@ and l.country_id = 'UK';
             
 -- 37. 부서번호가 50인 사원의 직무시작과 직무종료일을 출력하시오.
 select e.department_id, e.employee_id, start_date, end_date
-from hr.employees e, hr.job_history h
+from employees e, job_history h
 where e.employee_id = h.employee_id
 and e.department_id = 50;
 
