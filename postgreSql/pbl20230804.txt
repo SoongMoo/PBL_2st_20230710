@@ -1,0 +1,514 @@
+select * from information_schema.columns
+where table_name = 'employees' 
+order by table_name;
+
+
+select salary , employee_id, first_name
+from employees
+order by salary desc;
+
+select salary , employee_id, first_name
+from employees
+order by salary asc;
+
+
+select first_name, salary , employee_id
+from employees
+where first_name not like 'A%'
+order by first_name asc;
+
+
+select first_name, salary, employee_id
+from employees
+order by first_name desc;
+
+select first_name, salary, employee_id
+---        1          2         3
+from employees
+order by 1 desc;
+
+select salary, employee_id, first_name
+from employees
+order by 3 desc;
+
+
+
+select * , commission_pct, manager_id
+from employees
+where manager_id = 100;
+
+select department_id , salary
+from employees
+where department_id = 80;
+
+---- group 함수
+--- MAX(), AVG(), MIN(), SUM()
+
+select max(salary), sum(salary), min(salary), 
+	   avg(salary), count(salary)
+from employees;
+
+
+--- 직원 중에 입사일 제일 빠른 날짜는?
+select MIN(HIRE_DATE)
+from employees;
+
+
+select salary, department_id
+from employees;
+
+
+--- 90 부서의 최저 급여와 최대 급여는?
+select MAX(SALARY), min(salary)
+from employees
+where DEPARTMENT_ID = 90;
+
+--- 80 부서의 최저 급여와 최대 급여는?
+select  MAX(SALARY), mIN(SALARY)
+from employees
+where DEPARTMENT_ID = 80;
+
+--- 각 부서별 최저 급여와 최대 급여는?
+
+select DEPARTMENT_ID, MAX(salary), MIN(SALARY)
+from EMPLOYEES
+group by DEPARTMENT_ID;
+
+
+select max(salary) , min(salary) 
+from employees
+where department_id = 70 
+   or department_id = 60 
+
+select COUNT(distinct DEPARTMENT_ID)
+from EMPLOYEES;
+
+create table users(
+	user_num integer,
+	user_id varchar(50),
+	user_name varchar(30)
+);
+
+select * from users;
+
+select coalesce(max(user_num), 10000) + 1 from users;
+--- 서브쿼리
+insert into users
+values((select coalesce(max(user_num), 10000) + 1 from users),
+		'high','이숭무');
+select * from users;
+
+--- 각 부서별 최대 급여를 구하시오
+select department_id, max(salary)
+from employees 
+group by department_id;
+
+--- 각 부서별 최대 급여를 촐력 할때 최대 급여가 10000이상인 부서만 출력
+select department_id, max(salary) 
+from employees 
+group by department_id
+having max(salary) >= 10000
+order by 2;
+
+select department_id, max(salary)
+from employees 
+group by department_id
+having max(salary) >= 10000
+order by max(salary);
+
+select department_id, max(salary) max_sal
+from employees 
+group by department_id
+having max(salary) >= 10000
+order by max_sal;
+
+/* select
+ * from
+ * where
+ * group by
+ * having
+ * order by
+ */
+
+select * from employees
+where department_id= 90;
+
+select * from departments 
+where department_id = 90;
+
+
+--- T-sql join
+select employee_id, first_name,
+		employees.department_id,
+	   department_name , location_id	
+from employees , departments
+where employees.department_id  = departments.department_id 
+and employees.department_id = 90;
+
+select employee_id, first_name , e.department_id,
+	   department_name , location_id	
+from employees e, departments d
+where e.department_id  = d.department_id 
+and e.department_id = 90;
+
+select employee_id, first_name , e.department_id,
+	   department_name , location_id	
+from employees e, departments d
+where e.department_id  = d.department_id ;
+
+
+SELECT     e.employee_id, e.last_name,e.department_id,
+           d.department_id,d.location_id
+FROM       employees e, departments d
+WHERe      e.department_id = d.department_id;
+
+--- 20부서와 80부서의 직원 정보(employee_id,last_name,job_id)를 출력
+ select employee_id, last_name, job_id
+ from employees
+ where department_id in (20, 80);
+
+--- 20부서와 80부서의 직원 정보(employee_id,last_name,job_id)와
+--- 부서 정보 (department_id, department_name)을 출력
+select  employee_id,last_name,job_id,
+		d.department_id, department_name
+from employees e,departments d 
+where e.department_id = d.department_id
+  and d.department_id in (20, 80)
+
+
+--- ansi-join : join ~ on
+-- 80부서의 직원 정보(employee_id,last_name,job_id)와
+--- 부서 정보 (department_id, department_name)을 출력
+select employee_id, last_name, job_id,
+		d.department_id, department_name
+from employees e join departments d 
+on e.department_id = d.department_id -- join 조건
+where d.department_id in (20, 80);  
+  
+---부서번호(department_id), 부서명(department_name)과 
+-- 부서의 주소(street_address), 부서의 우편번호(location_id)를 
+--- t-sql을 사용하여 출력 
+SELECT	 	 department_id, department_name, 
+		 	 l.location_id, street_address
+FROM	  	 departments d, locations l
+WHERE		 d.location_id  = l.location_id ;
+
+--- ansi - join
+SELECT	 	 department_id, department_name, 
+		 	 l.location_id, street_address
+FROM	  	 departments d join locations l
+on		 d.location_id  = l.location_id ;
+
+---부서번호(department_id), 부서명(department_name)과 
+-- 부서의 주소(street_address), 부서의 우편번호(location_id)를 
+-- 20인 부서와 60인 부서만 출력한다.
+-- 단, t-sql을 사용하여 출력
+SELECT	 	 department_id, department_name, 
+		 	 l.location_id, street_address
+FROM	  	 departments d, locations l
+WHERE		 d.location_id  = l.location_id 
+and	department_id in (20, 60);
+--- ansi - join
+SELECT	 	 department_id, department_name, 
+		 	 l.location_id, street_address
+FROM	  	 departments d join locations l
+on		 d.location_id  = l.location_id 
+where	department_id in (20, 60);
+
+--- NATURAL JOIN
+SELECT	 	 department_id, department_name, 
+		 	 location_id, city
+FROM	  	 departments NATURAL JOIN	 locations
+WHERE		 department_id in (20, 60);
+
+
+select * from information_schema.columns
+where table_name = 'employees' ;
+
+select * from information_schema.columns
+where table_name = 'departments' ;
+
+select * from employees;
+select * from departments;
+
+--- 부서장을 상사로 둔 직원들을 출력하시오...
+--- employee_id, first_name, job_id 
+--- department_id , department_name, manager_id
+
+select employee_id, first_name, job_id , e.manager_id ,
+		d.department_id , department_name, d.manager_id
+from employees e , departments d 
+where e.manager_id = d.manager_id; 
+
+--- 같은 부서의 부서장을 상사로 둔 직원들을 출력하시오.
+--- employee_id, first_name, job_id 
+--- department_id , department_name, manager_id
+select employee_id, first_name, job_id,
+		d.department_id, department_name, d.manager_id
+from employees e , departments d 
+where e.department_id = d.department_id 
+  and e.manager_id = d.manager_id ;
+
+--ansi-join 
+select employee_id, first_name, job_id,
+		d.department_id, department_name, d.manager_id
+from employees e join departments d 
+on e.department_id = d.department_id 
+  and e.manager_id = d.manager_id ;
+ 
+--- using 절 사용
+select employee_id, first_name, job_id,
+		d.department_id, department_name, d.manager_id
+from employees e join departments d
+using (department_id, manager_id);
+
+---- natural join 
+select employee_id, first_name, job_id,
+		d.department_id, department_name, d.manager_id
+from employees e natural join departments d ;
+
+
+--- t-sql join
+SELECT	 l.city, d.department_name
+FROM	 locations l , departments d 
+where    l.location_id = d.location_id 
+ and	 l.location_id = 1400;
+
+--- natural join
+SELECT	 city, department_name
+FROM	 locations  natural join departments 
+where    location_id = 1400;
+
+--- 직원번호, 이름, 직무, 부서번호, 부서명을 출력하세요.
+select employee_id, first_name, job_id, 
+	   d.department_id, department_name
+from employees e , departments d 
+where e.department_id = d.department_id ;
+-- ansi - join
+select employee_id, first_name, job_id, 
+	   d.department_id, department_name
+from employees e join departments d 
+on e.department_id = d.department_id ;
+--- using절 사용
+select employee_id, first_name, job_id,
+	   d.department_id, department_name
+from employees e join departments d using(department_id);
+
+--- 우편번호가 1400인 부서의 부서이름과 주소를 출력하시오.
+ select department_name, street_address 
+ from departments d , locations l
+ where d.location_id = l.location_id 
+ and l.location_id = 1400;
+-- ansi-join 
+select department_name , street_address 
+from departments d2 join locations l 
+on d2.location_id = l.location_id 
+where l.location_id = 1400;
+--- natural join
+select department_name , street_address 
+from departments natural join locations
+where location_id = 1400 ;
+-- using 절사용
+select department_name , street_address 
+from departments join locations  using(location_id)
+where location_id = 1400 ;
+
+--- 각 부서의 부서명과 지역번호 그리고 부서장 번호와 부서장이름 , 직무를 출력
+-- 이 때 20,30,50, 80인 부서만 출력
+-- t-sql 조인,  ansi-join사용을 모두 할 것
+select 	department_name, d.location_id ,d.manager_id 
+		e.first_name , e.job_id 
+from departments d  , employees e
+where e.employee_id = d.manager_id
+and e.department_id (20,30,50, 80);
+
+select 	department_name, d.location_id ,d.manager_id 
+		e.first_name , e.job_id 
+from departments d  join employees e
+on e.employee_id = d.manager_id
+where e.department_id (20,30,50, 80);
+
+select * from information_schema.columns
+where table_name = 'employees' ;
+
+select * from information_schema.columns
+where table_name = 'departments' ;
+
+
+select 	department_name, d.location_id ,d.manager_id 
+		e.first_name , e.job_id 
+from departments d  , employees e
+where e.employee_id = d.manager_id
+and e.department_id (20,30,50, 80);
+
+
+-- 사원번호, 사원이름, 직무, 부서번호, 부서명
+select employee_id, first_name, job_id,
+	   d.department_id, department_name
+from employees e , departments d 
+where e.department_id = d.department_id;
+
+--- 부서번호, 부서명, 지역번호, 주소
+select department_id, department_name, 
+	   l.location_id, l.street_address 
+from departments d , locations l 
+where d.location_id = l.location_id;
+
+---3중 조인
+-- 사원번호, 사원이름, 직무, 부서번호, 부서명, 주소를 출력하시오.
+select employee_id, first_name, job_id, 
+	   d.department_id, department_name,
+	   l.location_id, street_address
+from employees e , departments d , locations l 
+where e.department_id = d.department_id 
+  and d.location_id = l.location_id 
+  
+--- ansi-join 
+select employee_id, first_name, job_id, 
+	   d.department_id, department_name,
+	   l.location_id, street_address
+from employees e join departments d 
+  on e.department_id = d.department_id join locations l 
+  on d.location_id = l.location_id ;
+
+
+--- 직무명과 직무번호, 직원번호, 직원명, 급여, 부서번호, 부서명을 출력
+select * from information_schema.columns
+where table_name = 'jobs' ;
+
+select job_title, j.job_id
+	   employee_id, first_name, salary,
+	   d.department_id, department_name
+from jobs j , employees e , departments d 
+where j.job_id = e.job_id 
+  and e.department_id = d.department_id ;
+ 
+select job_title, j.job_id
+	   employee_id, first_name, salary,
+	   d.department_id, department_name
+from jobs j join employees e 
+on j.job_id = e.job_id  join departments d 
+on e.department_id = d.department_id ; 
+
+select job_title, j.job_id
+	   employee_id, first_name, salary,
+	   d.department_id, department_name
+from jobs j NATURAL  join employees e 
+            join departments d using(department_id) ; 
+
+select job_title, j.job_id
+	   employee_id, first_name, salary,
+	   d.department_id, department_name
+from jobs j join employees e using (job_id)
+            join departments d using (department_id) ; 
+ 
+-- 직원정보 사원번호, 이름 , 급여, 직무를 출력할 때
+-- 부서정보 테이블서 부서명, 우편번호를 출력하며,
+-- 주소테이블에서 우편번호에 해당하는 주소를 출력하세요.
+select employee_id, first_name, salary, job_id,
+       d.department_id, department_name, 
+       l.location_id , street_address
+from employees e, departments d, locations l 
+where e.department_id = d.department_id
+  and d.location_id = l.location_id;           
+           
+select employee_id, first_name, salary, job_id,
+       d.department_id, department_name, 
+       l.location_id , street_address
+from employees e join departments d 
+on e.department_id = d.department_id join  locations l
+on d.location_id = l.location_id;
+
+select employee_id, first_name, salary, job_id,
+       department_id, department_name, 
+       location_id , street_address
+from employees join departments using (department_id)
+      NATURAL  join locations;
+
+select employee_id, first_name, salary, job_id,
+       department_id, department_name, 
+       location_id , street_address
+from hr.employees  join hr.departments using(department_id) 
+				   join  hr.locations using(location_id);
+
+--- 직무번호가 SH_CLER직무의 직무명과 이 직무를 담당하는 
+---- 직원들의 직원번호, 직원이름, 부서번호
+--- 그리고 부서명을 출력하시오. t-sql과 ansi-join만 사용
+ select job_title, j.job_id,
+        employee_id, first_name, 
+        d.department_id, department_name
+ from jobs j , employees e ,departments d 
+ where j.job_id = e.job_id 
+   and e.department_id = d.department_id
+   and j.job_id like 'SH_CLER%';
+  
+ select job_title, j.job_id,
+        employee_id, first_name, 
+        d.department_id, department_name
+ from jobs j join employees e on j.job_id = e.job_id 
+ join departments d on e.department_id = d.department_id 
+ where j.job_id like 'SH_CLER%';
+--- 직원 정보를 구하는 사원 번호 이름 급여 입사일을 출력할 때
+--  직무의 상한값과 하한값을 출력하고 
+--  각부서의 부서명을 하고 부서의 우편번호와 주소를 출력하세요.
+SELECT EMPLOYEE_ID, FIRST_NAME, SALARY, HIRE_DATE
+       ,J.JOB_ID, max_salary, J.MIN_SALARY
+       ,D.DPARTMENT_ID, DEPARTMENT_NAME
+       ,L.LOCATION_ID ,l.street_address 
+FROM jobs J,employees E,departments D,locations L
+WHERE J.JOB_ID = E.JOB_ID
+AND E.DEPARTMENT_ID = D.DEPARTMENT_ID
+AND D.LOCATION_ID = L.LOCATION_ID;
+
+SELECT EMPLOYEE_ID, FIRST_NAME, SALARY, HIRE_DATE
+       ,J.JOB_ID, max_salary, J.MIN_SALARY
+       ,D.DEPARTMENT_ID, DEPARTMENT_NAME
+       ,L.LOCATION_ID ,l.street_address 
+FROM jobs J JOIN employees E
+ON J.JOB_ID = E.JOB_ID JOIN  departments D
+ON E.DEPARTMENT_ID = D.DEPARTMENT_ID JOIN locations L
+ON D.LOCATION_ID = L.LOCATION_ID;
+
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+SELECT  e.last_name, e.department_id, d.department_name
+		  FROM    employees e   LEFT OUTER JOIN   departments d
+                  ON      (e.department_id = d.department_id);
+SELECT  e.last_name, e.department_id, d.department_name
+		 FROM               employees e    
+		 RIGHT OUTER JOIN   departments d
+		 ON                 (e.department_id = d.department_id);
+SELECT            e.last_name, e.department_id, d.department_name
+FROM              employees e
+FULL OUTER JOIN   departments d
+ON (e.department_id = d.department_id);
+
+
+
+
+SELECT MAX(avg_salary) AS max_avg_salary
+FROM (
+    SELECT department_id, AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY department_id
+) AS department_avg;
+
+
+
+
+
+
+
+SELECT MAX(avg_salary) AS max_avg_salary
+FROM (
+    SELECT department_id, AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY department_id
+) AS department_avg;
