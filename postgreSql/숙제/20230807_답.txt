@@ -66,12 +66,13 @@ where city = 'Toronto';
 select job_title, last_name, first_name, department_name, street_address, country_name
 from  jobs j join  employees e
 on j.job_id = e.job_id
-join  departments d
+left outer join  departments d
 on e.department_id = d.department_id
 join  locations l
 on d.location_id = l.location_id
-full outer join  countries c
+right outer join  countries c
 on l.country_id = c.country_id;
+
 
 
 
