@@ -174,8 +174,8 @@ and job_id like '%MA%';
 -- 커미션을 포함한 사원들의 연봉을 구하시오
 -- 사원 번호, 이름, 급여, 커미션, 연봉 출력
 -- 단, 연봉의 별칭을 YEAR_SAL 로 표시하시오
-select employee_id, first_name, salary, nvl(commission_pct, 0)
-        , (salary * (1 + nvl(commission_pct, 0)) * 12) year_sal
+select employee_id, first_name, salary, coalesce(commission_pct, 0)
+        , (salary * (1 + coalesce(commission_pct, 0)) * 12) year_sal
 from  employees;
 
 -- 5. 부서번호가 20, 50, 80인 부서의 부서번호와 
@@ -468,7 +468,7 @@ where country_name != 'United States of America';
 
 --11.직원정보를 출력하는데 커미션이 null일 경우 0.01%의 커미션을 주기로 합의하여 이를 YEARSAL로 $표기와 함께 세자리씩 급여와 출력하고 직무내용, 주소와 출생 국가를 출력하시오
 --직원번호, 이름, 성, 급여, 커미션을 포함한 연봉, 직무, 직무내용, 주소, 출생국
-select employee_id, first_name, last_name, to_char(salary,'$999,999,999') salary, to_char((salary*(1+nvl(commission_pct,0.01))*12),'$999,999,999') yearsal, job_title, street_address, country_name
+select employee_id, first_name, last_name, to_char(salary,'$999,999,999') salary, to_char((salary*(1+coalesce(commission_pct,0.01))*12),'$999,999,999') yearsal, job_title, street_address, country_name
 from  jobs j join  employees e
 on j.job_id = e.job_id
 join  departments d
