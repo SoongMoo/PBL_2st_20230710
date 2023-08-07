@@ -305,7 +305,7 @@ and commission_pct is null;
 -- 8. 부서장의 성, 이름, 커미션을 출력하시오.
 select last_name, first_name, commission_pct
 from  employees e,  departments d
-where e.employee_id = d.department_id;
+where e.employee_id = d.manager_id;
 
 -- 9. 부서장을 상사로 둔 직원들의 성, 이름, 이메일을 출력하시오.
 select last_name, first_name, email
