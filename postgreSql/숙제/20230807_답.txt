@@ -114,14 +114,7 @@ from  locations l,  countries c
 where l.country_id = c.country_id
 and l.country_id = 'UK';
 
--- 7.평균 급여가 가장 높은 직무를 출력하시오.
-select job_id, AVG(salary)
-from  employees
-group by job_id
-having AVG(salary) = (select MAX(AVG(salary))
-                    from  employees
-                    group by job_id);
-                    
+                 
 -- 8. 우편번호가 비어있는 주소와 도시명을 출력하시오.
 select street_address, city, postal_code
 from  locations
