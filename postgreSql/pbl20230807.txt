@@ -1,0 +1,542 @@
+select * from departments; -- 27
+select * from employees -- 107
+order by department_id;
+
+
+select employee_id, d.department_id
+from departments d right outer join  employees e
+on e.department_id  = d.department_id;
+
+select employee_id, d.department_id
+from departments d left outer join  employees e
+on e.department_id  = d.department_id;
+
+---- 직원 번호, 이름, 급여, 직무, 직원의 부서번호, 
+---  부서테이블에 있는 부서번호, 부서명
+select employee_id, first_name, salary, job_id, e.department_id
+       , d.department_id, department_name
+from employees e right outer join departments d 
+on e.department_id =d.department_id;
+
+
+--- 직원이 없는 부서의 부서번호, 부서명을 출력하시오,
+select d.department_id , department_name
+from departments d left outer join employees e 
+on e.department_id = d.department_id 
+where e.department_id is null; 
+
+--- 부서 없는 직원을 구하시오.
+--- 직원 번호, 이름, 급여, 직무, 직원의 부서번호
+select employee_id, first_name, salary, job_id, department_id
+from employees
+where department_id is null;
+
+
+---  직원 번호, 이름, 급여, 직무,
+---  부서 테이블 부서번호, 부서명
+---  부서 없는 직원도 출력하고 직원이 없는 부서도 출력하기.
+select employee_id, first_name, salary, job_id
+	  ,d.department_id, department_name
+from employees e full outer join departments d 
+on e.department_id = d.department_id ;
+--- outer : left outer join, right outer join , 
+--          full outer join 
+
+
+--- 주위해야 할 점
+--- 카티시안 곱 (27 * 107)
+/*
+select employee_id, first_name, salary, job_id
+	  ,d.department_id, department_name
+from employees e , departments d;
+
+select employee_id, first_name, salary, job_id
+	  ,d.department_id, department_name
+from employees e CROSS  join departments d;
+*/
+
+--- 서브쿼리
+--- 단일행 서브쿼리 
+--- 103번 직원 상사와 같은 상사를 둔 직원의 모든 정보를 출력
+select manager_id from employees where employee_id = 103;
+
+select * from employees
+where manager_id = 102;
+	
+select * from employees
+where manager_id = 
+	(select manager_id from employees where employee_id = 103);
+
+create table copy_emp
+as 
+select * from employees;
+
+select * from copy_emp;
+
+create table copy_emp1
+as 
+select * from employees
+where 1 != 1;
+
+select * from copy_emp1;
+
+insert into copy_emp1
+select * from employees;
+
+select * from copy_emp1
+
+create table test_num(
+	num1 integer,  -- 100001
+	val varchar(30)
+);
+
+select coalesce( max(num1), 100000) + 1 from test_num;
+
+insert into test_num(num1, val)
+values(
+	(select coalesce( max(num1), 100000) + 1 from test_num),
+	'이숭무'
+);
+ select * from test_num;
+
+
+--- 90인 부서의 평균급여보다 많이 받는 사원을 알려주세요..
+select trunc(avg(salary)) from employees 
+where department_id = 90;
+
+select * from employees e 
+where salary >= 
+			(select trunc(avg(salary)) from employees 
+			where department_id = 90);
+		
+--- 급여를 제일 적게 받는 직원을 출력하세요.
+select min(salary) from employees;
+select * from employees
+where salary = 2100;
+select * from employees
+where salary = (select min(salary) from employees);
+
+--  Rogers사원보다 먼저 입사한 사원을 구하시오?
+select hire_date from employees where last_name = 'Rogers';
+
+select * from employees 
+where hire_date < '2006-08-26';
+
+select * from employees 
+where hire_date < 
+		(select hire_date from employees 
+		 where last_name = 'Rogers');
+-- Rogers의 직무와 같고 Rogers의 급여보다 많이 받는 사원을 구하시오.
+select job_id from employees
+where last_name = 'Rogers';
+
+select salary from employees
+where last_name = 'Rogers'
+
+select * from employees e 
+where job_id = 'ST_CLERK'
+ and salary >= 2900;
+
+select * from employees e 
+where job_id = (select job_id from employees
+				where last_name = 'Rogers')
+ and salary >= (select salary from employees
+				where last_name = 'Rogers');
+
+			
+-- 각 부서의 최소급여가 50인 부서의 최소 급여보다 큰 
+-- 부서와 최소금액을 출력하세요.
+select min(salary) from employees where department_id = 50;
+
+select department_id , min(salary)
+from employees e 
+group by department_id
+having min(salary) >= 2100;
+			
+select department_id , min(salary)
+from employees e 
+group by department_id
+having min(salary) > (
+	select min(salary) from employees where department_id = 50
+);
+
+--- Rogers의 입사일을 출력
+select hire_date from employees where last_name = 'Rogers';
+
+select employee_id, first_name, job_id, salary, 
+	   '2006-08-26' Rogers_hire_date
+from employees;
+			
+select employee_id, first_name, job_id, salary, 
+	   (select hire_date from employees 
+	   	where last_name = 'Rogers') Rogers_hire_date
+from employees;			
+			
+-- 다중행 서브쿼리
+--- 각 부서의 최소 급여와 같은 급여를 받는 사원들을 구하시오.
+select min(salary)
+from employees
+group by department_id;
+			
+select * from employees 
+where salary in (select min(salary)
+				from employees
+				group by department_id)	;
+--- 각 부서에 최소 급여를 받는 사원의 직원번호와 이름, 직무 , 급여를 출력
+select department_id, min(salary)
+from employees e 
+group by department_id;
+-- 쌍비교
+select employee_id , first_name , job_id , salary, department_id
+from employees e 
+where (department_id, salary) in 
+						(select department_id, min(salary)
+						  from employees e 
+		                group by department_id);
+
+--- Taylor성을 가진 직원
+select * from employees
+where last_name = 'Taylor';
+
+-- Taylor성을 가진 직원들의 직무와 같은 직무를 하는 직원들을 구하시오
+select job_id from employees where last_name = 'Taylor';
+
+select * from employees e 
+where job_id in ('SA_REP' ,'SH_CLERK');
+		  
+select * from employees e 
+where job_id in ((select job_id from employees 
+				 where last_name = 'Taylor'));
+
+-- 다중 행 연산자 (any, all)
+---4200, 4800, 6000, 9000의 최소보다 큰 급여를 받는 사원을 구하시오
+select * from employees e 
+where salary >= 4200;
+
+select * from employees
+where salary > any (array[4200, 4800, 6000, 9000]);
+				
+--- 60인 부서의 급여를 구하시오.
+select salary from employees where department_id = 60;
+--- 60인 부서의 직원들의 급여중 최소급여 보다 많이 받는 사원
+select * from employees e 
+where salary >= (select min(salary) from employees 
+				 where department_id = 60);
+				
+select * from employees
+where salary > any (select salary from employees 
+			   where department_id = 60);
+			  
+--- 60인 부서의 직원들의 급여와 같은 급여를 받는 사원
+select * from employees
+where salary = any (select salary from employees 
+			   where department_id = 60);
+
+--- 60인 부서의 직원들의 급여중 최대급여 보다 작게 받는 사원
+select max(salary) from employees where department_id = 60;
+			  
+select * from employees
+where salary <= (select max(salary) from employees 
+				 where department_id = 60	); 
+
+select * from employees
+where salary < any (select salary from employees 
+				 where department_id = 60	); 			  
+			  
+-----6인 부서의 급여중 제일 작은 급여보다 더 작은 급여를 받는 사원은?
+select min(salary) from employees where department_id = 60
+
+select * from employees 
+where salary < (select min(salary) from employees
+				  where department_id = 60);
+			  
+select * from employees 
+where salary < all (select salary from employees
+				  where department_id = 60);			  
+			  
+---6인 부서의 급여중 제일 많은 급여보다 더 많은 급여를 받는 사원은?
+select max(salary) from employees where department_id = 60;
+			
+select * from employees
+where salary > (select max(salary) from employees 
+				where department_id = 60);
+			  
+select * from employees
+where salary > all (select salary from employees 
+				where department_id = 60);		  
+
+-- 직무가 IT_PROG에서  제일 많이 받는 급여보다 더 많이 받는 사원을 출력하시오.
+SELECT salary  FROM employees  WHERE job_id = 'IT_PROG'
+
+select * from employees
+where salary > all (SELECT salary  FROM employees  
+					WHERE job_id = 'IT_PROG')
+					
+-- 직무가 IT_PROG에서  제일 많이 받는 급여보다 작게 받는 사원을 출력하되
+-- 	IT_PROG을 제외하시오.
+SELECT salary  FROM employees  WHERE job_id = 'IT_PROG'
+
+select * from employees
+where salary < any (SELECT salary  FROM employees  
+					WHERE job_id = 'IT_PROG')		
+  and job_id != 'IT_PROG';
+
+-- 집합 , 합집합(union) , 교집합(intersect), 차집합(except)
+-- 합집합
+-- 직원,    회원
+-- 직원id   회원id
+ /*
+select emp_id, emp_name from emp where emp_id = 'highland0';
+select mem_id, mem_name from mem where mem_id = 'highland0';
+*/
+ /*
+select emp_id from emp where emp_id = 'highland0'
+union
+select mem_id from mem where mem_id = 'highland0'	
+*/
+select * from job_history;
+--- 직원들의 과거에 했던 업무와 현재 진행중인 업무
+--- 직원번호, 직무
+select employee_id , job_id
+from employees
+union
+select employee_id , job_id
+from job_history
+order by employee_id;
+			
+select employee_id , job_id
+from employees
+union all
+select employee_id , job_id
+from job_history
+order by 1;
+	
+--- 교집합
+select employee_id , job_id
+from employees
+INTERSECT 
+select employee_id , job_id
+from job_history;
+			
+-- 차집합
+select employee_id , job_id
+from employees
+EXCEPT
+select employee_id , job_id
+from job_history;
+
+select employee_id, salary, hire_date , department_id
+from employees
+union
+select employee_id , null::integer, null::date,	department_id
+from job_history
+
+
+select employee_id emp_id, salary sal , hire_date , department_id
+from employees
+union
+select employee_id , null::integer, null::date,	department_id
+from job_history
+
+select * from job_history;
+
+select employee_id emp_id,salary sal,null::date dt,department_id
+from employees
+union
+select employee_id , null::integer, end_date,	department_id
+from job_history
+
+--- inline view :
+---- 직원번호, 성, 급여, 부서번호, 부서 평균 급여
+select department_id, avg(salary)
+from employees 
+group by department_id;
+
+select employee_id , last_name, salary, department_id
+from employees;
+
+select employee_id , last_name, salary, d.department_id
+	, avg_sal
+from employees e, (select department_id, avg(salary) avg_sal
+					from employees 
+					group by department_id)	d
+where e.department_id = d.department_id;
+
+---  직원 번호 , 성, 급여, 부서번호 , 부서명
+select employee_id, last_name, salary, department_id
+from employees;
+select department_id, department_name
+from departments;
+
+
+
+
+select employee_id, last_name, salary, 
+		d.department_id,department_name
+from employees e , departments d 
+where e.department_id = d.department_id;
+
+
+---- 직원번호, 성, 급여, 부서번호, 부서 평균 급여
+--- 평균 급여보다 많이 받는 사원을 출력하세.
+select department_id, avg(salary) avg_sal
+from employees 
+group by department_id ;
+
+select employee_id, last_name, salary
+from employees
+
+select employee_id, last_name, salary, 
+		d.department_id, avg_sal
+from employees e join (select department_id, avg(salary) avg_sal
+						from employees 
+						group by department_id ) d
+on e.department_id  = d.department_id
+where salary > avg_sal;
+
+-- view 
+select * from employees;
+--- 60부서와 100번부서에서 직원의 직원번호, 이름 , 급여, 입사일 부서번호를 출력
+select employee_id, first_name , salary, hire_date, department_id
+from employees
+where department_id in (60, 100);
+
+create view vw_80_100
+as
+select employee_id, first_name , salary, hire_date, department_id
+from employees
+where department_id in (60, 100);
+
+select * from vw_80_100;
+
+--- 직원번호, 이름, 급여, 커미션, 년봉
+--- 커미션이 null이면 0으로 변환하여 년봉을 구하시오
+select employee_id, first_name, salary,  commission_pct, 
+    (salary + (1 *  coalesce(commission_pct,0))) * 12
+from employees;
+
+create or REPLACE view vw_year_sal
+as 
+select employee_id, first_name, salary,  commission_pct ,
+    (salary + (1 *  coalesce(commission_pct,0))) * 12
+from employees
+where job_id like 'AD%';
+
+select * from vw_year_sal;
+
+
+select * from employees;
+
+
+
+
+create or REPLACE view vw_70
+(eid, lname, year_sal)
+as 
+select employee_id , last_name , salary * 12
+from employees
+where department_id = 70;
+
+select * from vw_70;
+
+create or REPLACE view vw_70
+as 
+select employee_id eid , last_name lname, salary * 12 year_sal
+from employees
+where department_id = 70;
+
+select * from vw_70;
+
+select employee_id, last_name, email, hire_date, job_id,salary
+from employees;
+
+create or replace view vw_nn
+as 
+select employee_id, last_name, email, hire_date,job_id,salary,
+	   department_id
+from employees;
+
+select * from vw_nn;
+
+begin;
+	delete from vw_nn
+	where department_id = 90;
+
+	select * from employees;
+rollback;
+select * from employees where department_id = 90;
+
+begin;
+	insert into vw_nn
+	values(1011,'Rhee','high',now(),'sam', 10000, 1000);
+
+	select * from employees
+	where department_id = 1000;
+commit;
+delete from vw_nn where department_id = 1000;
+
+create or replace view vi_join
+(eid, lname, sal, did, dname)
+as
+select employee_id, last_name, salary, 
+	   d.department_id, department_name
+from employees e , departments d
+where e.department_id = d.department_id;
+
+select * from vi_join;
+--- DML --- insert , delete , update , select
+--- DDL --- create , alter , drop
+--- DCL --- grant, revoke
+--- TCL --- rollback, commit, savepoint
+
+
+-- merge
+create table emp
+as
+select * from employees
+where employee_id = 132;
+
+select * from emp;
+
+
+
+
+merge into emp e1
+using (select * from employees) e2
+on (e1.employee_id = e2.employee_id)
+WHEN MATCHED THEN
+update set
+    salary = e1.salary * 1.1,
+    hire_date = now()
+WHEN NOT MATCHED THEN
+insert values(e2.employee_id, e2.first_name, e2.last_name,
+              e2.email, e2.phone_number, e2.hire_date, e2.job_id,
+              e2.salary,e2.commission_pct, e2.manager_id,
+              e2.department_id);
+
+select * from emp where employee_id = 132;
+
+----
+DELETE FROM emp
+WHERE employee_id IN (
+    SELECT employee_id
+    FROM employees
+    WHERE employee_id = 132
+);
+
+delete from emp;
+select * from emp;
+
+merge into emp e1
+using (select * from employees where employee_id = 140) e2
+on (e1.employee_id = e2.employee_id)
+WHEN MATCHED THEN
+update set
+    salary = e1.salary * 1.1,
+    hire_date = now()
+WHEN NOT MATCHED THEN
+insert values(140, '숭무', '이',
+              'high', '010', now(), 'sam',
+              10000,null, 100, 130);
+
+select * from emp;
