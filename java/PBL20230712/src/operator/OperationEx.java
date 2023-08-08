@@ -10,9 +10,9 @@ public class OperationEx {
 		double j = 3.0;
 		
 		System.out.println(i / j);
-		// 나머지 
+		// 몫 
 		System.out.println(i % j);
-		//  몫
+		//  나머지
 		System.out.println((int)i / (int)j);
 		System.out.println((int)(10.0 / 3.0 ));
 		System.out.println((int)( i   /  j  ));
