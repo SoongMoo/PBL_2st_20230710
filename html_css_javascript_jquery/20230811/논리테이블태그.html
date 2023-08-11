@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1" width="600">
+        <caption>colgroup 연습</caption>
+        <colgroup>
+            <col width="25%">
+            <col span="2" width="25%" style="background-color:blue;">
+            <col width="25%" style="background-color:yellow;">
+        </colgroup>
+        <thead>
+        <tr><th width="25%">방이름</th>
+            <th width="25%">대상</th>
+            <th width="25%">크기</th>
+            <th width="25%">가격</th></tr>
+        </thead>
+
+        <tfoot>
+        <tr><th colspan="4">렌트힙니다.</th></tr>
+        </tfoot>
+        
+        <tbody>
+        <tr><th>유채방</th>            
+            <td>여성</td>
+            <td rowspan="3">4인실</td>
+            <td rowspan="4">20000</td></tr>
+        <tr><th rowspan="2">동백방</th>
+            <td>동성</td></tr>
+        <tr><td>가족</td></tr>
+        <tr><th>천햬향방</th>
+            <td>-  </td>
+            <td>2인실</td></tr>
+        </tbody>
+    </table>
+</body>
+</html>
