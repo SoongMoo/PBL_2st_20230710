@@ -1,3 +1,12 @@
+데이터베이스 위치 : show data_directory;
+데이터베이스파일 위치 : SELECT oid, datname FROM pg_database;
+select * from information_schema.tables
+where table_schema = 'public' order by table_name;
+
+select * from information_schema.columns
+where table_name = 'member' order by column_name
+
+
 CREATE TABLE regions
     ( region_id      integer  CONSTRAINT  region_id_nn NOT NULL 
     , region_name    VARCHAR(25) 
