@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="get" name="frm" action="#">
+        <fieldset>
+            <legend>신청과목</legend>
+            <p>신청과목을 선택하여주세요.</p>
+            <input type="radio" name="subject" value="회화"/>회화
+            <input type="radio" name="subject" value="문법"/>문법
+            <input type="radio" name="subject" value="작문"/>작문
+            <input type="radio" name="subject" value="듣기"/>듣기
+        </fieldset>
+        <fieldset><!--*****같은 이름으로 서버에 전송이되면 배열로 받아야 한다.-->
+            <legend>광고 수신여부</legend>
+            <input type="checkbox" name="chk1" value="mail"/> 이메일
+            <input type="checkbox" name="chk1" value="sms"/> 문자
+            <input type="checkbox" name="chk1" value="catok"/> 카톡
+        </fieldset>
+        선호색상 <input type="color" name="clr" value="#00ff00"/><br />
+        <input type="submit" value="전송" />
+    </form>
+</body>
+</html>
