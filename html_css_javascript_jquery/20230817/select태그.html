@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="get" name="frm1" action="#">
+        <select name="subject">
+            <option>HTML</option>
+            <option>CSS</option>
+            <option>JSP</option>
+            <option>SPRING</option>
+        </select><br />
+        <select name="subject1">
+            <option value="HTML">HTML</option>
+            <option value="CSS">CSS</option>
+            <option value="JSP">JSP</option>
+            <option value="SPRING">SPRING</option>
+        </select><br />
+        <select name="exercise" size="2">
+            <option value="1">농구</option>
+            <option value="2">야구</option>
+            <option value="3" selected>축구</option>
+            <option value="4">배구</option>
+        </select><br />
+        <select name="class" multiple>
+			<option >건축학과</option>
+			<option >기계공학과</option>
+			<option >산업공학</option>
+			<option >전기공학과</option>
+			<option >경영학과</option>
+			<option >화학공학과</option>
+			<option >컴퓨터공학과</option>
+		</select><br />
+        <select name="class1" multiple size="3">
+			<option >건축학과</option>
+			<option >기계공학과</option>
+			<option >산업공학</option>
+			<option >전기공학과</option>
+			<option >경영학과</option>
+			<option >화학공학과</option>
+			<option >컴퓨터공학과</option>
+		</select><br />
+        <select name="location">
+           <optgroup label="관악구"> 
+                <option>봉천동</option>
+                <option>신림동</option>
+                <option>남현동</option>
+            </optgroup>
+            <optgroup label="동대문구">
+                <option>전농동</option>
+                <option>답십리</option>
+                <option>신설동</option>
+            </optgroup>
+        </select><br />
+        <input type="text" name="choice" list="choices"/>
+        <datalist id="choices">
+            <option value="문법" label="문법"></option>
+            <option value="어휘" label="어휘"></option>
+            <option value="회화" label="회화"></option>
+            <option value="리스닝" label="리스닝"></option>
+        </datalist><br />
+        자기소개서<br />
+        <textarea rows="10" cols="10" name="contents"></textarea><br />
+        <input type="submit" value="전송" />
+        <input type="button" value="전송2" 
+            onclick="javascript:frm1.submit();"/>
+        <button type="button" 
+            onclick="javascript:frm1.submit();">전송2</button>
+        <button type="submit" >
+            <img src="../images/1.png"/>
+        </button>
+        <input type="image" src="../images/1.png" />
+    </form>
+</body>
+</html>
