@@ -6,6 +6,7 @@
     <title>선택자</title>
     <style>
         /* */
+        *{margin: 0px; padding: 0px;}
         p{color:red;}
         .ctxt{color:blue;}
         #cul > li {color:aqua} /*ul > li {color:aqua}*/
@@ -15,6 +16,24 @@
         h4[class]{color: yellow;} /*.logo{color: yellow;}*/
         img[alt]{width:50px;height:50px;}
         *[title]{width:100px;height:100px;}
+
+        a:hover{color: green;}
+        a:visited{color:black}
+        a:focus{color:pink}
+        .box > li {border-top: solid 1px #123456;}
+        .box > li:first-letter{font-size:300%;}
+        .box > li:first-child{color:brown; border-top: none}
+        .box > li:last-child{color:brown}
+        .box:first-line{color:red}
+        .box:after{content : "텍스트를 작성" ;}
+        .box:before{content : "텍스트를 작성!!!!!!" ;}
+
+        ol li{color:green;}
+        ol p{color:blue}
+
+        p.more a{color:aqua}
+
+        h1.htag,p.ptag,p#ptag2{color:aqua;font-size: 12px;}
     </style>
 </head>
 <body>
@@ -46,5 +65,39 @@
     <img src="../images/1.png" alt="강아지"/>
     <img src="../images/1.png" title="강아지"/>
     <img src="../images/1.png" />
+
+    <h2>가상 클래스 선택자</h2>
+    <ul>
+        <li><a href="http://www.naver.com">COMPANY</a></li>
+        <li><a href="#">PRODUCT</a></li>
+        <li><a href="#">SERVICE</a></li>
+    </ul>
+    
+    <h2>수도 클래스 선택자</h2>
+    <ul class="box">
+        <li>COMPANY</li>
+        <li>PRODUCT</li>
+        <li>SERVICE</li>
+    </ul>
+
+    <h2>하위 선택자</h2>
+    <ol>
+		<li>메뉴1</li>
+		<li><p>메뉴2</p></li>
+		<li>메뉴3</li>
+    </ol>
+      
+    <h2>종속 선택자</h2>
+    <p class="bcycle">안녕하세요</p>
+    <p class="more"><a href="#">더보기</a></p>
+    <ul class="more">
+            <li>1</li>
+            <li>2</li>
+    </ul>
+   
+    <h2>그룹 선택자</h2>
+    <h1 class="htag">웹 표준 퍼블리싱</h1>
+    <p class="ptag">웹디자인의 한 분야로 원래 용어는 웹콘텐츠 UI 디자인이다.</p>
+    <p id="ptag2">안녕하세요. 이숭무입니다.</p>
 </body>
 </html>

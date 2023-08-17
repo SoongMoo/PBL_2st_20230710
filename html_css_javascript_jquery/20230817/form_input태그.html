@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- get -->
+    <!-- get 방식 -->
     <a href="http://www.google.com/search?q=jsp search">jsp search</a>
     <form method="post" name="frm" action="#">
         사원번호 : <input type="text" name="eNum" value="hk00001" readonly/><br />
@@ -16,8 +16,28 @@
         maxlength="12" required/><br />
         이메일 : <input type="email" name="mail" size="30" 
                     placeholder="이메일 형식에 맞아야함" /><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="email1"/>@
+                <input type="text" name="email2" placeholder="직접입력">
+                <select id="choice">
+                    <option>==주소선택==</option>
+                    <option>name.com</option>
+                    <option>naver.com</option>
+                    <option>gmail.com</option>
+                </select><br />
         홈페이지 : <input type="url" name="addr" placeholder="http://으로 시작"/><br />
-        연락처 : <input type="tel" name="phone" placeholder="모바일에서 사용"/><br />
+        연락처1 : <input type="tel" name="phone" placeholder="모바일에서 사용"/><br />
+        연락처2:  <input type="text" name="tel2" list="firstNum" >
+                  <datalist  id="firstNum">
+                    <option value="010" label="010"></option>
+                    <option value="011" label="011"></option>
+                    <option value="017" label="017"></option>
+                    <option value="018" label="018"></option>
+                    <option value="019" label="019"></option>
+                  </datalist > - 
+                  <input type="text" name="tel3" minlength="3" maxlength="4"> -
+                  <input type="text" name="tel4" minlength="4" maxlength="4">
+                  <br />
         생년월일 : <input type="date" name="birth" /><br />
         성별 : <input type="radio" name="gender" value="M" checked/>남자
                 <input type="radio" name="gender" value="F" />여자<br />
@@ -28,7 +48,56 @@
                 <input type="checkbox" name="interest" value="java"/>자바
                 <input type="checkbox" name="interest" value="html"/>html
                 <input type="checkbox" name="interest" value="javascript"/>자바스크립트<br />
+        졸업 :
+            <select name="grade">
+                <option value="0">=== 선택하세요 ===</option>
+                <option value="1">고등학교 졸업</option> 
+                <option value="2">전문대학 졸업</option>
+                <option value="3">대학교 졸업</option>
+                <option value="4">석사 졸업</option>
+                <option value="5">박사 졸업</option>
+            </select><br />
+        학점 :
+            <select name="score" size=3>
+                <option>A</option>
+                <option>B</option>
+                <option selected>C</option>
+                <option>D</option>
+                <option>F</option>
+            </select><br />
+        학과 : 
+            <select name="class" multiple>
+                <option value="0">==복수전공도 선택==</option>
+                <option value="archi">건축공학과</option>
+                <option value="mechanic">기계공학과</option>
+                <option value="indust">산업공학과</option>
+                <option value="elec">전기전자공학과</option>
+                <option value="computer">컴퓨터공학과</option>
+                <option value="chemical">화학공학과</option>
+            </select><br />
+        자기소개서:
+        <textarea name="desc" cols="50" rows="10"></textarea><br />
+        <!-- 추가적인 태그 -->
+        배송비 : <input type="number" name="delivery"  min=2000 max=5000 value="2000" step="500"/>원<br />
+        수량 : <input type="range" name="qty" min="1" max="100" value="2" step="1"/>개<br />
+        제품 색상 :<input type="color" name="clr" value="#abcdef" /><br />
+        제조일 : <input type="date" name="date" value="2022-10-22"/><br />
+        타이어 생산일 : <input type="week" name="wk" value="2022-W43"/><br />
+        시간 : <input type="time" name="tm" value="16:17"/><br />
+        UTC : <input type="datetime-local" name="dl" value="2022-10-22T09:30"/><br />
+        파일 : <input type="file" name="upload" /><br />
+        파일 : <input type="file" name="upload1" multiple /><br />
+        <!--버튼-->
         <input type="submit" value="전송" />
+        <button type="submit">전송2</button>
+        <input type="image" src="../images/1.png" width="50" height="50"/>
+        <button type="submit">
+            <img src="../images/1.png" width="50" height="50"/>
+        </button>
+        <br />
+        <input type="reset" value="다시쓰기"/><br />
+        <input type="button" value="네이버" onclick="javascript:location.href='http://www.naver.com'" />
+        <button type="button" onclick="javascript:location.href='http://www.naver.com'">네이버</button>
     </form>    
 </body>
 </html>

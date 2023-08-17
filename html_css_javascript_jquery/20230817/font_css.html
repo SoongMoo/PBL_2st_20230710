@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1{
+           font-family: "굴림", "Gulim"; 
+           font-size:3em; /* px,pt */
+           font-weight: bold; /* normal, bolder,lighter,100, 200,300,400,...,900 */
+           font-variant: small-caps; /* normal 소문자를 작은 대문자*/
+           font-style : italic; /* normal */
+           line-height : 200%;
+           color:#0f0; /* #00ff00, #0f0 , #001122 , #012 */
+        }
+        p{font: italic 1em 돋움;
+          font-variant: small-caps;}
+        .accent {
+            font-variant:small-caps;  /* 작은 대문자 */
+            font-weight:bold; /* 굵게 */
+        } 
+        p span#txt{font-style:normal;}
+    </style>
+</head>
+<body>
+    <h1>3Em의 크기를 가진 제목</h1>
+    <p>1em의 크기를 가진 단락</p>
+    <!--이테리채 id="txt"는 변경되지 않게 -->
+    <h1>세계 3대 미항</h1><!--소문자를 작은 대문자, 글자를 굵은 글자 -->
+    <p><span class="accent">시드니(Sydney)</span>, 호주</p>
+    <p><span class="accent">리우데자네이루(Rio de Janeiro)</span>, 브라질</p>
+    <p><span class="accent">나폴리(Naples)</span>, 이탈리아</p>
+    <p><span id="txt">나폴리(Naples)</span>, 이탈리아</p>
+
+</body>
+</html>
