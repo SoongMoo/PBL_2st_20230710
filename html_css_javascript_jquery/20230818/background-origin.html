@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width:400px;
+            height:200px;
+            padding: 35px;
+            margin-bottom:20px;
+            border : 15px solid #ccc;
+            background : url('../images/bg3.jpg') no-repeat;    
+        }
+        .bg1{
+            background-origin: padding-box;
+        }
+        .bg2{
+            background-origin:border-box;
+        }
+        .bg3{
+            background-origin:content-box;
+        }
+        body{
+            /*
+            background-image: url('../images/bottom-bg.jpg');
+            background-repeat:no-repeat;
+            background-position:center bottom;
+            */
+            background :url('../images/bottom-bg.jpg')no-repeat  center bottom;
+            background-attachment:fixed;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg1"></div>
+	<div class="bg2"></div>
+	<div class="bg3"></div>  
+</body>
+</html>
