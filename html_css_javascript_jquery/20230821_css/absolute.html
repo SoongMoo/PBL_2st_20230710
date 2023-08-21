@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        #wrap{
+            width:300px;
+            height:300px;
+            background: orange;
+            position:relative;
+            left:100px;
+            top:200px;
+        }
+        .box{
+            width:50px;
+            height:50px;
+            background: blue;
+            position:absolute;
+        }
+        #crd1{
+            left:50px;
+            top:50px;
+        }
+        #crd2{
+            right : 0px;
+            top:0px;
+        }
+        #crd3{
+            right : 0px;
+            bottom:0px;
+        }
+        #crd5{
+            left : 0px;
+            bottom:0px;
+        }
+        #crd4{
+            left : 0px;
+            top:125px;
+            left:125px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+		<div class="box" id="crd1">박스1</div>
+		<div class="box" id="crd2">박스2</div>
+		<div class="box" id="crd3">박스3</div>
+		<div class="box" id="crd4">박스4</div>
+		<div class="box" id="crd5">박스5</div>
+	</div>
+</body>
+</html>

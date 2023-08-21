@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .table1{
+            border:1px solid black;
+            border-collapse:collapse;
+            width: 300px;
+            height: 200px;
+        }
+        .table1 td {
+            border:1px dotted black;
+            text-align:center;
+            width:150px;
+        }
+        .table2{
+            border:1px solid black;
+            border-collapse:separate;
+            border-spacing:20px 10px; /* 수평 수직 */
+        }
+        .table2 td {
+            width:150px;
+            height: 200px;
+            border:1px dotted black;
+        }
+        .val1 { vertical-align:top; }
+        .val2 { vertical-align:bottom; }
+        .val3 { vertical-align:middle; }
+        .table3{
+            border:1px solid black;
+            border-collapse:separate;
+            border-spacing:20px 10px; /* 수평 수직 */
+        }
+        .table3 td {
+            border:1px dotted black;
+            empty-cells:show;
+        }
+    </style>
+</head>
+<body>
+    <table class="table1">
+        <caption>프로축구 경기 일정</caption>
+        <tr>
+            <td>울산</td>
+            <td>울산 vs 인천</td>
+        </tr>
+        <tr>
+            <td>부산</td>
+            <td>부산 vs 대전</td>
+        </tr>
+        <tr>
+            <td>서울</td>
+            <td>서울 vs 강원</td>
+        </tr>
+    </table>
+    <table class="table2">
+        <caption>프로축구 경기 일정</caption>
+        <tr>
+            <td>울산</td>
+            <td class="val1">울산 vs 인천</td>
+        </tr>
+        <tr>
+            <td>부산</td>
+            <td class="val2">부산 vs 대전</td>
+        </tr>
+        <tr>
+            <td>서울</td>
+            <td class="val3">서울 vs 강원</td>
+        </tr>
+    </table>
+    <table class="table3">
+        <caption>프로축구 경기 일정</caption>
+        <tr>
+            <td>울산</td>
+            <td >울산 vs 인천</td>
+        </tr>
+        <tr>
+            <td>부산</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>서울</td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+</html>
