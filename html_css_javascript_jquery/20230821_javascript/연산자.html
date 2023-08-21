@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 산술연산자 (+,-,*,/) 
+        var a = 10;
+        var b = 20;
+        var result ;
+        result = a + b;
+        document.write(result + "<br />");
+        result = a - b;
+        document.write(result + "<br />");
+        result = a % b; // 나머지 연산자.
+        document.write(result + "<br />");
+        var korNum = Number(prompt("국어점수를 입력하세요. "));
+        var matNum = Number(prompt("수학점수를 입력하세요. "));
+        var engNum = Number(prompt("영어점수를 입력하세요. "));
+        var resultAvg = (korNum + matNum + engNum) / 3;
+        document.write(resultAvg + "<br />");
+        function add(){
+            var num1 = document.getElementById("num1").value;
+            var num2 = document.getElementById("num2").value;
+            var res = Number(num1) + Number(num2);
+            document.getElementById("result1").value = res;
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id = "num1" />
+    +
+    <input type="text" id = "num2" />
+    = <input type ="text" id = "result1" />
+    <button type="button" onclick="javascript:add();">실행</button>
+</body> 
+</html>

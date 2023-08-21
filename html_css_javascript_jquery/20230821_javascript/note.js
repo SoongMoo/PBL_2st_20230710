@@ -1,0 +1,1 @@
+document.write("note.js에서 불러운 javascript 내용");

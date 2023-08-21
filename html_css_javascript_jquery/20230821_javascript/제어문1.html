@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.write("9 * 1 = 9<br />");
+        document.write("9 * 2 = 18<br />");
+        document.write("9 * 3 = 27<br />");
+        document.write("9 * 4 = 36<br />");
+        document.write("9 * 5 = 45<br />");
+        document.write("9 * 6 = 54<br />");
+        document.write("9 * 7 = 63<br />");
+        document.write("9 * 8 = 72<br />");
+        document.write("9 * 9 = 81<br />");
+        i = 1;
+        while (i <= 9){
+            document.write("9 * "+ i +" = " + (9 * i) + "<br />");
+            i ++;
+        }
+        function gugu(){
+            var dan = document.getElementById("dan").value;
+            i = 1;
+            var result = "";
+            while (i <= 9){
+                result += dan + " * "+ i +" = " + (dan * i) + "<br />";
+                i ++;
+            }
+            document.getElementById("result").innerHTML = result;
+        }
+        function odd(){
+            var dan = document.getElementById("dan").value;
+            i = 0;
+            var result = "";
+            while (i < 9){
+                i ++;
+                if(i % 2 == 0) continue;
+                result += dan + " * "+ i +" = " + (dan * i) + "<br />";
+                
+            }
+            document.getElementById("odd").innerHTML = result;
+        }
+    </script>
+</head>
+<body>
+    원하는 단을 입령하세요 :
+    <input type="number" min = 1 max="9" value="1" id="dan"/>
+    <button type="button" onclick="javascript:gugu();">실행</button>
+    <button type="button" onclick="javascript:odd();">실행</button><br />
+    <div id="result"></div>
+    <div id="odd"></div>
+</body>
+</html>

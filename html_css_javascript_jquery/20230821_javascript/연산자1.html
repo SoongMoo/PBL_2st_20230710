@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var korNum = 60;
+	    var engNum = 70;
+	    var mathNum = 80;
+        var avg = (korNum + engNum + mathNum) / 3;
+        // 평균이 70이상이고 각 과목의 점수가 60이상이면 true아니면 false
+        var result = avg >= 70 && korNum >= 60 && engNum>=60 && mathNum>=60;
+        document.write(result + "<br />"); 
+        // 비교(관계) 연산자 
+        result = korNum > engNum;
+        document.write(result + "<br />"); 
+        result = korNum < engNum;
+        document.write(result + "<br />"); 
+        result = korNum >= engNum;
+        document.write(result + "<br />"); 
+        result = korNum <= engNum;
+        document.write(result + "<br />"); 
+        result = korNum == engNum;
+        document.write(result + "<br />"); 
+        result = korNum != engNum;
+        document.write(result + "<br />"); 
+        // 대입연산
+        var num1 = 10;
+        var num2 = 20;
+        num1 += 5; // num1 = num1 + 5
+        document.write(num1 + "<br />");
+        num1 -= 5; // num1 =num1 - 5
+        document.write(num1 + "<br />");
+        num1 *= 5;
+        document.write(num1 + "<br />");
+        num1 /= 5;
+        document.write(num1 + "<br />");
+        num1 %= 5;
+        document.write(num1 + "<br />");
+    // 증가감 연산자
+        num1++; // num1 = num1 + 1
+        document.write(num1 + "<br />");
+        ++num1; // num1 = num1 + 1
+        document.write(num1 + "<br />");
+        num1 --; // num1 = num1 - 1
+        document.write(num1 + "<br />");
+        --num1;
+        document.write(num1 + "<br />");
+
+        document.write(num1++ + "<br />");
+        document.write(num1 + "<br />");
+        document.write(++num1 + "<br />");
+        document.write(num1 + "<br />");
+    // 논리 연산 (&&:and, ||:or , !:not)
+        var bool1 = true;
+        bool2 = false;
+        var result = bool1 && bool2
+        document.write(result + "<br />");
+        // 여성이면서 30이상이면 true;
+        var gender = "여성";
+        var age = 35;
+        result = gender == "여성"  && age >= 30;
+        document.write(result + "<br />");
+    
+        // 3항연산
+        // result가 true면 결과1이고 result가 false라면 결과2인 경우
+        // result  ?   결과1    :    결과2;
+        num1 = 30;
+        num2 = 60;
+        num1 > num2 ? document.write("num1이 크다"):
+                      document.write("num2이 크다");
+        
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
