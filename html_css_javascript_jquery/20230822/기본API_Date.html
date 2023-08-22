@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 기본자료형: 정수, 실수, 문자 , 부울
+        // 기본 API : Date, Array, Math, String
+        // Date객체
+        var todate = new Date();
+        // 현재 달 
+        var toMonth = todate.getMonth();
+        document.write(toMonth + 1 + "<br />");  // 0 ~ 11
+        // 현재 date : 일
+        var toDate = todate.getDate();
+        document.write(toDate + "<br />");
+        // day : 요일 
+        var toDay = todate.getDay();
+        document.write(toDay + "<br />"); // 일 ~ 토 : 0 ~ 6
+        switch(toDay){
+            case 0 : document.write("일요일 <br />");
+                    break;
+            case 1 : document.write("월요일 <br />");
+                    break;
+            case 2 : document.write("화요일 <br />");
+                    break;
+            case 3 : document.write("수요일 <br />");
+                    break;
+            case 4 : document.write("목요일 <br />");
+                    break;
+            case 5 : document.write("금요일 <br />");
+                    break;
+            case 6 : document.write("토요일 <br />");
+                    break;
+        }
+        var toHours = todate.getHours();
+        document.write(toHours + "<br />");
+        var toMinutes = todate.getMinutes();
+        document.write(toMinutes + "<br />");
+        var toSeconds = todate.getSeconds();
+        document.write(toSeconds + "<br />");
+        var toTime = todate.getTime(); // 타임스템프
+        document.write(toTime + "<br />"); 
+        //UTC 시간
+        document.write(todate + "<br />"); 
+        // 2023.8.22
+        document.write(todate.toLocaleDateString() + "<br />");
+        // 2023.8.22 오전 9:31:30
+        document.write(todate.toLocaleString() + "<br />");
+        // Tue Aug 22 2023
+        document.write(todate.toDateString() + "<br />");
+
+        /// 임의날짜 지정
+        ///                     11월
+        var day = new Date(2021, 10, 14, 12, 30, 25);
+        document.write(day.toDateString() + "<br />");
+        document.write(day.getDate() + "<br />");
+        document.write(day.getFullYear() + "<br />");
+        day.setFullYear(2023);
+        document.write(day.getFullYear() + "<br />");
+        day.setMonth(9); // 10월
+        document.write(day.getMonth() + 1 + "<br />");
+        // 2023-10-14
+        document.write(day.getFullYear()   + "-" + 
+                      (day.getMonth() + 1) + "-" +
+                       day.getDate()  +    "<br />");
+        
+        var month = [1,2,3,4,5,6,7,8,9,10,11,12];
+        //           0 1 2 3 4 5 6 7 8  9 10 11
+        document.write(month[7] + "<br />");
+        document.write(month[todate.getMonth()] + "<br />");
+        var week = ['일','월','화','수','목','금','토'];
+        //           0    1    2    3    4    5    6
+        
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
