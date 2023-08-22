@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // String class
+        var theText= new String("Web Js Hi Ciy");
+        ///                      0123456789012  : index는 고정
+        ///                                1    : 문자가 가지는 고유의 번호
+        document.write(theText + "<br />");
+        var theText= "Web Js Hi Ciy";
+        document.write(theText + "<br />");
+        // 굵은 글씨
+        document.write(theText.bold() + "<br />");
+        // 글자의 갯수
+        document.write(theText.length + "<br />");
+        // 모두 소문자로
+        document.write(theText.toLowerCase() + "<br />");
+        //모두 대문자로 
+        document.write(theText.toUpperCase() + "<br />");
+        // 원하는 문자의 위치확인
+        document.write(theText.indexOf("i") + "<br />");
+        // 원하는 문자의 위치를 뒤에서 부터
+        document.write(theText.lastIndexOf("i") + "<br />");
+        // index가 5에 해당하는 문자
+        document.write(theText.charAt(5) + "<br />");
+        // index 4번부터 2글자
+        document.write(theText.substring(4, 4+2) + "<br />");
+        document.write(theText.substr(4, 2) + "<br />");
+        // Ciy를 City로 변경
+        document.write(theText.replace("Ciy", "City") + "<br />");
+        var theText1 = " good";
+        // theText과 theText1을 붙여서 출력
+        document.write(theText + theText1 + "<br />");
+        document.write(theText.concat(theText1) + "<br />");
+        // 문자열 자르기
+        document.write(theText.split(" ") + "<br />");
+        var arrayStr = theText.split(" "); // ["Web","Js","Hi","Ciy"] : 배열
+                                          ///    0     1    2    3  
+        document.write(arrayStr[0] + "<br />");
+        document.write(theText.split(" ")[0] + "<br />");
+        // :를 구분문자로 문자열 자르기
+        var theText2= "Web:Js:Hi:Ciy";
+        document.write(theText.split(":") + "<br />");
+        // 마지막 문자 추출
+        document.write(theText.charAt(theText.length -1) + "<br />");
+        var theText3="images/i.mg.10.jpg";
+        //파일명을 출력
+        document.write(theText3.split("/")[1] + "<br />");
+        //  확장자를 출력
+        var fileName = theText3.split("/")[1];
+        document.write(fileName + "<br />");
+        var lastIndex = fileName.lastIndexOf(".");
+        document.write(fileName.substring(lastIndex+1) + "<br />");
+        if(fileName.substring(lastIndex+1) == "jpg"){
+            document.write("저장할 수 없는 파일입니다.");
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

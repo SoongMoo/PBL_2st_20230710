@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // Math class
+        var maxNum = Math.max(30,48,10,3);
+        document.write(maxNum +"<br />");
+        var minNum = Math.min(30,48,10,3);
+        document.write(minNum +"<br />");
+        var roundNum = Math.round(10.4); // 반올림
+        document.write(roundNum +"<br />");
+        var roundNum = Math.round(10.5); // 반올림
+        document.write(roundNum +"<br />");
+        // 소수점이하의 수가 0이 아니면 무조건 올림
+        var ceilNum=Math.ceil(10.1);
+	    document.write(ceilNum +"<br />");  
+        // 소수점이 있는 경우 무조건 버림
+        var truncNum=Math.floor(10.5);
+        document.write(truncNum +"<br />");
+        // 절대 값 : |-10| : 10
+        var absNum= Math.abs(-11);
+	    document.write(absNum +"<br />");
+        // 난수값 : 랜덤값 : 0 ~ 1
+        var randNum = Math.random() ;
+        document.write(randNum +"<br />");	
+        /* 1 부터 45사이의 값을 무작위로 가지고 오시오. */
+        var lottoNum =  Math.floor(Math.random() * 45) + 1
+        document.write(lottoNum +"<br />");	
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
