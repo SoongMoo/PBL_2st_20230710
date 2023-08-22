@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function popup(){
+            window.open("popup.html","popName",
+            "width=300px,height=200px, left=500px, top=100px");
+        }
+        function popup1(){
+            window.open("popup1.html","popName",
+            "width=300px,height=200px, left=500px, top=100px");
+        }
+    </script>
+</head>
+<body>
+
+    <button type="button" onclick="popup();">popup창</button>
+    <a href="javascript:popup1();" >popup1창</a><br />
+    <input type="text" id="userId" value="1000"/>
+</body>
+</html>

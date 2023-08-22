@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // Array class
+        let arr = new Array(); // 크기가 없는 배열
+        arr[0] = "값1";
+        arr[1] = "값2";
+        arr[2] = "값3";
+        arr[3] = "값4";
+        arr[4] = "값5";
+        document.write(arr[2] + "<br />");
+        /* 크기가 없는 배열은 var로 선언할 수 없다. 
+        var name = new Array();
+        name[0] = "이숭무";
+        document.write(name[0] + "<br />");
+        */
+       // 초기값을 가진 배열
+        var name2 = ["이숭무", "이상범", "이장범", "김찬중"];
+        document.write(name2[3] + "<br />");
+        name2[4] = "강병진"; // 배열 확장이 가능하다.
+        document.write(name2[4] + "<br />");
+
+        // 크기를 가진 배열 : 초기값을 갖지 않음
+        var name3 = new Array(4);
+        document.write(name3[0] + "<br />");
+        name3[0] = "이숭무";
+        name3[1] = "이상범";
+        name3[2] = "이장범";
+        name3[3] = "강병진";
+        document.write(name3[0] + "<br />");
+        name3[4] = "김찬중";
+        document.write(name3[4] + "<br />");
+
+        var money=[100,100,200,50];
+        //          0   1   2   3
+        /* 배열 안에 있는 값의 합을 구하시오. */
+        var total=0;
+        for(var i = 0; i < money.length ; i++){
+            total += money[i];
+        }
+        document.write(total + "<br />");
+        // forEach
+        var total=0;
+        money.forEach((currElement, index, array)=>{
+            document.write(currElement + "<br />");
+            document.write(index + "<br />");
+            document.write(array + "<br />");
+            total += currElement;
+        });
+        document.write(total + "<br />");
+        
+        var theFood=["짜장면","냉면","갈비탕","돈까스","삼겹살"];
+        theFood.reverse();
+        document.write( theFood + "<br />");
+        theFood.sort(); // 갈비탕,냉면,돈까스,삼겹살,짜장면
+        ///                  0     1     2      3     4
+        document.write( theFood + "<br />");
+        var Mountain2=["설악산","지리산","한라산","속리산"];
+        var result = theFood.concat(Mountain2);
+        document.write( result + "<br />");
+        /// 1번째부터 3개 
+        result = theFood.slice(1, 1 + 3); // 1부터 4전까지
+        document.write( result + "<br />"); // 돈까스,삼겹살
+        // 3에서부터 1개
+        result = theFood.slice(3, 3 + 1); 
+        document.write( result + "<br />"); 
+         // 3에서부터 2개
+        result = theFood.slice(3, 3 + 2); 
+        document.write( result + "<br />");
+
+        // 배열에 있는 요소를 문자열로 결합
+        result = theFood.join("-"); // "-".join(theFood);
+        document.write( result + "<br />");
+        
+
+        var str = "i am a boy";
+        //         0123456789
+        result = str.substring(7, 7 + 3);
+        document.write(result + "<br />");
+
+        var theSubway=["2호선","9호선","7호선","4호선","3호선"];
+        var newLine1="1호선";
+	    var newLine2="수인선";
+
+        var subwayNum = theSubway.pop(); // 배열의 마지막 요소 삭제
+        document.write(theSubway + "<br />");
+        document.write(subwayNum + "<br />");
+
+        subwayNum = theSubway.shift(); // 배열의 앞에 있는 요소를 삭제
+        document.write(theSubway + "<br />"); 
+        document.write(subwayNum + "<br />");
+
+        theSubway.unshift(newLine1);
+        document.write(theSubway + "<br />"); 
+        
+        theSubway.push(newLine2);
+        document.write(theSubway + "<br />"); 
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

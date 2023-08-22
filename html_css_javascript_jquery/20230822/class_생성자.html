@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function test(){
+            document.write("dks<br />");
+        }
+        function comFactory(cpuInfo,ramInfo, hddInfo){ // 생성자
+            this.cpu=cpuInfo;  // 멤버필드
+            this.ram=ramInfo;  // 멤버필드
+            this.hdd=hddInfo;  // 멤버필드
+            // 메서드
+            this.totInfo=function(){
+                document.write("cpu는 " + this.cpu + "<br />");
+            }
+            this.getRam=function(num){
+                document.write("cpu는 " + (Number(this.ram) 
+                                        + Number(num)) + "<br />");
+            }
+            this.setHdd=function(num){
+                this.hdd = num;
+            }
+            this.getHdd=function(){
+                document.write("HDD는 " + this.hdd + "<br />");
+            }
+        }
+        var com = new comFactory("2.8", "8", "2T");
+        document.write(com.hdd);
+        com.getRam(10);
+        com.totInfo();
+        com.setHdd("100T");
+        com.getHdd();
+        var com1 = new comFactory("3.8", "10", "3T");
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

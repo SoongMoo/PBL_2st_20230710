@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function f(x, y){
+            z  = 2*x +3 *y;
+            document.write(z +"<br />");
+        }
+        f(2, 3);
+        function greet(){
+            alert("안녕하세요.");
+        }
+        var num = 1; 
+        function nextGallery(){
+            num++;
+            if(num > 7) num = 1;
+            document.getElementById("gallery").src="../images/img"+num+".jpg";
+        }
+        function prevGallery(){
+            num--;
+            if (num < 1) num = 7;
+            document.getElementById("gallery").src="../images/img"+num+".jpg";
+        }
+    </script>
+</head>
+<body>
+    <button type="button" onclick="javascript:greet();">greet</button>
+    <a href="javascript:prevGallery();"><img src="../images/left_btn.png" /></a>
+    <img src="../images/img1.jpg" id="gallery" />
+    <a href="javascript:nextGallery();"><img src="../images/right_btn.png" /></a>
+</body>
+</html>

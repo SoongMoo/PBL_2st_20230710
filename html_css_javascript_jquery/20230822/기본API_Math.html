@@ -28,7 +28,10 @@
         document.write(randNum +"<br />");	
         /* 1 부터 45사이의 값을 무작위로 가지고 오시오. */
         var lottoNum =  Math.floor(Math.random() * 45) + 1
-        document.write(lottoNum +"<br />");	
+        document.write(lottoNum +"<br />");
+        var  imgNum = Math.floor(Math.random() * 7) + 1 ;  // 1 ~ 7
+
+        document.write("<img src='../images/img" + imgNum +".jpg'  alt='그림'/>");
     </script>
 </head>
 <body>
