@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        DOM : Document Object Model 
+        document.getElementById("아이디명") # 복수를 허용하지 않는다.
+        document.getElementsByTagName("태그명") # 복수를 허용한다.
+        document.getElementsByClassName("클래스명") # 복수를 허용한다.
+        document.querySelector("선택자")
+    -->
+    <input type="text" id="id"  />
+    <input type="text" id="id1"  />
+    <h1>H1 Tag1</h1>
+    <h1>H1 Tag3</h1>
+    <h1>H1 Tag5</h1>
+</body>
+<script>
+    document.getElementById("id").value=10;
+    document.getElementById("id1").value=20;
+    // document.getElementsByTagName("h1")[0].innerText="이숭무";
+    var elemTag =  document.getElementsByTagName("h1");
+    elemTag[1].innerText="이상범";
+    console.log(elemTag);
+    console.log("이숭무");
+</script>
+</html>
