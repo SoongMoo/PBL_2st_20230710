@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function drop(){
+            var con = confirm("정말 탈퇴하시겠습니까?");
+            if(con){
+                alert("탈퇴되었습니다.")
+                location.href="http://www.naver.com";
+            }
+        }
+        function prom(){
+            var num1 = prompt("숫자를 입력하세요", 0);
+            var num2 = prompt("숫자를 입력하세요", 0);
+            alert(parseInt(num1) + parseInt(num2)) 
+        }
+        function btn(){
+            var cnt= 10;
+            interval = setInterval(function(){
+                cnt--;
+                document.getElementById("count").innerText=cnt;
+            }, 1000); // 1000 == 1초
+            setTimeout(function(){
+                clearInterval(interval);
+                alert("페이지가 이동합니다.");
+                location.href="http://www.naver.com";
+            },10000);
+        }
+    </script>
+</head>
+<body>
+    <!-- BOM 
+	alert, window.open, location, prompt, confirm, navigator.userAgen,
+	setInterval(),clearInterval(),setTimeout()
+  -->
+  <h3><span id="count">10</span>초 후에 이동을 합니다.</h3>
+  <button type="button" onclick="btn()">버튼</button>
+
+  <button type="button" onclick="drop();">회원탈퇴</button>
+  <button type="button" onclick="prom();">prompt</button>
+
+</body>
+</html>

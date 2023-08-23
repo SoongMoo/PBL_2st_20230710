@@ -18,8 +18,17 @@
     <h1>H1 Tag1</h1>
     <h1>H1 Tag3</h1>
     <h1>H1 Tag5</h1>
+
+    <h2 class="head2">head2 class</h2>
+    <h2 class="head2">head2 class</h2>
+    <h2 class="head2">head2 class</h2>
+    <h2 class="head2">head2 class</h2>
+
+    <h3 id="head3">head3 id</h3>
+    <h3 id="head3">head4 id</h3>
 </body>
 <script>
+
     document.getElementById("id").value=10;
     document.getElementById("id1").value=20;
     // document.getElementsByTagName("h1")[0].innerText="이숭무";
@@ -27,5 +36,16 @@
     elemTag[1].innerText="이상범";
     console.log(elemTag);
     console.log("이숭무");
+    document.getElementsByClassName("head2")[0].innerHTML="이숭무";
+
+    var elemCalss=document.getElementsByClassName("head2");
+    console.log(elemCalss);
+    elemCalss[1].innerText="이상범";
+
+    /*
+    var elemId = document.getElementById("head3");
+    console.log(elemId)
+    */
+    document.getElementById("head3").innerHTML="이장범";
 </script>
 </html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        function btn(){
+            //document.getElementById("firstTitle").innerHTML="이숭무";
+            document.querySelector("#secondTitle").innerHTML="이숭무";
+        }
+        $(function(){
+            $("#btn1").click(function(){
+                $("#secondTitle").html("이숭무");
+                $("#secondTitle").css("color","red");
+            });
+
+            $("#btn2").click(function(){
+                 $("#nextTitle").css("font-size","12px");
+            });
+            // btn3을 클릭하면
+            // obj3에 있는 theObj1의 글자색을 보라색으로 변경
+            $("#btn3").click(function(){
+                $(".obj3 > .theObj1").css("color","purple")
+            });
+            // btn4을 클릭하면
+            // obj3에 있는 theObj2의 글자색을 보라색으로 변경
+            $("#btn4").click(function(){
+                $(".obj3").children(".theObj2").css("color","purple");
+            });
+            // btn5을 클릭하면
+            // obj3에 있는 li의 글자를 굵은 글씨로 변경 
+            $("#btn5").click(function(){
+                $(".obj3 > li").css("font-weight","bold");
+            });
+            /// btn6을 클릭하면
+            /// .obj5의 부모인 ul에 테두리를 2px solid #f00로 변경
+            $("#btn6").click(function(){
+                $(".obj5").parent().css("border","2px solid #f00");
+            });
+            /// btn7을 클릭하면
+            //.obj4에 앞에 있는 요소의 글씨를 오렌지로
+            $("#btn7").click(function(){
+                $(".obj4").prev().css("color","orange");
+            });
+            /// btn8을 클릭하면
+            //.obj4에 다음에 있는 요소의 글씨를 바다색으로
+            $("#btn8").click(function(){
+                $(".obj4").next().css("color","aqua");
+            });
+            // .obj6의 형제요소를 가운데 정렬
+            $("#btn9").click(function(){
+                $(".obj6").siblings("li").css("text-align","center");
+            });
+            $("#btn10").click(function(){
+                $(":text").css("background","#c00");
+            });
+            $("#btn11").click(function(){
+                $("a[target='_blank']").attr("href","http://www.naver.com");
+            });
+            $("#btn12").click(function(){
+                if(!$(':checkbox[name="chk"]').is(":checked")){
+                    alert("하나 이상 체크가 되어 있어야 합니다.");
+                }
+            });
+            
+            $("#chk1").change(function(){
+                if($(":checkbox[id='chk1']").is(":checked")){
+                    $(':checkbox[name="chk"]').prop("checked",true);
+                }else{
+                    $(':checkbox[name="chk"]').prop("checked",false);
+                }
+            });
+       });
+    </script>
+</head>
+<body>
+    <span id="firstTitle">선택자</span>
+    <button type="button" onclick="btn();">버튼</button><br />
+    <span id="secondTitle">선택자</span>
+    <button type="button" id="btn1">버튼1</button><br />
+    <span id="nextTitle">선택자</span>
+    <button type="button" id="btn2">버튼2</button> <br />
+    <ul class="obj3">
+		<li class="theObj1">리스트1</li>
+		<li class="theObj2">리스트2</li>
+		<li >리스트3</li>
+    </ul>
+    <button type="button" id="btn3">버튼3</button> 
+    <button type="button" id="btn4">버튼4</button>
+    <button type="button" id="btn5">버튼5</button><br />
+    <ul>
+		<li>리스트7</li>
+		<li class="obj5">리스트8</li>
+		<li>리스트9</li>
+    </ul>
+    <button type="button" id="btn6">버튼6</button><br />
+    <ul>
+		<li>리스트4</li>
+		<li class="obj4">리스트5</li>
+		<li>리스트6</li>
+    </ul>
+    <button type="button" id="btn7">버튼7</button>
+    <button type="button" id="btn8">버튼8</button><br />
+    <ul>
+		<li>리스트10</li>
+		<li class="obj6">리스트11</li>
+		<li>리스트12</li>
+    </ul>
+    <button type="button" id="btn9">버튼9</button><br />
+
+    <input type="text" id = "userName" name="userName" />
+    <button type="button" id="btn10">버튼10</button><br />
+
+    <a href="#" target="_blank">링크</a>
+    <button type="button" id="btn11">버튼11</button><br />
+
+    <input type="checkbox" id="chk1"  /><br />
+    <input type="checkbox" id="chk" name="chk" value="농구"/>농구
+    <input type="checkbox" id="chk" name="chk" value="야구"/>야구<br />
+    <button type="button" id="btn12">버튼12</button><br />
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--<script src="../js/jquery-1.8.1.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script><!--cdn-->
+    <script>
+        // 자바스크립트 타입
+        function btn(){
+            if(document.getElementById("txt").value==""){
+                alert("이름을 입력하세요.");
+                return false;
+            }
+        }
+        // jquery 타입
+        /*
+        $(document).ready(function(){
+            $("#btn").click(function(){
+                if($("#txt1").val()==""){
+                    alert("이름을 입력하세요.");
+                    return false;
+                }
+            });
+        });
+        */
+       $(function(){
+            $("#btn").click(function(){
+                if($("#txt1").val()==""){
+                    alert("이름을 입력하세요.");
+                    return false;
+                }
+            });
+       });
+       /*
+        $(document).ready(function(){
+            //코딩
+        });
+        $(function(){
+            //코딩
+        });
+       */
+    </script>
+</head>
+<body>
+    <input type="text" id="txt" />
+    <input type="text" id="txt1" />
+    <button type="button" onclick="btn();">버튼1</button>
+    <button type="button" id="btn" >버튼2</button>
+</body>
+</html>
