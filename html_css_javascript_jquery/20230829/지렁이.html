@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mouse Movement Worm</title>
+  <style>
+    #worm {
+      width: 20px;
+      height: 20px;
+      background-color: green;
+      position: absolute;
+      border-radius: 50%;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div id="worm"></div>
+
+  <script>
+    $(document).mousemove(function(event) {
+      var mouseX = event.pageX;
+      var mouseY = event.pageY;
+
+      $('#worm').css({
+        left: mouseX,
+        top: mouseY
+      });
+    });
+  </script>
+</body>
+</html>

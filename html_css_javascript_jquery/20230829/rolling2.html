@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript"
+    src="https://code.jquery.com/jquery-1.8.1.min.js"></script>
+    <script>
+        $(function(){
+            $("#btn").click(function(){
+                $("#right_content li:last").after($("#right_content li:first"));
+            })
+            interval = setInterval(up_content, 1000);
+            $("#right_content").mouseover(function(){
+                clearInterval(interval);
+            });
+            $("#right_content").mouseleave(function(){
+                interval = setInterval(up_content, 1000);
+            });
+        });
+        function up_content(){
+            $("#right_content li:last").after($("#right_content li:first"));
+        }
+    </script>
+    <style>
+        #right_content{
+            width:400px;
+            height:300px;
+            overflow:hidden;
+        }
+        ul{ list-style-type : none;}
+        li{display:inline;}
+    </style>
+</head>
+<body>
+  <div id="wrap" >
+	<ul id="right_content">
+		<li><img src="../images/img1.jpg"/></li>
+		<li><img src="../images/img2.jpg"/></li>
+		<li><img src="../images/img3.jpg"/></li>
+	</ul>
+  </div>    
+</body>
+</html>

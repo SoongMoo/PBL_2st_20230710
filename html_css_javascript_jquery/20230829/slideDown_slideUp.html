@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript"
+    src="https://code.jquery.com/jquery-1.8.1.min.js"></script>
+    <script>
+        $(function(){
+            $(".list1").hide("fast");
+            $("#btn4").click(function(){
+                $(this).parent().next().children(1).next().slideDown(1000);
+            });
+            $("#btn5").click(function(){
+                $(".list1").slideUp(1000);
+            });
+            $("#btn6").click(function(){
+                $(".list1").slideToggle(1000);
+            });
+        });
+        
+    </script>
+</head>
+<body>
+    <p>
+        <button id="btn4">slideDown</button>
+        <button id="btn5">slideUp</button>
+        <button id="btn6">slideToggle</button>
+    </p>
+    <div >
+		<h3>관련 사이트</h3>
+		<ul class="list1">
+		  <li><a href="#">list1</a></li>
+		  <li><a href="#">list2</a></li>
+		  <li><a href="#">list3</a></li>
+		  <li><a href="#">list4</a></li>
+		</ul>
+    </div>
+</body>
+</html>

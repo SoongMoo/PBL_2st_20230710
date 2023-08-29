@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript"
+    src="https://code.jquery.com/jquery-1.8.1.min.js"></script>
+    <script>
+        $(function(){
+            $("#btn").click(function(){
+                $("#right_content li:last").after($("#right_content li:first"));
+            })
+            interval = setInterval(up_content, 1000);
+            $("#right_content").mouseover(function(){
+                clearInterval(interval);
+            });
+        });
+
+
+        function up_content(){
+            $("#right_content li:last").after($("#right_content li:first"));
+        }
+    </script>
+    <style>
+        #right_content{
+            width:100px;
+            height:22px;
+            border:1px solid black;
+            overflow:hidden;
+        }
+    </style>
+</head>
+<body>
+  <button id="btn">롤링</button>
+  <div id="wrap" >
+	<ul id="right_content">
+		<li>이숭무</li>
+		<li>이상범</li>
+		<li>이장범</li>
+		<li>이길무</li>
+		<li>이충무</li>
+		<li>김찬중</li>
+	</ul>
+  </div>    
+</body>
+</html>

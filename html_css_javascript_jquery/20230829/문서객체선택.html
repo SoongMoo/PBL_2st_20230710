@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- document.querySelector("셀렉터").css()
+         $("셀렉터").css()
+    -->
+    <script type="text/javascript"
+            src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        $(function(){
+            $("p").css("color","red");
+        });
+        $(function(){
+            //홀수index를 가진 li만 배경색이 노란색으로
+            $("#btn1").click(function(){
+                $("#list1 li:odd").css("background","yellow");
+            });
+            //짝수index를 가진 li만 배경색이 회색으로
+            $("#btn2").click(function(){
+                $("#list1 li:even").css("background","gray");
+            });
+            //id="list1"인 요소에 <li> 요소중 첫번째 <li>요소만 선택후 폰트색상을 빨강색 적용
+            $("#btn3").click(function(){
+                $("#list1 li:first").css("color","red")
+            });
+            //id="list1"인 요소에 <li> 요소중 마지막 <li>요소만 선택후 폰트색상을 녹색 적용
+            $("#btn4").click(function(){
+                $("#list1 li:last").css("color","green");
+            });
+            //id="list1"인 요소에 <li> 요소중 두번째 <li>요소만 선택후 폰트스타일 기울임 적용
+            $("#btn5").click(function(){
+                $("#list1 li").eq(1).css("font-style","italic")
+            });
+            //id="list1"인 요소에 <li> 요소중 세번째 이전요소만 선택후 
+                // 테두리를 선 2px 하늘색 적용, 이전 모두
+            $("#btn6").click(function(){
+                $("#list1 li:lt(2)").css("border","2px solid aqua")
+            });
+            //id="list1"인 요소에 <li> 요소중 세번째 이후 요소만 선택후 
+                // 테두리를 선 2px 보라색 적용
+            $("#btn7").click(function(){
+                $("#list1 li:gt(2)").css("border","2px solid purple");
+            });
+            //id="list1"인 요소에 <li> 요소중 2의 배수번째 요소만 선택 후 배경색을 오렌지색으로
+            // index와 무관
+            $("#btn8").click(function(){
+                $("#list1 li:nth-child(2n)").css("background","orange");
+            });
+            // id="list1"인 요소에 <li> 요소중  
+            // 내용이 "리스트9"이 포함된 <li>요소만 선택, 글자색을 빨간색 :    
+            $("#btn9").click(function(){
+                $("#list1 li:contains('리스트9')").css("color","red");
+            });
+            // id="list1"인 요소에 <li> 요소중  
+            // 태그 <span>이 포함된 <li>요소만 선택, 글자색을 녹색으로
+            $("#btn10").click(function(){
+                $("#list1 li:has('span')").css("color","green");
+            });
+            // 또는
+            $("#btn11").click(function(){
+                $("#list1 li").find("span").css("color","green");
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- 자바스크립트 , 기본객체-->
+    <p>안녕해세요</p>
+    <ul id="list1">
+        <li>리스트1</li><!-- 0 -->
+        <li>리스트2</li><!-- 1 -->
+        <li>리스트3</li><!-- 2 -->
+        <li>리스트4</li>
+        <li>리스트5</li>
+        <li><span>리스트6</span></li>
+        <li>리스트7</li>
+        <li>리스트9</li>
+        <li><span>리스트10</span></li>
+    </ul>
+    <button type="button" id="btn1">버튼1</button> <br />
+    <button type="button" id="btn2">버튼2</button> <br />
+    <button type="button" id="btn3">버튼3</button> <br />
+    <button type="button" id="btn4">버튼4</button> <br />
+    <button type="button" id="btn5">버튼5</button> <br />
+    <button type="button" id="btn6">버튼6</button> <br />
+    <button type="button" id="btn7">버튼7</button> <br />
+    <button type="button" id="btn8">버튼8</button> <br />
+    <button type="button" id="btn9">버튼9</button> <br />
+    <button type="button" id="btn10">버튼10</button> <br />
+    <button type="button" id="btn11">버튼11</button> <br />
+</body>
+</html>

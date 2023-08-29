@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript"
+    src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        $(function(){
+            $("#btn1").click(function(){
+                $("#textZone").css("color","red");
+            });
+            $("#btn2").mouseover(function(){
+                $("#textZone").css("color","blue");
+            });
+            $("#btn3").mouseleave(function(){
+                $("#textZone").css("color","black");
+            });
+            $("#btn3").mouseenter(function(){
+                $("#textZone").css("color","aqua");
+            });
+            $("#btn2").mouseout(function(){
+                $("#textZone").css("color","black");
+            });
+            $("#btn1").focus(function(){
+                $("#textZone").css("border","2px solid red");
+            });
+            $("#btn1").blur(function(){
+                $("#textZone").css("border","");
+            });
+        });
+    </script>
+</head>
+<body>
+    <p><button id="btn3">mouseleave</button></p>
+    <p><button id="btn2">mouseover</button></p>
+    <p><button id="btn1">click</button></p>
+    <p id="textZone">
+        어느덧 검은 호랑이의 해인 2022 임인년을 맞이하기까지 약 2주 가량 남았습니다! 과학기술정보통신부가 발표한 2022년도 월력요항에 따르면, 2022년에는 52일의 일요일과 국경
+    </p>
+</body>
+</html>

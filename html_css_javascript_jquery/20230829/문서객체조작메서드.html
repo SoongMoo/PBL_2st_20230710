@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript"
+            src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        $("document").ready(function(){
+        });
+        $(function(){
+            //1. 요소로 바꾸는 경우에는 html로
+            // .theTitle에 있는 내용을 "<a href='#'>요소 내용 변경</a>"
+            // 변경
+            $("#btn1").click(function(){
+                $(".theTitle").html("<a href='#'>요소 내용 변경</a>");
+                //document.getElementsByClassName("theTitle")[0].innerHTML("<a href='#'>요소 내용 변경</a>");
+            });
+            //2. list_2 ==> 리스트2로 문자변경
+            $("#btn2").click(function(){
+                $(".obj1").text("리스트2");
+            });
+            //3. id="list3"인 요소에 마지막 위치에 새요소를 추가합니다.
+            $("#btn3").click(function(){
+                $("#list3").append("<li>리스트_6</li>");
+            });
+            //4. id="list3"인 요소에 첫번째 위치에 새요소를 추가합니다.
+            $("#btn4").click(function(){
+                $("#list3").prepend("<li>리스트1</li>")    
+            });
+            //5. id="list3"인 요소에 마지막 위치에 첫번째 요소를 추가합니다.
+            $("#btn5").click(function(){
+                $("#list3 li:last").after($("#list3 li:first"));
+            });
+            //6. id="list3"인 요소에 첫번째 위치에 마지막 요소를 추가합니다.
+            $("#btn6").click(function(){
+                $("#list3 li:first").before($("#list3 li:last"));
+            });
+            //7. id="list3"인 요소에 하위 <li>요소중 첫번째 요소 삭제
+            $("#btn7").click(function(){
+                $("#list3 li").eq(0).remove();
+            });
+            //8. id="list3"인 2번째 li요소 다음에 새요소를 중간 추가합니다.
+            $("#btn8").click(function(){
+                $("<li>다음에 요소추가</li>").insertAfter($("#list3 li").eq(1));
+            });
+            //9. id="list3"인 3번째 li요소 이전에 새요소를 중간 추가합니다.
+            $("#btn9").click(function(){
+                $("<li>이전에 요소추가</li>").insertBefore($("#list3 li").eq(2));
+            });
+            //10 두번째요소에 class 속성 추가
+            // li 두번째요소에 class속성 추가
+            $("#btn10").click(function(){
+                $("#list3 li").eq(1).attr("class","obj2");
+            });
+            // 11. li 세번째요소에 class속성 추가
+            $("#btn11").click(function(){
+                $("#list3 li").eq(2).addClass("obj3");
+            });
+            // 12.첫번째 요소의 class명을 obj5 변경하자., class를 obj4 추가
+            $("#btn12").click(function(){
+                $("#list3 li").eq(0).attr("class","obj5");
+                $("#list3 li").eq(0).addClass("obj4");
+                $(".obj5").css("color","red");
+                $(".obj4").css("border","2px solid blue");
+            });
+        }); 
+    </script>
+</head>
+<body>
+    <button type="button" id="btn12">버튼12</button><br />
+    <button type="button" id="btn11">버튼11</button><br />
+    <button type="button" id="btn10">버튼10</button><br />
+    <button type="button" id="btn9">버튼9</button><br />
+    <button type="button" id="btn8">버튼8</button><br />
+    <button type="button" id="btn7">버튼7</button><br />
+    <button type="button" id="btn6">버튼6</button><br />
+    <button type="button" id="btn5">버튼5</button><br />
+    <button type="button" id="btn4">버튼4</button><br />
+    <button type="button" id="btn3">버튼3</button><br />
+    <button type="button" id="btn2">버튼2</button><br />
+    <button type="button" id="btn1">버튼1</button><br />
+    <h2 class="theTitle">html 조작</h2>
+    <ul id="list3">
+      <li class="obj1">list_2</li>
+      <li>list_3</li>
+
+      <li>list_4</li>
+      <li>list_5</li>
+    </ul>  
+    <h2 class="theTitle1">obj5</h2>
+</body>
+</html>

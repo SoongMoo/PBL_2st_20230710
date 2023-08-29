@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript"
+    src="https://code.jquery.com/jquery-1.8.1.min.js"></script>
+    <script>
+        $(function(){
+            $("#btn").click(function(){
+                $("#appd").append('<div id = "appd"><input type="text" size="6"/><input type="text" size="15" name="ddd"/><button type="button" id="btn1" onclick="del(this);" >삭제</button></div>');
+            });
+        });
+
+        function del(obj){ // 자바스크립트 함수 정의
+            $(obj).parent().remove(); // jquery실행
+        }
+    </script>
+</head>
+
+<body>
+    <form name="frm" action="#" method="post">
+        이름  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 전화번호 <br />
+        친구를 추가 하시려면 <span id="btn" style="color:red">[추가]</span>를 눌러주세요<br />
+    </form>
+    <div id = "appd">
+        <input type="text" size="6"/>
+        <input type="text" size="15" name="ddd"/> 삭제
+    </div>
+</body>
+</html>
