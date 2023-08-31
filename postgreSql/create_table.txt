@@ -1,3 +1,6 @@
+데이터베이스 : create database 데이터베이스명
+데이터베이스 삭제 : drop database 데이터베이스명
+
 데이터베이스 위치 : show data_directory;
 데이터베이스파일 위치 : SELECT oid, datname FROM pg_database;
 select * from information_schema.tables
