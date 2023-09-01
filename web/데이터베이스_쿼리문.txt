@@ -1,0 +1,272 @@
+/* 직원 */
+create table employees(
+	emp_num 	varchar(30) ,
+	EMP_ID  	VARCHAR(10) NOT NULL ,
+	EMP_PW  	VARCHAR(200) NOT NULL ,
+	EMP_NAME  	VARCHAR(50)  NOT NULL ,
+	EMP_ADDR  	VARCHAR(200) NOT NULL ,
+	EMP_ADDR_detail	VARCHAR(30) ,
+	EMP_post	VARCHAR(6) NOT NULL ,
+	EMP_PHONE   VARCHAR(13)  NOT NULL ,
+	emp_jumin 	varchar(14) NOT NULL ,
+	EMP_EMAIL   VARCHAR(200) NOT null,
+	emp_enter_date Date NOT null
+);
+/* 회원 */
+CREATE TABLE members (
+	member_Num VARCHAR(30),
+	member_Id VARCHAR(15) NOT NULL,
+	member_Pw VARCHAR(200) NOT NULL,
+	member_Name VARCHAR(15) NOT NULL,
+	member_addr VARCHAR(200) NOT NULL,
+	member_addr_detail VARCHAR(30) ,
+	member_post VARCHAR(6) NOT NULL,
+	member_phone1 VARCHAR(13) NOT NULL,
+	member_phone2 VARCHAR(13),
+	member_regist DATE NOT NULL, 
+	member_birth DATE NOT NULL, 
+	gender CHAR(1)  NOT NULL,
+	member_email VARCHAR(100) NOT NULL,
+	member_email_conf CHAR(1)
+);
+/* 퇴사자 */
+create table retired(
+	emp_num varchar(30),
+	retired_date date not null,
+	job_title varchar(30) ,
+	reason varchar(200) not null
+);
+/* 상품 */
+CREATE TABLE goods (
+	goods_num VARCHAR(10),
+	goods_name VARCHAR(100) not null ,
+	goods_price integer not null,
+	goods_content VARCHAR(2000) not null,
+	goods_main_store VARCHAR(500)not null,
+	goods_main_store_img VARCHAR(500)not null,
+	goods_images VARCHAR(500) ,
+	goods_images_img VARCHAR(500) ,
+	delivery_cost integer default 0,
+	visit_count integer default 0,
+	emp_num varchar(30) ,
+	goods_regist date not null,
+	update_emp_num varchar(30),
+	goods_update_date date
+);
+drop TABLE goods;
+/* 상품입고 */
+CREATE TABLE goodsIpgo (
+	ipgo_num varchar(30),
+	goods_num VARCHAR(10) not null,
+	ipgo_qty integer not null,
+	made_date date not null,
+	ipgo_price integer not null,
+	ipgo_date date not null,
+	emp_num varchar(30)
+);
+/* 상품 문의 */
+CREATE TABLE goods_inquire (
+	inquire_num serial,
+	goods_num VARCHAR(10) ,
+	member_Num varchar(30),
+	inquire_subject VARCHAR(100) not null,
+	inquire_content VARCHAR(2000) not null,
+	inquire_kind VARCHAR(20) not null,
+	inquire_date date not null,
+	inquire_answer VARCHAR(2000) ,
+	inquire_answer_date date,
+	emp_num varchar(30) 
+);
+/* 관심상품 */
+drop TABLE wish;
+CREATE TABLE wish (
+	goods_num VARCHAR(10) ,
+	member_Num VARCHAR(30),
+	wish_date DATE not null
+);
+/* 장바구니 */
+CREATE TABLE cart (
+	goods_num VARCHAR(10) ,
+	member_Num VARCHAR(30),
+	cart_date date not null,
+	cart_qty integer not null
+);
+
+/* 구매 */
+CREATE TABLE purchase (
+	purchase_num VARCHAR(30),
+	purchase_date DATE not null,
+	purchase_price integer not null,
+	delivery_addr varchar(200),
+	delivery_addr_detail varchar(30),
+	delivery_post varchar(6),
+	delivery_phone VARCHAR(13),
+	message VARCHAR(200),
+	purchase_status VARCHAR(20),
+	member_Num VARCHAR(30)
+);
+/* 구매리스트 */
+CREATE TABLE purchase_list (
+	purchase_num VARCHAR(30),
+	goods_num varchar(10),
+	purchase_qty integer not null,
+	total_price integer not null
+);
+/* 배송 */
+drop TABLE delivery;
+CREATE TABLE delivery (
+	purchase_num VARCHAR(30),
+	delivery_num VARCHAR(20),
+	delivery_date date
+);
+/* 결제 */
+CREATE TABLE payment (
+	purchase_num VARCHAR(30),
+	payment_kind VARCHAR(50), /* 결제수단 */
+	payment_price integer, /* 결제금액 */
+	payment_date DATE, /* 결제일 */
+	confirm_number VARCHAR(20), /* 승인번호 */
+	card_number VARCHAR(15) /* 카드번호 */
+);
+
+/* 후기 */
+CREATE TABLE review (
+	purchase_num VARCHAR(30),
+	goods_num VARCHAR(10),
+	review_date DATE,
+	score integer,
+	review_content varchar(2000),
+	member_Id VARCHAR(15)
+);
+
+alter table members
+add column point integer;
+
+alter table employees
+add constraint emp_num_pk primary key(emp_num),
+add constraint emp_id_uu unique (emp_id),
+add constraint emp_jumin_uu unique (emp_jumin),
+add constraint emp_email_uu unique (emp_email);
+
+
+alter table members
+add constraint mem_num_pk primary key(member_num),
+add constraint mem_id_uu unique (member_id),
+add constraint mem_email_uu unique (member_email);
+
+alter table retired
+add constraint retired_emp_num_pk primary key(emp_num);
+
+alter table goods
+add constraint goods_num_pk primary key (goods_num);
+
+alter table goodsipgo
+add constraint ipgo_num_goods_num_pk 
+	primary key(ipgo_num, goods_num);
+
+alter table goods_inquire
+add constraint inquire_goods_mem_num_pk
+	primary key(inquire_num,goods_num,member_num);
+
+alter table wish
+add constraint good_member_num_pk 
+	primary key (goods_num, member_num);
+
+alter table cart
+add constraint cart_good_member_num_pk
+	primary key (goods_num, member_num);
+
+alter table purchase
+add constraint purchase_num_pk primary key(purchase_num);
+
+alter table purchase_list
+add constraint purchase_goods_num_pk 
+	primary key (purchase_num, goods_num);
+
+
+alter table delivery
+add constraint del_purchase_num_pk primary key(purchase_num)
+,add constraint delivery_num_uu unique(delivery_num);
+
+alter table payment 
+add constraint pay_purchase_num_pk primary key(purchase_num);
+
+alter table review 
+add column review_num serial;
+
+alter table review
+add constraint purchase_num_goods_num_pk 
+	primary key (purchase_num,goods_num);
+
+
+/****************************************************/
+alter table retired
+drop constraint emp_num_fk;
+
+alter table retired
+add constraint emp_num_fk foreign key(emp_num)
+	references employees(emp_num) on delete cascade;
+
+
+alter table goods
+add constraint goods_emp_num_fk foreign key (emp_num)
+    references employees(emp_num) on delete set null,
+add constraint update_emp_num_fk foreign key(update_emp_num)
+	references employees(emp_num) on delete set null;
+
+
+alter table goodsIpgo
+add constraint goods_num_fk foreign key(goods_num)
+	references goods(goods_num),
+add constraint goodsipgo_emp_num_fk foreign key(emp_num)
+	references employees(emp_num) on delete set null;
+
+
+alter table goods_inquire
+add constraint inquire_goods_num_fk foreign key(goods_num)
+	references goods(goods_num) on delete cascade,
+add constraint inquire_mem_num_fk foreign key(member_num)
+	references members(member_num) on delete cascade,
+add constraint inquire_emp_num_fk foreign key(emp_num)
+	references employees(emp_num) on delete set null;
+
+alter table wish 
+add constraint wish_goods_num_fk foreign key (goods_num)
+	references goods(goods_num) on delete cascade,
+add constraint wish_mem_num_fk foreign key(member_num)
+	references members(member_num) on delete cascade;
+
+
+alter table cart 
+add constraint cart_goods_num_fk foreign key (goods_num)
+	references goods(goods_num) on delete cascade,
+add constraint cart_mem_num_fk foreign key(member_num)
+	references members(member_num) on delete cascade;
+
+alter table purchase 
+drop constraint pur_mem_num_fk;
+
+alter table purchase 
+add constraint pur_mem_num_fk foreign key(member_num)
+	references members(member_num) on delete set null;
+
+
+alter table purchase_list 
+add constraint purchase_num_fk foreign key(purchase_num)
+	references purchase(purchase_num) on delete cascade,
+add constraint pur_list_goods_num_fk foreign key(goods_num)
+	references goods(goods_num);
+
+alter table review
+add constraint purchase_goods_num_fk 
+					foreign key(purchase_num, goods_num)
+	references purchase_list(purchase_num, goods_num) 
+					on delete cascade;
+
+alter table delivery 
+add constraint deli_purchase_num_fk foreign key(purchase_num)
+	references purchase(purchase_num) on delete cascade;
+
+alter table payment 
+add constraint pay_purchase_num_fk foreign key(purchase_num)
+	references purchase(purchase_num) on delete cascade;
