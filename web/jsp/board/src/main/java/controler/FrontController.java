@@ -37,7 +37,13 @@ public class FrontController extends HttpServlet
 		if(command.equals("/boardPro.naver")) {
 			BoardWriteService action = new BoardWriteService();
 			action.execute(request);
-			response.sendRedirect("boardList.naver");
+			//response.sendRedirect("boardList.naver");
+			response.setCharacterEncoding("utf-8");
+			
+			RequestDispatcher dispatcher =
+					request.getRequestDispatcher("boardResult.jsp");
+			dispatcher.include(request, response);
+			
 		}
 	}
 }
