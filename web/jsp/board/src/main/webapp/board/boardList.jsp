@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%
+	request.setAttribute("str", "이숭무");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +11,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%= request.getAttribute("str") %> : ${str }
+
 게시글 목록<br />
 <table border= 1 width="600px">
 <thead>
