@@ -45,8 +45,7 @@ public class UserWriteService {
 		dto.setMemberBirth(date);
 		
 		UserDAO dao = new UserDAO();
-		
-		
+		dao.userInsert(dto);
 		
 	}
 }
