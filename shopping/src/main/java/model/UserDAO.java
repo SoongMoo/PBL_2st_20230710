@@ -62,7 +62,6 @@ public class UserDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	public AuthInfoDTO loginSelect(String userId) {
 		AuthInfoDTO dto = null;

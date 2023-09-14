@@ -13,6 +13,8 @@
 	<ul>
 		<li><a href="employeeList.emp">직원 목록</a></li>
 		<li><a href="memberList.mem">회원 목록</a></li>
+		
+		<li><a href="logout.login">로그아웃</a></li>
 	</ul>
 	<!-- 오늘은 회원가입부터 로그인까지 -->
 </c:if>

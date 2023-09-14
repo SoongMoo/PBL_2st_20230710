@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class LoginFrontController extends HttpServlet 
 	implements Servlet{
@@ -28,6 +29,10 @@ public class LoginFrontController extends HttpServlet
 						request.getRequestDispatcher("main.jsp");
 				dispatcher.forward(request, response);
 			}
+		}else if(command.equals("/logout.login")) {
+			HttpSession session = request.getSession();
+			session.invalidate();
+			response.sendRedirect(request.getContextPath()+"/");
 		}
 	}
 	@Override

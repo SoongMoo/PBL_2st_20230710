@@ -26,8 +26,7 @@ public class UserFrontController extends HttpServlet
 					request.getRequestDispatcher("user/userForm.jsp");
 			dispatcher.forward(request, response);
 		}else if(command.equals("/userRegist.nhn")) {
-			UserWriteService action =
-					new UserWriteService();
+			UserWriteService action = new UserWriteService();
 			action.execute(request);
 			response.sendRedirect(request.getContextPath()+"/");
 		}

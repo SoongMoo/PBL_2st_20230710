@@ -23,7 +23,7 @@ $(function(){
 </script>
 </head>
 <body>
-<form action="userRegist.nhn" method="post" name="frm" id="frm">
+<form action="userRegist.nhn" method="get" name="frm" id="frm">
 <table border="1" width="600px">
 	<tr><th width="150px">*아이디</th>
 		<td width="450px"><input type="text" name="memberId" required="required"/></td></tr>
