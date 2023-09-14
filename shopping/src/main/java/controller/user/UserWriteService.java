@@ -11,6 +11,9 @@ import model.UserDAO;
 
 public class UserWriteService {
 	public void execute(HttpServletRequest request) {
+		try {
+			request.setCharacterEncoding("utf-8");
+		}catch(Exception e) {}
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
 		String memberName = request.getParameter("memberName");

@@ -15,6 +15,14 @@ public class MemberDTO {
 	String memberEmail;
 	String memberGender;
 	Date memberBirth;
+	Date memberRegist;
+	
+	public Date getMemberRegist() {
+		return memberRegist;
+	}
+	public void setMemberRegist(Date memberRegist) {
+		this.memberRegist = memberRegist;
+	}
 	public String getMemberNum() {
 		return memberNum;
 	}
