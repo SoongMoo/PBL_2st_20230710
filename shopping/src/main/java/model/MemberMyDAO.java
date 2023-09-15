@@ -61,9 +61,35 @@ public class MemberMyDAO extends DataBaseInfo{
 		}
 		
 	}
+	public void memberDrop(String memberId) {
+		con = getConnection();
+		sql = " delete from members "
+			+ " where member_id = ? ";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개이(가) 삭제되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
-	
-	
+	public void memberPwUpdate(String memberId, String newPw) {
+		con = getConnection();
+		sql = " update members "
+			+ " set member_pw = ? "
+			+ " where member_id = ? ";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, newPw);
+			pstmt.setString(2, memberId);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 수정되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	

@@ -7,7 +7,7 @@ import model.AuthInfoDTO;
 import model.MemberDTO;
 import model.MemberMyDAO;
 
-public class MemDetailService {
+public class MemberInfoService {
 	public void execute(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		AuthInfoDTO authInfo = (AuthInfoDTO)session.getAttribute("dto");
