@@ -35,7 +35,8 @@
 		<tr><th><input type="password" name="userPw" placeholder="비밀번호"/>
 				<div style="color:red">${errPw }</div></th></tr>
 		<tr><th colspan="2">
-			아이디/비밀번호 찾기 | <a href="userAgree.nhn">회원가입</a>
+			<a href="idInquiry.help">아이디</a>/
+			<a href="pwInquiry.help">비밀번호 찾기</a> | <a href="userAgree.nhn">회원가입</a>
 			</th></tr>
 	</table>
 </form>

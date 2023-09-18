@@ -5,6 +5,14 @@ public class AuthInfoDTO {
 	String userPw;
 	String userName;
 	String grade;
+	String userEmail;
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+	
 	public String getUserId() {
 		return userId;
 	}

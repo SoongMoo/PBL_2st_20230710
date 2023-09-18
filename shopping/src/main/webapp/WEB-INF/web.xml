@@ -50,6 +50,12 @@
   	<servlet-name>myPage</servlet-name>
   	<url-pattern>*.my</url-pattern>
   </servlet-mapping>
-  
-  
+  <servlet>
+  	<servlet-name>help</servlet-name>
+  	<servlet-class>controller.help.HelpFrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>help</servlet-name>
+  	<url-pattern>*.help</url-pattern>
+  </servlet-mapping>
 </web-app>

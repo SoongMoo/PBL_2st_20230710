@@ -79,9 +79,7 @@ public class MemberMyPageFrontController extends HttpServlet
 			}
 			RequestDispatcher dispatcher =
 					request.getRequestDispatcher(path);
-			dispatcher.forward(request, response);
-			
-			
+			dispatcher.forward(request, response);	
 		}else if(command.equals("/memberPwPro.my")) {
 			MemberPasswordService action = 
 					new MemberPasswordService();
