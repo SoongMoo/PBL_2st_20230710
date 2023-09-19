@@ -14,11 +14,14 @@
 		<c:if test="${dto.grade == 'emp' }">
 			<li><a href="employeeList.emp">직원 목록</a></li>
 			<li><a href="memberList.mem">회원 목록</a></li>
+			<li><a href="empMyPage.empmy">마이페이지</a></li>
+			<li><a href="goodsList.goods">상품리스트</a></li>
 		</c:if>
 		<c:if test="${dto.grade == 'mem' }">
 			<li><a href="memberMyPage.my">내정보 보기</a></li>
 		</c:if>
 			<li><a href="logout.login">로그아웃</a></li>
+			
 	</ul>
 </c:if>
 <!-- 비 로그인일 때 -->
