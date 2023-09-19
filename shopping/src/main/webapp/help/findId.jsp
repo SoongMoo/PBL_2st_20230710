@@ -8,7 +8,7 @@
 </head>
 <body>
 <form action="idFind.help" name="frm" id="frm" method="post">
-	<table border="1" width=600>
+	<table border="1" width=600 align="center">
 		<tr><th>전화번호</th>
 		    <td><input type="text" name="userPhone" required="required"/></td></tr>
 		<tr><th>이메일</th>

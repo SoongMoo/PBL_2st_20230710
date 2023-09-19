@@ -9,7 +9,7 @@
 <body>
 직원등록<br />
 <form method="get" action="employeeRegist.emp" name="frm">
-	<table border = 1>
+	<table border = 1 align="center">
 		<tr><th>직원번호</th>
 			<td><input type="text" name="empNum" readonly="readonly"
 				value="${empNum }"/> :자동부여 </td></tr>

@@ -18,7 +18,7 @@
 	<li><a href="memberDrop.my">회원탈퇴</a></li>
 </ul>
 <form name="frm" action="memberModify.my" method="post">
-<table border=1 width="600px">
+<table border=1 width="600px" align="center">
 	<tr><th width="200">이름</th>
 		<td width="400"><input type="text" name="memberName" 
 			value="${dto.memberName }" /></td></tr>	

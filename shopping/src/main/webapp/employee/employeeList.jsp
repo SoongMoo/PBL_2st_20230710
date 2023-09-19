@@ -9,7 +9,7 @@
 </head>
 <body>
 직원목록<br />
-<table border =1 width=600>
+<table border =1 width=600 align="center">
 	<tr><td>직원번호</td><td>직원명</td><td>입사일</td></tr>
 	<c:forEach items="${dtos}" var="dto">
 	<tr><td><a href="employeeDetail.emp?num=${dto.empNum }">${dto.empNum }</a></td>

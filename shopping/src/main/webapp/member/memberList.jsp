@@ -9,7 +9,7 @@
 </head>
 <body>
 회원 리스트 | 선태한 회원 삭제<br />
-<table border=1>
+<table border=1 align="center">
 	<tr><td>번호</td><td>이름</td><td>아이디</td></tr>
 	<c:forEach items="${list }" var="dto">
 		<tr><td><a href="memberDetail.mem?memberNum=${dto.memberNum }">${dto.memberNum }</a></td>

@@ -8,7 +8,7 @@
 </head>
 <body>
 <form action="findPwOk.help" name="frm" id="frm" method="post">
-	<table border="1" width="600">
+	<table border="1" width="600" align="center">
 		<tr><th>아이디</th>
 		    <td><input type="text" name="userId" required="required"/></td></tr>
 		<tr><th>전화번호</th>

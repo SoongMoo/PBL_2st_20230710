@@ -8,7 +8,7 @@
 </head>
 <body>
 <form action="goodsRegist.goods" method="post" >
-<table border = "1" width ="600">
+<table border = "1" width ="600" align="center">
 	<tr><th width="100">상품번호</th>
 		<td><input type="text" name="goodsNum" 
 					value="${goodsNum }" readonly="readonly"/>번호자동부여</td></tr>
