@@ -56,6 +56,9 @@ public class EmployeeFrontController extends HttpServlet
 			action.execute(request);
 			response.sendRedirect("employeeDetail.emp?num="
 						+request.getParameter("empNum"));
+		}else if(command.equals("/employeeDelete.emp")) {
+			
+			response.sendRedirect("employeeList.emp");
 		}
 	}
 	@Override

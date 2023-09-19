@@ -13,7 +13,7 @@ public class MemberDetailService {
 		String memberNum = request.getParameter("memberNum");
 		MemberDAO dao = new MemberDAO();
 		MemberDTO dto = dao.selectOne(memberNum);
-		request.setAttribute("memVO", dto);
+		request.setAttribute("dto", dto);
 		
 	}
 }

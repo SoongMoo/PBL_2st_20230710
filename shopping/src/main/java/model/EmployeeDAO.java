@@ -179,7 +179,19 @@ public class EmployeeDAO {
 		}
 		return empNum;
 	}
-	
+	public void employeeDelete(String empNum) {
+		con = getConnection();
+		sql = " delete from employees where emp_num = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, empNum);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개 행이(가) 삭제되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	

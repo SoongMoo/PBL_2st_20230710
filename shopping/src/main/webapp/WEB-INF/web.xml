@@ -67,7 +67,14 @@
   	<url-pattern>*.goods</url-pattern>
   </servlet-mapping>
   
-  
+   <servlet>
+  	<servlet-name>members</servlet-name>
+  	<servlet-class>controller.members.MemberFrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>members</servlet-name>
+  	<url-pattern>*.mem</url-pattern>
+  </servlet-mapping>
   
   
   

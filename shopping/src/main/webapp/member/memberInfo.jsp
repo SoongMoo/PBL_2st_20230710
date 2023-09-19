@@ -9,17 +9,21 @@
 </head>
 <body>
 회원 상세정보<br />
-회원번호 : ${memVO.memberNum }<br />
-회원아이디 : ${memVO.memberId }<br />
-회원이름 : ${memVO.memberName }<br />
-연락처 : ${memVO.memberPhone }<br />
-주소 : ${memVO.memberAddr }<br />
-성별 : <c:if test="${memVO.memberGender == 'F'}">여자</c:if>
-     <c:if test="${memVO.memberGender == 'M'}">남자</c:if> <br />
-생년월일 : ${memVO.memberBirth }<br />
-이메일 : ${memVO.memberEmail }<br />
-<a href="memberUpdate.mem?memberNum=${memVO.memberNum }">회원 수정</a> | 
-<a href="memberdelete.mem?memberNum=${memVO.memberNum }">회원 강제 탈퇴</a> | 
+회원번호 : ${dto.memberNum }<br />
+이름 : ${dto.memberName }<br />
+아이디 : ${dto.memberId }<br />
+주소 : ${dto.memberAddr }<br />
+상세주소 : ${dto.memberAddrDetail }<br />
+우편번호 : ${dto.memberPost }<br />
+연락처1 : ${dto.memberPhone1 }<br />
+연락처2 : ${dto.memberPhone2 }<br />
+성별 : <c:if test="${dto.memberGender == 'M' }">남자</c:if> 
+	  <c:if test="${dto.memberGender == 'F'}">여자</c:if><br />
+등록일 : ${dto.memberRegist }<br />
+생년월일 : ${dto.memberBirth }<br />
+이메일 : ${dto.memberEmail }<br />
+<a href="memberUpdate.mem?memberNum=${dto.memberNum }">회원 수정</a> | 
+<a href="memberdelete.mem?memberNum=${dto.memberNum }">회원 강제 탈퇴</a> | 
 <a href="memberList.mem">회원목록</a>
 </body>
 </html>

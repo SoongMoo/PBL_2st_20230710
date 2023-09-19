@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controller.employees.EmployeeAutoNumService;
+
 public class MemberFrontController extends HttpServlet 
 		implements Servlet{
 	public void doProcess(HttpServletRequest request,
@@ -26,28 +28,28 @@ public class MemberFrontController extends HttpServlet
 				request.getRequestDispatcher("member/memberList.jsp");
 			dispatcher.forward(request, response);
 		}else if(command.equals("/memberWrite.mem")) {
+			MemberAutoNumService action = 
+					new MemberAutoNumService();
+			action.execute(request);	
 			/// insert 
 			RequestDispatcher dispatcher =
 				request.getRequestDispatcher("member/memberForm.jsp");
 			dispatcher.forward(request, response);
 		}else if(command.equals("/memberRegist.mem")) {
 			/// insert 
-			MemberWriteService action = 
-					new MemberWriteService();
+			MemberWriteService action = new MemberWriteService();
 			action.execute(request);
 			response.sendRedirect("memberList.mem");
 		}else if(command.equals("/memberDetail.mem")) {
 			//상세보기
-			MemberDetailService action = 
-					new MemberDetailService();
+			MemberDetailService action = new MemberDetailService();
 			action.execute(request);
 			RequestDispatcher dispatcher = 
 				request.getRequestDispatcher("member/memberInfo.jsp");
 			dispatcher.forward(request, response);
 		}else if(command.equals("/memberUpdate.mem")) {
 			// update
-			MemberDetailService action = 
-					new MemberDetailService();
+			MemberDetailService action = new MemberDetailService();
 			action.execute(request);
 			RequestDispatcher dispatcher =
 				request.getRequestDispatcher("member/memberModify.jsp");

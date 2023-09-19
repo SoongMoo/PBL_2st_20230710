@@ -19,6 +19,7 @@
 직원주민번호: ${dto.empJumin }<br />
 직원입사일: ${dto.empEnterDate }<br />
 <a href="employeeUpdate.emp?num=${dto.empNum }">수정</a> | 
-퇴사 | 직원목록
+<a href="employeeDelete.emp?num=${dto.empNum }">직원삭제 | 
+<a href="employeeList.emp">직원목록</a>
 </body>
 </html>
