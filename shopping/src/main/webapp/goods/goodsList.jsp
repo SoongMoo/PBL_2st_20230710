@@ -11,6 +11,7 @@
 <ul>
 	<li><a href="goodsWrite.goods">상품 추가</a></li>
 	<li><a href="goodsIpgo.ipgo">상품 입고</a></li>
+	<li><a href="goodsIpgoList.ipgo">상품 입고 현황</a></li>
 </ul>
 상품 목록<br/>
 <table border=1 width="600" align="center">

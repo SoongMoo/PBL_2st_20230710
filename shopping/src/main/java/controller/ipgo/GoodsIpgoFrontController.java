@@ -25,6 +25,20 @@ public class GoodsIpgoFrontController extends HttpServlet
 			GoodsIpgoService action = new GoodsIpgoService();
 			action.execute(request);
 			response.sendRedirect("goodsList.goods");
+		}else if(command.equals("/goodsIpgoList.ipgo")) {
+			GoodsIpgoListService action = 
+					new GoodsIpgoListService();
+			action.execute(request);
+			System.out.println("xbvdxzbvzdxbad");
+			RequestDispatcher dispatcher =
+					request.getRequestDispatcher("goodsIpgo/goodsIpgoList.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/goodsIpgoDetail.ipgo")) {
+			GoodsIpgoDetailService action = new GoodsIpgoDetailService();
+			action.execute(request);
+			RequestDispatcher dispatcher =
+					request.getRequestDispatcher("goodsIpgo/goodsIpgoDetail.jsp");
+			dispatcher.forward(request, response);			
 		}
 	}
 	@Override

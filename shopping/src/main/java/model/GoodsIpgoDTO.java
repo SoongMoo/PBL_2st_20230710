@@ -11,6 +11,15 @@ public class GoodsIpgoDTO {
 	String empNum;
 	Integer ipgoQty;
 	
+	String goodsName;	
+	public String getGoodsName() {
+		return goodsName;
+	}
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}	
+	
+	
 	public Integer getIpgoPrice() {
 		return ipgoPrice;
 	}
