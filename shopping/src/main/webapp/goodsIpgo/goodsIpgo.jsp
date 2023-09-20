@@ -15,6 +15,7 @@
 </script>
 </head>
 <body>
+<form action="ipgoRegist.ipgo" method="post">
 입고번호 : <input type="text" name= "goodsIpgoNum" /><br />
 상품번호 : <input type="text" name= "goodsNum" id="goodsNum" readonly="readonly"/>
 		 <button type="button" id="btn" >상품 검색</button><br />
@@ -23,5 +24,7 @@
 입고 수량 : <input type="number" name= "ipgoQty" /><br />
 제조일 : <input type="date" name= "madeDate" /><br />
 가격 : <input type="number" name= "ipgoPrice" /><br />
+<input type="submit" value="입고 등록" />
+</form>
 </body>
 </html>

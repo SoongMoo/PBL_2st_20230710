@@ -22,7 +22,8 @@
 <form action="goodsItem.goods" method="post">
 <table>
 	<tr><th>
-		검색 : <input type="search" name="goodsWord" > <input type="submit" value="확인">
+		검색 : <input type="search" name="goodsWord" value="${goodsWord }"> 
+		<input type="submit" value="확인">
 	</th></tr>
 </table>
 </form>

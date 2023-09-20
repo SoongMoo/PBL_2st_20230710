@@ -54,7 +54,7 @@ public class GoodsDAO extends DataBaseInfo{
 		List<GoodsDTO> list = new ArrayList<GoodsDTO>();
 		String search = "";
 		if(goodsWord != null) {
-			search = " and goods_name = '" + goodsWord + "'";
+			search = " and goods_name like '%" + goodsWord + "%'";
 		}
 		con = getConnection();
 		sql = " select goods_num, goods_name, goods_price"

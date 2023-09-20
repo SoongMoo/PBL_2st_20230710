@@ -21,6 +21,10 @@ public class GoodsIpgoFrontController extends HttpServlet
 			RequestDispatcher dispatcher = 
 					request.getRequestDispatcher("goodsIpgo/goodsIpgo.jsp");
 			dispatcher.forward(request, response);
+		}else if(command.equals("/ipgoRegist.ipgo")) {
+			GoodsIpgoService action = new GoodsIpgoService();
+			action.execute(request);
+			response.sendRedirect("goodsList.goods");
 		}
 	}
 	@Override
