@@ -76,7 +76,14 @@
   	<url-pattern>*.mem</url-pattern>
   </servlet-mapping>
   
-  
+  <servlet>
+  	<servlet-name>ipgo</servlet-name>
+  	<servlet-class>controller.ipgo.GoodsIpgoFrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ipgo</servlet-name>
+  	<url-pattern>*.ipgo</url-pattern>
+  </servlet-mapping>
   
   
   

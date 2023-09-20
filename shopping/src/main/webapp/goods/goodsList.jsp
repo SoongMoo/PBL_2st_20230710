@@ -8,6 +8,10 @@
 <title>goodsList.jsp</title>
 </head>
 <body>
+<ul>
+	<li><a href="goodsWrite.goods">상품 추가</a></li>
+	<li><a href="goodsIpgo.ipgo">상품 입고</a></li>
+</ul>
 상품 목록<br/>
 <table border=1 width="600" align="center">
 	<tr><td>번호</td><td>상품번호</td><td>상품명</td>
@@ -19,8 +23,5 @@
 			<td>${dto.goodsRegist }</td></tr>	
 	</c:forEach>
 </table>
-<p>
-<a href="goodsWrite.goods">상품 추가</a>
-</p>
 </body>
 </html>

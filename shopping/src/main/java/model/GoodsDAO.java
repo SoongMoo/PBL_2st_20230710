@@ -50,8 +50,12 @@ public class GoodsDAO extends DataBaseInfo{
 			close();
 		}
 	}
-	public List<GoodsDTO> allSelect(){
+	public List<GoodsDTO> allSelect(String goodsWord){
 		List<GoodsDTO> list = new ArrayList<GoodsDTO>();
+		String search = "";
+		if(goodsWord != null) {
+			search = " and goods_name = '" + goodsWord + "'";
+		}
 		con = getConnection();
 		sql = " select goods_num, goods_name, goods_price"
 			+ "       ,goods_content, goods_main_store"
@@ -59,8 +63,9 @@ public class GoodsDAO extends DataBaseInfo{
 			+ "       ,goods_images_img, delivery_cost"
 			+ "       ,visit_count, emp_num, goods_regist"
 			+ "       ,update_emp_num, goods_update_date"
-			+ " from goods ";
-		
+			+ " from goods "
+			+ " where 1 = 1 " + search ;
+		System.out.println(sql);
 		try {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();

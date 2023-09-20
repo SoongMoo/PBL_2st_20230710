@@ -61,6 +61,12 @@ public class GoodsFrontController extends HttpServlet
 					new GoodsDeleteService();
 			action.execute(request);
 			response.sendRedirect("goodsList.goods");
+		}else if(command.equals("/goodsItem.goods")) {
+			GoodsListService action = new GoodsListService();
+			action.execute(request);
+			RequestDispatcher dispatcher =
+					request.getRequestDispatcher("goods/goodsItem.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 	@Override
