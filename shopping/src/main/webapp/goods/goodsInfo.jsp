@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% request.setAttribute("newLine", "\n"); %>
 <!DOCTYPE html>
 <html>
@@ -21,8 +22,12 @@
 <tr><th>등록일</th><td>${dto.goodsRegist }</td></tr>
 <tr><th>마지막 수정 사원</th><td>${dto.updateEmpNum }</td></tr>
 <tr><th>마지막 수정일</th><td>${dto.goodsUpdateDate }</td></tr>
-<tr><th>대문이미지</th><td>${dto.goodsMainStore }</td></tr>
-<tr><th>설명이미지</th><td>${dto.goodsImages }</td></tr>
+<tr><th>대문이미지</th>
+	<td><img src="goods/images/${dto.goodsMainStore }" /></td></tr>
+<tr><th>설명이미지</th>
+	<td><c:forTokens items="${dto.goodsImages }" delims="`" var="img">
+		<img src="goods/images/${img }" /><br />
+	</c:forTokens> </td></tr>
 <tr><th colspan="2">
 		<a href="goodsUpdate.goods?num=${dto.goodsNum }">상품 수정</a> | 
 		<a href="goodsDel.goods?num=${dto.goodsNum }">상품 삭제</a> | 
