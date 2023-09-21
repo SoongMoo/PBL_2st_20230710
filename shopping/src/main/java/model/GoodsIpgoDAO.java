@@ -86,12 +86,45 @@ public class GoodsIpgoDAO extends DataBaseInfo{
 		return dto;
 	}
 	
+	public void ipgoGoodsUpdate(GoodsIpgoDTO dto) {
+		con = getConnection();
+		sql = " update goodsIpgo "
+			+ " set ipgo_Date = ?, ipgo_Qty =? "
+			+ "    , made_Date = ? , ipgo_Price = ?"
+			+ " where ipgo_Num = ? "
+			+ "   and goods_Num = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setDate(1, new java.sql.Date(dto.getIpgoDate().getTime()));
+			pstmt.setInt(2, dto.getIpgoQty());
+			pstmt.setDate(3, new java.sql.Date(dto.getMadeDate().getTime()));
+			pstmt.setInt(4, dto.getIpgoPrice());
+			pstmt.setString(5, dto.getGoodsIpgoNum());
+			pstmt.setString(6, dto.getGoodsNum());
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개 행이(가) 수정되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void goodsIpgoDelete(String ipgoNum, String goodsNum) {
+		con = getConnection();
+		sql = " delete from goodsIpgo "
+			+ " where ipgo_num = ? and goods_num = ?";
+		try {
+			pstmt =con.prepareStatement(sql);
+			pstmt.setString(1, ipgoNum);
+			pstmt.setString(2, goodsNum);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개행이(가) 삭제되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+	}
 	
 	
 	
-	
-	
-	
-	
-	
+
 }

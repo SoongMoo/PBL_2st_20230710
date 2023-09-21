@@ -19,6 +19,11 @@ $(function(){
 			return false;
 		}
 	});
+	$("#userId").click(function(){
+		$("#userId").val("");
+		window.open("idCheck.nhn","아이디검색","width=400, height=200, left=30, top=50");
+	});
+	
 });
 </script>
 </head>
@@ -26,7 +31,9 @@ $(function(){
 <form action="userRegist.nhn" method="get" name="frm" id="frm">
 <table border="1" width="600px" align="center">
 	<tr><th width="150px">*아이디</th>
-		<td width="450px"><input type="text" name="memberId" required="required"/></td></tr>
+		<td width="450px"><input type="text" name="memberId" required="required" 
+							id="userId" readonly="readonly"/>
+		아이디 중복확인</td></tr>
 	<tr><th >*회원비밀번호</th>
 		<td ><input type="password" name="memberPw" id="memberPw" required="required"/></td></tr>
 	<tr><th >*회원비밀번호확인</th>

@@ -39,6 +39,25 @@ public class GoodsIpgoFrontController extends HttpServlet
 			RequestDispatcher dispatcher =
 					request.getRequestDispatcher("goodsIpgo/goodsIpgoDetail.jsp");
 			dispatcher.forward(request, response);			
+		}else if(command.equals("/goodsIpgoUpdate.ipgo")) {
+			GoodsIpgoDetailService action = new GoodsIpgoDetailService();
+			action.execute(request);
+			RequestDispatcher dispatcher =
+					request.getRequestDispatcher("goodsIpgo/goodsIpgoUpdate.jsp");
+			dispatcher.forward(request, response);			
+		}else if(command.equals("/goodsIpgoModify.ipgo")) {
+			GoodsIpgoUpdateService action =
+					new GoodsIpgoUpdateService();
+			action.execute(request);
+			response.sendRedirect("goodsIpgoDetail.ipgo?ipgoNum="
+								  + request.getParameter("goodsIpgoNum") 
+								  +"&num="
+								  + request.getParameter("goodsNum"));
+		}else if(command.equals("/goodsIpgoDelete.ipgo")) {
+			GoodsIpgoDeleteService action =
+					new GoodsIpgoDeleteService();
+			action.execute(request);
+			response.sendRedirect("goodsIpgoList.ipgo");
 		}
 	}
 	@Override
