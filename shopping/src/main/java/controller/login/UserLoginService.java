@@ -19,6 +19,7 @@ public class UserLoginService {
 		}else {
 			if(dto.getUserPw().equals(userPw)) {
 				session.setAttribute("dto", dto);
+				session.setAttribute("auth", dto);
 				i = 1;
 			}else {
 				request.setAttribute("errPw", "비밀번호가 틀렸습니다.");

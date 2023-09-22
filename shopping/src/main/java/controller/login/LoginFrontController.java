@@ -1,6 +1,7 @@
 package controller.login;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -33,6 +34,19 @@ public class LoginFrontController extends HttpServlet
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect(request.getContextPath()+"/");
+		}else if(command.equals("/loginCk.login")) {
+			RequestDispatcher dispatcher =
+					request.getRequestDispatcher("login.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/login1.login")) {
+			UserLoginService action = new UserLoginService();
+			action.execute(request);
+			PrintWriter out = response.getWriter();
+			response.setContentType("text/html; charset=utf-8");
+			out.print("<script language='javascript'>");
+			out.print("opener.document.location.reload();");
+			out.print("window.self.close();");
+			out.print("</script>");
 		}
 	}
 	@Override

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controller.goods.GoodsListService;
+
 public class MainFrontController extends HttpServlet 
 								implements Servlet{
 	@Override
@@ -19,6 +21,8 @@ public class MainFrontController extends HttpServlet
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length());
 		if(command.equals("/main.main")) {
+			GoodsListService action = new GoodsListService();
+			action.execute(request);
 			RequestDispatcher dispatcher =
 					request.getRequestDispatcher("main.jsp");
 			dispatcher.forward(request, response);

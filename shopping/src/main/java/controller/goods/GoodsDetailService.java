@@ -11,5 +11,6 @@ public class GoodsDetailService {
 		GoodsDAO dao = new GoodsDAO();
 		GoodsDTO dto = dao.selectOne(goodsNum);
 		request.setAttribute("dto", dto);
+		request.setAttribute("newLine", "\n");
 	}
 }

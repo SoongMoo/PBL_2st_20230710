@@ -85,6 +85,13 @@
   	<url-pattern>*.ipgo</url-pattern>
   </servlet-mapping>
   
-  
+  <servlet>
+  	<servlet-name>item</servlet-name>
+  	<servlet-class>controller.item.ItemFrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>item</servlet-name>
+  	<url-pattern>*.item</url-pattern>
+  </servlet-mapping>
   
 </web-app>

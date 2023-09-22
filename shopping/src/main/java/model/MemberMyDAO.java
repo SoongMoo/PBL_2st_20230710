@@ -8,7 +8,8 @@ public class MemberMyDAO extends DataBaseInfo{
 		con = getConnection();
 		sql = " select MEMBER_ID, MEMBER_NAME, MEMBER_PHONE1, MEMBER_PHONE2"
 			+ "       ,MEMBER_ADDR, MEMBER_ADDR_DETAIL, member_post "
-			+ "       ,GENDER, MEMBER_BIRTH, MEMBER_EMAIL, member_regist "
+			+ "       ,GENDER, MEMBER_BIRTH, MEMBER_EMAIL, member_regist"
+			+ "		  ,member_num "
 			+ " from members "
 			+ " where member_id = ? ";
 		try {
@@ -27,6 +28,7 @@ public class MemberMyDAO extends DataBaseInfo{
 			dto.setMemberBirth(rs.getDate(9));
 			dto.setMemberEmail(rs.getString(10));
 			dto.setMemberRegist(rs.getDate(11));
+			dto.setMemberNum(rs.getString(12));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

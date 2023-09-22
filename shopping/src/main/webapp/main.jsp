@@ -10,7 +10,7 @@
 <body>
 <!-- 로그인되었을 때 -->
 <c:if test="${!empty dto }">
-	<ul>
+	<ul style="text-align:center;list-style:none;">
 		<c:if test="${dto.grade == 'emp' }">
 			<li><a href="employeeList.emp">직원 목록</a></li>
 			<li><a href="memberList.mem">회원 목록</a></li>
@@ -19,15 +19,15 @@
 		</c:if>
 		<c:if test="${dto.grade == 'mem' }">
 			<li><a href="memberMyPage.my">내정보 보기</a></li>
+			<li><a href="cartList.item">장바구니</a></li>
 		</c:if>
 			<li><a href="logout.login">로그아웃</a></li>
-			
 	</ul>
 </c:if>
 <!-- 비 로그인일 때 -->
 <c:if test="${empty dto }">
 <form action="login.login" method="post" >
-	<table border="1">
+	<table border="1" align="center">
 		<tr><th colspan="2">
 			<input type="checkbox" name="keepLogin" value="on"/>로그인 유지 |
 			<input type="checkbox" name="storeId" value="store"/>아이디 저장
@@ -44,6 +44,24 @@
 	</table>
 </form>
 </c:if>
+<table align = "center">
+<colgroup>
+	<col span="3" width="300" height="300"/>
+</colgroup>
+	<tr>
+		<c:forEach items="${dtos }"  var="dto" varStatus="status">
+			<td><a href="detailView.item?num=${dto.goodsNum }">
+				<img src="goods/images/${dto.goodsMainStore }"
+						width="300" height="150"/></a><br />
+				${dto.goodsName }<br />
+				${dto.goodsPrice }<br />				
+				<c:if test="${dto.deliveryCost == 0 }">무료배송</c:if>
+				<c:if test="${dto.deliveryCost != 0 }">${dto.deliveryCost}</c:if>
+			</td>
+			<c:if test="${status.count % 3 == 0  }"></tr><tr></c:if>
+		</c:forEach>	
+	</tr>
+</table>
 </body>
 </html>
 
