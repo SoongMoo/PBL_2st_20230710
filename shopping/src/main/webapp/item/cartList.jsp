@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,9 @@ $(function(){
 		else $("#checkBoxs").prop("checked",true)
 	});
 });
+function prodChk(){
+	
+}
 function goodsCartAdd(goodsNum){
 	$.ajax({
 		url: "cart.item",
@@ -63,6 +67,26 @@ function cartItemDel(goodsNum){
 	con = confirm ("정말 삭제하시겠나?");
 	if(con) location.href="cartItemDel.item?goodsNum="+goodsNum;
 }
+function itemsDel(){
+	var goodsNums = "";
+	$("input:checkbox[name='prodCk']:checked").each(function(){
+		goodsNums += $(this).val() + "-";
+	});
+	//location.href="cartItemsDel.item?goodsNums="+goodsNums;
+	$.ajax({
+		type:"post",
+		url : "cartItemsDel.item",
+		data : "goodsNums="+goodsNums, // {"goodsNums":goodsNums}
+		success : function(){
+			location.reload();
+		},
+		error:function(){
+			alert("서버에 접속되지 않았습니다.\n 다시 로그인해 주세요.");
+			return false;
+		}
+	});
+}
+
 </script>
 </head>
 <body>
@@ -83,6 +107,13 @@ function cartItemDel(goodsNum){
 	<td><button type="button" onclick="javascript:cartItemDel('${dto.goodsNum }');">상품삭제</button></td>
 	</tr>
 </c:forEach>
+<tr><td colspan="6" align="right">
+		상품수 : <span id="prodCnt">${dtos.size() }개</span><br />
+		총수량 : <span id="totQtyt">${totQtyt }개</span><br />
+		전체 금액 : <span id="totalPrice">
+		<fmt:formatNumber type="currency" value="${totPri}" />원</span><br />
+	</td>
+</tr>
 <tr><td colspan="6" align="center">
 		<input type="submit" value="구매하기"/>
 	</td></tr>
