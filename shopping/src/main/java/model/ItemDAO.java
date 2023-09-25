@@ -33,6 +33,39 @@ public class ItemDAO extends DataBaseInfo{
 			close();
 		}	
 	}
+	public CartListDTO selectOne(String memberNum, String goodsNum) {
+		CartListDTO dto = new CartListDTO();
+		con = getConnection();
+		sql = " select MEMBER_NUM, c.GOODS_NUM, CART_QTY, CART_DATE"
+			+ "    ,goods_name, goods_price * CART_QTY total_price"
+			+ "    ,goods_main_store , delivery_Cost"
+			+ " from cart c, goods g"
+			+ " where c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = ? "
+			+ " and c.goods_num = ? "
+			+ " order by c.GOODS_NUM desc";		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberNum);
+			pstmt.setString(2, goodsNum);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto.setCartDate(rs.getDate("CART_DATE"));
+				dto.setCartQty(rs.getInt("CART_QTY"));
+				dto.setGoodsName(rs.getString("goods_name"));
+				dto.setGoodsNum(rs.getString("GOODS_NUM"));
+				dto.setMemberNum(rs.getString("MEMBER_NUM"));
+				dto.setTotalPrice(rs.getInt("total_price"));
+				dto.setGoodsImage(rs.getString("goods_main_store"));
+				dto.setDeliveryCost(rs.getInt("delivery_Cost"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		return dto;
+	}
+	
 	public List<CartListDTO> cartList(String memberNum){
 		List<CartListDTO> list = new ArrayList<CartListDTO>();
 		con = getConnection();
