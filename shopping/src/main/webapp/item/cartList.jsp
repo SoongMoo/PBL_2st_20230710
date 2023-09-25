@@ -8,6 +8,21 @@
 <title>Insert title here</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
+$(function(){
+	$("#checkBoxs").click(function(){
+		if($("#checkBoxs").prop("checked")){
+			$("input:checkbox[name='prodCk']").prop("checked",true);
+		}else{
+			$("input[name='prodCk']").prop("checked",false);
+		}
+	});
+	$("input[name='prodCk']").click(function(){
+		var checkCk = $("input[name='prodCk']").length;
+		var checked = $("input[name='prodCk']:checked").length;
+		if(checkCk != checked)$("#checkBoxs").prop("checked", false)
+		else $("#checkBoxs").prop("checked",true)
+	});
+});
 function goodsCartAdd(goodsNum){
 	$.ajax({
 		url: "cart.item",
@@ -44,19 +59,34 @@ function checkQty(goodsNum, cartQty){
 		return false;
 	}
 }
+function cartItemDel(goodsNum){
+	con = confirm ("정말 삭제하시겠나?");
+	if(con) location.href="cartItemDel.item?goodsNum="+goodsNum;
+}
 </script>
 </head>
 <body>
+<form action="itemBuy.item" method="post" >
 <table width="600" align = "center">
-<tr><td>이미지</td><td>제품이름</td><td>수량</td><td>합계금액</td></tr>
+<tr><td><input type="checkbox" id="checkBoxs" checked="checked" /></td>
+	<td>이미지</td><td>제품이름</td><td>수량</td><td>합계금액</td>
+	<td><button type="button" onclick="itemsDel();" >선택상품삭제</button></td>
+	</tr>
 <c:forEach items="${dtos }" var="dto">
-<tr><td><img width="30" src="goods/images/${dto.goodsImage }" /></td>
+<tr><td><input type="checkbox" name="prodCk" value="${dto.goodsNum }" checked="checked" /></td>
+	<td><img width="30" src="goods/images/${dto.goodsImage }" /></td>
 	<td>${dto.goodsName }</td>
 	<td><a href="javascript:checkQty('${dto.goodsNum }','${dto.cartQty }');">-</a> 
 		${dto.cartQty } 
 		<a href="javascript:goodsCartAdd('${dto.goodsNum }')">+</a></td>
-	<td>${dto.totalPrice }</td></tr>
+	<td>${dto.totalPrice }</td>
+	<td><button type="button" onclick="javascript:cartItemDel('${dto.goodsNum }');">상품삭제</button></td>
+	</tr>
 </c:forEach>
+<tr><td colspan="6" align="center">
+		<input type="submit" value="구매하기"/>
+	</td></tr>
 </table>
+</form>
 </body>
 </html>

@@ -82,7 +82,22 @@ public class ItemDAO extends DataBaseInfo{
 			close();
 		}
 	}
-	
+	public void itemDelete(String memberNum, String goodNum) {
+		con = getConnection();
+		sql = " delete from cart "
+			+ "	where member_Num=? and goods_num=?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberNum);
+			pstmt.setString(2, goodNum);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 삭되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+	}
 	
 	
 	
