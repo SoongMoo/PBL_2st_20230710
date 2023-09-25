@@ -16,16 +16,32 @@ $(function(){
 		}else{
 			$("input[name='prodCk']").prop("checked",false);
 		}
+		prodChk();
 	});
 	$("input[name='prodCk']").click(function(){
 		var checkCk = $("input[name='prodCk']").length;
 		var checked = $("input[name='prodCk']:checked").length;
-		if(checkCk != checked)$("#checkBoxs").prop("checked", false)
-		else $("#checkBoxs").prop("checked",true)
+		if(checkCk != checked)$("#checkBoxs").prop("checked", false);
+		else $("#checkBoxs").prop("checked",true);
+		prodChk();
 	});
 });
 function prodChk(){
-	
+	var cnt = 0;
+	var totalPrice = 0;
+	var totalQty = 0;
+	for(var i = 0 ; i < ${dtos.size()}; i++){
+		if($("input[name='prodCk']")[i].checked == true){
+			cnt++;
+			totalPrice += 
+				Number($(".cartPrice:eq("+i+")").text());
+			totalQty += 
+				Number($(".cartQty:eq("+i+")").text());
+		}
+	}
+	$("#prodCnt").text(cnt);
+	$("#totQty").text(totalQty);
+	$("#totalPrice").text(totalPrice);
 }
 function goodsCartAdd(goodsNum){
 	$.ajax({
@@ -86,11 +102,16 @@ function itemsDel(){
 		}
 	});
 }
-
+function goodsCheck(){
+	if ($("input[name='prodCk']:checked").length <= 0){
+		alert("적어도 하나이상 체크되어 있어야합니다.");
+		return false;
+	}
+}
 </script>
 </head>
 <body>
-<form action="itemBuy.item" method="post" >
+<form action="itemBuy.item" method="post" onsubmit="return goodsCheck();">
 <table width="600" align = "center">
 <tr><td><input type="checkbox" id="checkBoxs" checked="checked" /></td>
 	<td>이미지</td><td>제품이름</td><td>수량</td><td>합계금액</td>
@@ -101,17 +122,16 @@ function itemsDel(){
 	<td><img width="30" src="goods/images/${dto.goodsImage }" /></td>
 	<td>${dto.goodsName }</td>
 	<td><a href="javascript:checkQty('${dto.goodsNum }','${dto.cartQty }');">-</a> 
-		${dto.cartQty } 
+		<span class="cartQty">${dto.cartQty }</span> 
 		<a href="javascript:goodsCartAdd('${dto.goodsNum }')">+</a></td>
-	<td>${dto.totalPrice }</td>
+	<td><span class="cartPrice">${dto.totalPrice }</span></td>
 	<td><button type="button" onclick="javascript:cartItemDel('${dto.goodsNum }');">상품삭제</button></td>
 	</tr>
 </c:forEach>
 <tr><td colspan="6" align="right">
-		상품수 : <span id="prodCnt">${dtos.size() }개</span><br />
-		총수량 : <span id="totQtyt">${totQtyt }개</span><br />
-		전체 금액 : <span id="totalPrice">
-		<fmt:formatNumber type="currency" value="${totPri}" />원</span><br />
+		상품수 : <span id="prodCnt">${dtos.size() }</span>개<br />
+		총수량 : <span id="totQty">${totQtyt }</span>개<br />
+		전체 금액 : <span id="totalPrice">${totPri}</span>원<br />
 	</td>
 </tr>
 <tr><td colspan="6" align="center">

@@ -16,10 +16,12 @@
 			<li><a href="memberList.mem">회원 목록</a></li>
 			<li><a href="empMyPage.empmy">마이페이지</a></li>
 			<li><a href="goodsList.goods">상품리스트</a></li>
+			<li>구매정보확인</li>
 		</c:if>
 		<c:if test="${dto.grade == 'mem' }">
 			<li><a href="memberMyPage.my">내정보 보기</a></li>
 			<li><a href="cartList.item">장바구니</a></li>
+			<li>구매내역확인</li>
 		</c:if>
 			<li><a href="logout.login">로그아웃</a></li>
 	</ul>

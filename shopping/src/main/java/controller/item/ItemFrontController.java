@@ -48,6 +48,10 @@ public class ItemFrontController extends HttpServlet implements Servlet {
 					new CartItemsDeleteService();
 			action.execute(request);
 			//response.sendRedirect("cartList.item");
+		}else if(command.equals("/itemBuy.item")) {
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("item/goodsOrder.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 	@Override
