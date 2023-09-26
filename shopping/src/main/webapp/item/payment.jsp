@@ -94,7 +94,7 @@
 				    		
 				    		<label class="col-10 col-sm-2 input param" style="border:none;">goodname</label>
                             <label class="col-10 col-sm-9 input">
-                                <input type="text" name="goodname" value="테스트상품">
+                                <input type="text" name="goodname" value="${goodsName }">
                             </label>
 				    		
 				    		<label class="col-10 col-sm-2 input param" style="border:none;">buyername</label>
@@ -112,8 +112,8 @@
                                 <input type="text" name="buyeremail" value="test@test.com">
                             </label>
 				    		
-				    		<input type="hidden" name="returnUrl" value="https://[가맹점도메인]/INIstdpay_pc_return.jsp">
-                            <input type="hidden" name="closeUrl" value="https://[가맹점도메인]/close.jsp">
+				    		<input type="hidden" name="returnUrl" value="http://localhost:8080/shopping/INIstdpay_pc_return.item">
+                            <input type="hidden" name="closeUrl" value="http://localhost:8080/shopping/close.item">
                             
 				    		<label class="col-10 col-sm-2 input param" style="border:none;">acceptmethod</label>
                             <label class="col-10 col-sm-9 input">

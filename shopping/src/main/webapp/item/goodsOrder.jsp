@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="js/daumAddressScript.js"></script>
 </head>
 <body>
 <table width="700" align="center">
@@ -28,6 +30,7 @@
 </p>
 <p>
 <form action="goodsOrder.item" method="post">
+<input type="hidden" name="deliveryName" value="${list[0].goodsName }외 ${list.size() - 1}개"/>
 <input type="hidden" name="goodsNums" value="${goodsNums }"/>
 <input type="hidden" name="goodsTotalPrice" 
 	value="${goodsTotalPrice +  totalDeliveryCost}"/>
@@ -37,11 +40,19 @@
 		<table width="350">
 			<tr><td colspan=2>2. 배송 정보</td></tr>
 			<tr><td>받는 사람 </td>
-			    <td><input type="text" name="receiveName" /></td></tr>
+			    <td><input type="text" name="deliveryName" /></td></tr>
 			<tr><td>받는 사람 주소 </td>
-				<td><input type="text" name="receiveAddr" /></td></tr>
+				<td><input type="text" name="deliveryAddr" onclick="execDaumPostcode();" 
+							readonly="readonly" id="sample4_roadAddress"/></td></tr>
+			<tr><td>받는 사람 상세 주소 </td>
+				<td><input type="text" name="deliveryAddrDetail" /></td></tr>
+			<tr><td>받는 사람 우편번호 </td>
+				<td><input type="text" name="deliveryPost" id="sample4_postcode" 
+							readonly="readonly" /></td></tr>
 			<tr><td>받는 사람 연락처 </td>
-				<td><input type="text" name="receivePhone" /></td></tr>
+				<td><input type="tel" name="deliveryPhone" /></td></tr>
+			<tr><td>배송 메세지 </td>
+				<td><input type="text" name="message" /></td></tr>
 		</table>
 	</td>
     <td>

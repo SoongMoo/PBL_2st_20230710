@@ -132,9 +132,67 @@ public class ItemDAO extends DataBaseInfo{
 		}
 	}
 	
-	
-	
-	
+	public void purchaseInsert(PurchaseDTO dto) {
+		con = getConnection();
+		sql = " insert into purchase(purchase_Num, purchase_Date, delivery_Name, delivery_Phone"
+			+ "                     ,delivery_Addr, delivery_Addr_Detail, delivery_Post"
+			+ "                     ,message, purchase_Status, member_Num,  PURCHASE_PRICE )"
+			+ " values              (?, now(), ?, ?, ?, ?, ?, ?, '결제대기중', ?, ?)";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getPurchaseNum());
+			pstmt.setString(2, dto.getDeliveryName());
+			pstmt.setString(3, dto.getDeliveryPhone());
+			pstmt.setString(4, dto.getDeliveryAddr());
+			pstmt.setString(5, dto.getDeliveryAddrDetail());
+			pstmt.setString(6, dto.getDeliveryPost());
+			pstmt.setString(7, dto.getMessage());
+			pstmt.setString(8, dto.getMemberNum());
+			pstmt.setLong(9, dto.getPurchasePrice());
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개 행이(가) 삽입되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+	}
+	public void purchaseListInsert(PurchaseListDTO dto, String memberNum) {
+		con = getConnection();
+		sql = " insert into purchase_list(PURCHASE_NUM, GOODS_NUM, PURCHASE_QTY, total_price) "
+			+ " select ?, c.GOODS_NUM, cart_qty, cart_qty * goods_price "
+			+ " from cart c join goods g "
+			+ " on c.goods_num=g.goods_num "
+			+ " where c.goods_num = ? and member_num = ? ";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getPurchaseNum());
+			pstmt.setString(2, dto.getGoodsNum());
+			pstmt.setString(3, memberNum);
+			int i = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+	}
+	public void cartItemDelete(String goodsNum, String memberNum) {
+		con = getConnection();
+		sql = " delete from cart "
+			+ " where MEMBER_NUM = ? and GOODS_NUM = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberNum);
+			pstmt.setString(2, goodsNum);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 삭제되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+	}
 	
 	
 	

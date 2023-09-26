@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.goods.GoodsDetailService;
+import model.PurchaseDTO;
 
 public class ItemFrontController extends HttpServlet implements Servlet {
 	protected void doProcess(HttpServletRequest request, 
@@ -56,18 +57,28 @@ public class ItemFrontController extends HttpServlet implements Servlet {
 			dispatcher.forward(request, response);
 		}else if(command.equals("/goodsOrder.item")) {
 			GoodsOrderService action = new GoodsOrderService();
-			action.execute(request);
-			
-			/*
-			IniPayReqService action1 = new IniPayReqService();
+			PurchaseDTO dto = action.execute(request);
+			response.sendRedirect("paymentOk.item?price="
+								+dto.getPurchasePrice() + "&orderNumber="
+								+dto.getPurchaseNum() + "&goodsName="
+								+dto.getDeliveryName());
+		}else if(command.equals("/paymentOk.item")) {
+			IniPayReqService action = new IniPayReqService();
 			try {
-				action1.execute(request);
+				action.execute(request);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			*/
 			RequestDispatcher dispatcher = 
 					request.getRequestDispatcher("item/payment.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/INIstdpay_pc_return.item")) {
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("item/INIstdpay_pc_return.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/close.item")) {
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("item/close.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

@@ -15,8 +15,8 @@ public class IniPayReqService {
 		String mKey = SignatureUtil.hash(signKey, "SHA-256");
 
 		String timestamp			= SignatureUtil.getTimestamp();			// util에 의해서 자동생성
-		String orderNumber			= mid+"_"+SignatureUtil.getTimestamp();	// 가맹점 주문번호(가맹점에서 직접 설정)
-		String price				= "1000";								// 상품가격(특수기호 제외, 가맹점에서 직접 설정)
+		String orderNumber			= request.getParameter("orderNumber"); // 가맹점 주문번호(가맹점에서 직접 설정)
+		String price				= request.getParameter("price");								// 상품가격(특수기호 제외, 가맹점에서 직접 설정)
 
 
 		Map<String, String> signParam = new HashMap<String, String>();
@@ -31,5 +31,8 @@ public class IniPayReqService {
 		request.setAttribute("mid", mid);
 		request.setAttribute("signature", signature);
 		request.setAttribute("mKey", mKey);
+		request.setAttribute("goodsName", request.getParameter("goodsName"));
+		request.setAttribute("orderNumber", request.getParameter("orderNumber"));
+		request.setAttribute("price", request.getParameter("price"));
 	}
 }
