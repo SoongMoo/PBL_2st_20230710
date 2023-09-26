@@ -58,8 +58,7 @@ public class ItemFrontController extends HttpServlet implements Servlet {
 		}else if(command.equals("/goodsOrder.item")) {
 			GoodsOrderService action = new GoodsOrderService();
 			PurchaseDTO dto = action.execute(request);
-			response.sendRedirect("paymentOk.item?orderNumber="
-								  + dto.getPurchaseNum());
+			response.sendRedirect("paymentOk.item?orderNumber=" + dto.getPurchaseNum());
 		}else if(command.equals("/paymentOk.item")) {
 			IniPayReqService action = new IniPayReqService();
 			try {
