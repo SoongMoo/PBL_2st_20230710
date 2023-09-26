@@ -142,6 +142,9 @@ CREATE TABLE review (
 alter table members
 add column point integer;
 
+alter table purchase 
+add column delivery_Name varchar(200);
+
 alter table employees
 add constraint emp_num_pk primary key(emp_num),
 add constraint emp_id_uu unique (emp_id),
