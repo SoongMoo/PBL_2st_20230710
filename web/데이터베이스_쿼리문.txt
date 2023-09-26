@@ -53,7 +53,7 @@ CREATE TABLE goods (
 	update_emp_num varchar(30),
 	goods_update_date date
 );
-drop TABLE goods;
+
 /* 상품입고 */
 CREATE TABLE goodsIpgo (
 	ipgo_num varchar(30),
@@ -78,7 +78,6 @@ CREATE TABLE goods_inquire (
 	emp_num varchar(30) 
 );
 /* 관심상품 */
-drop TABLE wish;
 CREATE TABLE wish (
 	goods_num VARCHAR(10) ,
 	member_Num VARCHAR(30),
@@ -113,20 +112,23 @@ CREATE TABLE purchase_list (
 	total_price integer not null
 );
 /* 배송 */
-drop TABLE delivery;
 CREATE TABLE delivery (
 	purchase_num VARCHAR(30),
 	delivery_num VARCHAR(20),
 	delivery_date date
 );
 /* 결제 */
-CREATE TABLE payment (
-	purchase_num VARCHAR(30),
-	payment_kind VARCHAR(50), /* 결제수단 */
-	payment_price integer, /* 결제금액 */
-	payment_date DATE, /* 결제일 */
-	confirm_number VARCHAR(20), /* 승인번호 */
-	card_number VARCHAR(15) /* 카드번호 */
+create table payment(
+	purchase_Num varchar(30),
+	confirmNumber varchar(50),
+	cardNum varchar(50),  // 카드번호
+	tid varchar(50), // 거래번호
+	totalPrice varchar(50), // 결제 금액
+	resultMessage varchar(50), // 결과 메세지
+	payMethod varchar(50), // 결제 방법
+	applDate varchar(50), // 승인날짜
+	applTime varchar(50), // 승인시간
+	purchaseName varchar(50)
 );
 
 /* 후기 */
@@ -204,9 +206,6 @@ add constraint purchase_num_goods_num_pk
 
 /****************************************************/
 alter table retired
-drop constraint emp_num_fk;
-
-alter table retired
 add constraint emp_num_fk foreign key(emp_num)
 	references employees(emp_num) on delete cascade;
 
@@ -246,8 +245,6 @@ add constraint cart_goods_num_fk foreign key (goods_num)
 add constraint cart_mem_num_fk foreign key(member_num)
 	references members(member_num) on delete cascade;
 
-alter table purchase 
-drop constraint pur_mem_num_fk;
 
 alter table purchase 
 add constraint pur_mem_num_fk foreign key(member_num)
