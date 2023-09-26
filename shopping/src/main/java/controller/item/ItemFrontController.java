@@ -58,10 +58,8 @@ public class ItemFrontController extends HttpServlet implements Servlet {
 		}else if(command.equals("/goodsOrder.item")) {
 			GoodsOrderService action = new GoodsOrderService();
 			PurchaseDTO dto = action.execute(request);
-			response.sendRedirect("paymentOk.item?price="
-								+dto.getPurchasePrice() + "&orderNumber="
-								+dto.getPurchaseNum() + "&goodsName="
-								+dto.getDeliveryName());
+			response.sendRedirect("paymentOk.item?orderNumber="
+								  + dto.getPurchaseNum());
 		}else if(command.equals("/paymentOk.item")) {
 			IniPayReqService action = new IniPayReqService();
 			try {
@@ -73,12 +71,20 @@ public class ItemFrontController extends HttpServlet implements Servlet {
 					request.getRequestDispatcher("item/payment.jsp");
 			dispatcher.forward(request, response);
 		}else if(command.equals("/INIstdpay_pc_return.item")) {
+			INIstdpayPcReturn action = new INIstdpayPcReturn();
+			action.execute(request);
 			RequestDispatcher dispatcher = 
-					request.getRequestDispatcher("item/INIstdpay_pc_return.jsp");
+					request.getRequestDispatcher("item/buyfinished.jsp");
 			dispatcher.forward(request, response);
 		}else if(command.equals("/close.item")) {
 			RequestDispatcher dispatcher = 
 					request.getRequestDispatcher("item/close.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/purchaseList.item")) {
+			PurchaseListService action = new PurchaseListService();
+			action.execute(request);
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("item/purchaseList.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

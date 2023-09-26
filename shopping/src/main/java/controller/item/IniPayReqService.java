@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.inicis.std.util.SignatureUtil;
 
+import model.ItemDAO;
+import model.PurchaseDTO;
+
 public class IniPayReqService {
 	public void execute(HttpServletRequest request) throws Exception {
 		String mid					= "INIpayTest";		                    // 상점아이디					
@@ -31,8 +34,12 @@ public class IniPayReqService {
 		request.setAttribute("mid", mid);
 		request.setAttribute("signature", signature);
 		request.setAttribute("mKey", mKey);
-		request.setAttribute("goodsName", request.getParameter("goodsName"));
-		request.setAttribute("orderNumber", request.getParameter("orderNumber"));
-		request.setAttribute("price", request.getParameter("price"));
+		
+		ItemDAO  dao = new ItemDAO();
+		PurchaseDTO dto = dao.purchaseSelect(orderNumber); 
+		
+		request.setAttribute("goodsName",dto.getDeliveryName());
+		request.setAttribute("orderNumber", dto.getPurchaseNum());
+		request.setAttribute("price", dto.getPurchasePrice());
 	}
 }

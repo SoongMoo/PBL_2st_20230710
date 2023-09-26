@@ -1,5 +1,6 @@
 package controller.item;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,7 +15,12 @@ import model.PurchaseDTO;
 import model.PurchaseListDTO;
 
 public class GoodsOrderService {
-	public PurchaseDTO execute(HttpServletRequest request) {
+	public PurchaseDTO execute(HttpServletRequest request) {	
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
 		MemberMyDAO myDao = new MemberMyDAO();
@@ -27,7 +33,7 @@ public class GoodsOrderService {
 		String deliveryPhone = request.getParameter("deliveryPhone");
 		Long purchasePrice = Long.parseLong(request.getParameter("goodsTotalPrice"));
 		String message = request.getParameter("message");
-		String memberNum  = request.getParameter(memberDTO.getMemberNum());
+		String memberNum  = memberDTO.getMemberNum();
 		
 		PurchaseDTO dto = new PurchaseDTO();
 		dto.setDeliveryAddr(deliveryAddr);
