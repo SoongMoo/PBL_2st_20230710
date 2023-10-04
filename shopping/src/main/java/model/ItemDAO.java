@@ -4,19 +4,98 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDAO extends DataBaseInfo{
+public class ItemDAO extends DataBaseInfo {
+	public void wishGoodsDelete(String goodsNum, String memberNum) {
+		con = getConnection();
+		sql = " delete from wish"
+			+ " where goods_num=? and member_num =?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, goodsNum);
+			pstmt.setString(2, memberNum);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 삭제되었습니다.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+	}
+	public void wishGoodsInsert(String goodsNum, String memberNum) {
+		con = getConnection();
+		sql = " insert into wish (goods_num, member_num , wish_date )"
+			+ " values(?,?,now())";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, goodsNum);
+			pstmt.setString(2, memberNum);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 입력되었습니다.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+	}
+	
+	public int goodsSelect(String goodsNum, String memberNum) {
+		int i = 0;
+		con = getConnection();
+		sql = "select * from wish " + " where goods_num=? and member_num =?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, goodsNum);
+			pstmt.setString(2, memberNum);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				i = 1;
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		return i;
+	}
+
+	public void purchaseDelete(String purchaseNum) {
+		con = getConnection();
+		sql = " delete from purchase " + " where  purchase_Num = ? ";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, purchaseNum);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 삭제되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+
+	public void paymentDelete(String purchaseNum) {
+		con = getConnection();
+		sql = " delete from payment " + " where  purchase_Num = ? ";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, purchaseNum);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 삭제되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+
 	public void cartInsert(CartDTO dto) {
 		con = getConnection();
-		sql = " merge into cart c "
-			+ " using (select goods_num from goods "
-			+ "        where goods_num = ? ) g"
-			+ " on (c.goods_num = g.goods_num and c.member_num = ? ) "
-			+ " WHEN MATCHED THEN "
-			+ " update set "
-			+ " 	cart_qty = cart_qty + ? "
-			+ " WHEN NOT MATCHED THEN"
-			+ " insert ( MEMBER_NUM, GOODS_NUM, CART_DATE, CART_QTY) "
-			+ " values ( ?, ?, now() , ?) ";
+		sql = " merge into cart c " + " using (select goods_num from goods " + "        where goods_num = ? ) g"
+				+ " on (c.goods_num = g.goods_num and c.member_num = ? ) " + " WHEN MATCHED THEN " + " update set "
+				+ " 	cart_qty = cart_qty + ? " + " WHEN NOT MATCHED THEN"
+				+ " insert ( MEMBER_NUM, GOODS_NUM, CART_DATE, CART_QTY) " + " values ( ?, ?, now() , ?) ";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getGoodsNum());
@@ -31,24 +110,22 @@ public class ItemDAO extends DataBaseInfo{
 			e.printStackTrace();
 		} finally {
 			close();
-		}	
+		}
 	}
+
 	public CartListDTO selectOne(String memberNum, String goodsNum) {
 		CartListDTO dto = new CartListDTO();
 		con = getConnection();
 		sql = " select MEMBER_NUM, c.GOODS_NUM, CART_QTY, CART_DATE"
-			+ "    ,goods_name, goods_price * CART_QTY total_price"
-			+ "    ,goods_main_store , delivery_Cost"
-			+ " from cart c, goods g"
-			+ " where c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = ? "
-			+ " and c.goods_num = ? "
-			+ " order by c.GOODS_NUM desc";		
+				+ "    ,goods_name, goods_price * CART_QTY total_price" + "    ,goods_main_store , delivery_Cost"
+				+ " from cart c, goods g" + " where c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = ? "
+				+ " and c.goods_num = ? " + " order by c.GOODS_NUM desc";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, memberNum);
 			pstmt.setString(2, goodsNum);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				dto.setCartDate(rs.getDate("CART_DATE"));
 				dto.setCartQty(rs.getInt("CART_QTY"));
 				dto.setGoodsName(rs.getString("goods_name"));
@@ -60,26 +137,24 @@ public class ItemDAO extends DataBaseInfo{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close();
 		}
 		return dto;
 	}
-	
-	public List<CartListDTO> cartList(String memberNum){
+
+	public List<CartListDTO> cartList(String memberNum) {
 		List<CartListDTO> list = new ArrayList<CartListDTO>();
 		con = getConnection();
 		sql = " select MEMBER_NUM, c.GOODS_NUM, CART_QTY, CART_DATE"
-			+ "    ,goods_name, goods_price * CART_QTY total_price"
-			+ "    ,goods_main_store"
-			+ " from cart c, goods g"
-			+ " where c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = ? "
-			+ " order by c.GOODS_NUM desc";		
+				+ "    ,goods_name, goods_price * CART_QTY total_price" + "    ,goods_main_store"
+				+ " from cart c, goods g" + " where c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = ? "
+				+ " order by c.GOODS_NUM desc";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, memberNum);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				CartListDTO dto = new CartListDTO();
 				dto.setCartDate(rs.getDate("CART_DATE"));
 				dto.setCartQty(rs.getInt("CART_QTY"));
@@ -92,17 +167,15 @@ public class ItemDAO extends DataBaseInfo{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close();
-		}		
+		}
 		return list;
 	}
-	
+
 	public void itemQtyDown(String goodsNum, String memberNum) {
 		con = getConnection();
-		sql = " update cart "
-			+ " set cart_qty = cart_qty - 1 "
-			+ " where  MEMBER_NUM = ? and GOODS_NUM = ?";
+		sql = " update cart " + " set cart_qty = cart_qty - 1 " + " where  MEMBER_NUM = ? and GOODS_NUM = ?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, memberNum);
@@ -111,14 +184,14 @@ public class ItemDAO extends DataBaseInfo{
 			System.out.println(i + "개가 수정되었습니다.");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close();
 		}
 	}
+
 	public void itemDelete(String memberNum, String goodNum) {
 		con = getConnection();
-		sql = " delete from cart "
-			+ "	where member_Num=? and goods_num=?";
+		sql = " delete from cart " + "	where member_Num=? and goods_num=?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, memberNum);
@@ -127,17 +200,17 @@ public class ItemDAO extends DataBaseInfo{
 			System.out.println(i + "개가 삭되었습니다.");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close();
 		}
 	}
-	
+
 	public void purchaseInsert(PurchaseDTO dto) {
 		con = getConnection();
 		sql = " insert into purchase(purchase_Num, purchase_Date, delivery_Name, delivery_Phone"
-			+ "                     ,delivery_Addr, delivery_Addr_Detail, delivery_Post"
-			+ "                     ,message, purchase_Status, member_Num,  PURCHASE_PRICE )"
-			+ " values              (?, now(), ?, ?, ?, ?, ?, ?, '결제대기중', ?, ?)";
+				+ "                     ,delivery_Addr, delivery_Addr_Detail, delivery_Post"
+				+ "                     ,message, purchase_Status, member_Num,  PURCHASE_PRICE )"
+				+ " values              (?, now(), ?, ?, ?, ?, ?, ?, '결제대기중', ?, ?)";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getPurchaseNum());
@@ -153,17 +226,17 @@ public class ItemDAO extends DataBaseInfo{
 			System.out.println(i + "개 행이(가) 삽입되었습니다.");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close();
 		}
 	}
-	public void purchaseListInsert(PurchaseListDTO dto, String memberNum) {
+
+	public int purchaseListInsert(PurchaseListDTO dto, String memberNum) {
+		int i = 0;
 		con = getConnection();
 		sql = " insert into purchase_list(PURCHASE_NUM, GOODS_NUM, PURCHASE_QTY, total_price) "
-			+ " select ?, c.GOODS_NUM, cart_qty, cart_qty * goods_price "
-			+ " from cart c join goods g "
-			+ " on c.goods_num=g.goods_num "
-			+ " where c.goods_num = ? and member_num = ? ";
+				+ " select ?, c.GOODS_NUM, cart_qty, cart_qty * goods_price " + " from cart c join goods g "
+				+ " on c.goods_num=g.goods_num " + " where c.goods_num = ? and member_num = ? ";
 		System.out.println(sql);
 		System.out.println(dto.getPurchaseNum());
 		System.out.println(dto.getGoodsNum());
@@ -173,18 +246,19 @@ public class ItemDAO extends DataBaseInfo{
 			pstmt.setString(1, dto.getPurchaseNum());
 			pstmt.setString(2, dto.getGoodsNum());
 			pstmt.setString(3, memberNum);
-			int i = pstmt.executeUpdate();
+			i = pstmt.executeUpdate();
 			System.out.println(i + "개가 삽입되었습니다.");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close();
 		}
+		return i;
 	}
+
 	public void cartItemDelete(String goodsNum, String memberNum) {
 		con = getConnection();
-		sql = " delete from cart "
-			+ " where MEMBER_NUM = ? and GOODS_NUM = ?";
+		sql = " delete from cart " + " where MEMBER_NUM = ? and GOODS_NUM = ?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, memberNum);
@@ -193,17 +267,16 @@ public class ItemDAO extends DataBaseInfo{
 			System.out.println(i + "개가 삭제되었습니다.");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close();
 		}
 	}
-	
+
 	public void paymentInsert(PaymentDTO dto) {
 		con = getConnection();
 		sql = " insert into payment(purchase_Num,confirmNumber, cardNum, TID"
-			+ "					  , totalPrice, resultMessage, payMethod, applDate"
-			+ "					  , applTime, purchaseName)"
-			+ "	values(?,?,?,?,?,?,?,?,?,?)";
+				+ "					  , totalPrice, resultMessage, payMethod, applDate"
+				+ "					  , applTime, purchaseName)" + "	values(?,?,?,?,?,?,?,?,?,?)";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getPurchaseNum());
@@ -217,33 +290,29 @@ public class ItemDAO extends DataBaseInfo{
 			pstmt.setString(9, dto.getApplTime());
 			pstmt.setString(10, dto.getPurchaseName());
 			int i = pstmt.executeUpdate();
-	        System.out.println(i +"개가 삽입되었습니다.");
+			System.out.println(i + "개가 삽입되었습니다.");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close();
 		}
 	}
-	
-	public List<PurchaseInfoDTO> purchaseItemSelect(String memberNum){
+
+	public List<PurchaseInfoDTO> purchaseItemSelect(String memberNum) {
 		List<PurchaseInfoDTO> list = new ArrayList<PurchaseInfoDTO>();
 		con = getConnection();
 		sql = " select g.goods_num, goods_main_store, goods_name "
-			+ "   		,p.purchase_num, member_num , purchase_price, purchase_Status"
-			+ "         ,delivery_name "
-			+ "   		,goods_price * PURCHASE_QTY total_price "
-			+ "   		,confirmNumber   "
-			+ " from  goods g join purchase_list pl "
-			+ " on g.goods_num = pl.goods_num join purchase p "
-			+ " on pl.purchase_num = p.purchase_num left outer join payment pm "
-			+ " on p.purchase_num = pm.purchase_num "
-			+ " where p.member_num = ?";
-		
+				+ "   		,p.purchase_num, member_num , purchase_price, purchase_Status" + "         ,delivery_name "
+				+ "   		,goods_price * PURCHASE_QTY total_price " + "   		,confirmNumber   "
+				+ " from  goods g join purchase_list pl " + " on g.goods_num = pl.goods_num join purchase p "
+				+ " on pl.purchase_num = p.purchase_num left outer join payment pm "
+				+ " on p.purchase_num = pm.purchase_num " + " where p.member_num = ?";
+
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, memberNum);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				PurchaseInfoDTO dto = new PurchaseInfoDTO();
 				dto.setPurchaseNum(rs.getLong("purchase_num"));
 				dto.setPurchasePrice(rs.getInt("purchase_price"));
@@ -259,17 +328,17 @@ public class ItemDAO extends DataBaseInfo{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {close();}
-		
+		} finally {
+			close();
+		}
+
 		return list;
 	}
-	
+
 	public PurchaseDTO purchaseSelect(String purchaseNum) {
 		PurchaseDTO dto = new PurchaseDTO();
 		con = getConnection();
-		sql = " select purchase_num,purchase_price, delivery_name "
-			+ " from purchase "
-			+ " where purchase_num = ?";
+		sql = " select purchase_num,purchase_price, delivery_name " + " from purchase " + " where purchase_num = ?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, purchaseNum);
@@ -280,22 +349,11 @@ public class ItemDAO extends DataBaseInfo{
 			dto.setPurchaseNum(rs.getString("purchase_num"));
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {close();}
-		
+		} finally {
+			close();
+		}
+
 		return dto;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

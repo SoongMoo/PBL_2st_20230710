@@ -59,8 +59,8 @@ public class GoodsOrderService {
 			PurchaseListDTO dto1 = new PurchaseListDTO();
 			dto1.setGoodsNum(goodsNum);
 			dto1.setPurchaseNum(purchaseNum);
-			dao.purchaseListInsert(dto1, memberNum);
-			dao.cartItemDelete(goodsNum, memberNum);
+			int i = dao.purchaseListInsert(dto1, memberNum);
+			if(i >= 0) dao.cartItemDelete(goodsNum, memberNum);
 		}
 		return dto;
 	}

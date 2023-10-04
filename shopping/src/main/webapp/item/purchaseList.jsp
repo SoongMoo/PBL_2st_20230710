@@ -20,7 +20,9 @@
 		 ${dto.goodsName } </td>
 	
 	<td> <c:if test="${empty dto.confirmNum }">
-			<a href="paymentOk.item?orderNumber=${dto.purchaseNum }">결제하기</a></c:if>
+			<a href="paymentOk.item?orderNumber=${dto.purchaseNum }">결제하기</a>
+			<a href="purchaseDelete.item?purchaseNum=${dto.purchaseNum }">구매삭제</a>			
+			</c:if>
 		 <c:if test="${!empty dto.confirmNum }">
 		 	<a href="paymentDelete.item?purchaseNum=${dto.purchaseNum }" >결제취소</a>
 		 </c:if>
