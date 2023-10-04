@@ -16,7 +16,7 @@
 			<li><a href="memberList.mem">회원 목록</a></li>
 			<li><a href="empMyPage.empmy">마이페이지</a></li>
 			<li><a href="goodsList.goods">상품리스트</a></li>
-			<li>구매정보확인</li>
+			<li><a href="memPurchaseList.deli" >구매정보</a></li>
 		</c:if>
 		<c:if test="${dto.grade == 'mem' }">
 			<li><a href="memberMyPage.my">내정보 보기</a></li>
