@@ -5,6 +5,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDAO extends DataBaseInfo {
+	public List<WishListDTO> wishListSelect(String memberNum){
+		List<WishListDTO> list = new ArrayList<WishListDTO>();
+		con = getConnection();
+		sql = " select g.goods_num, goods_Main_Store, goods_name, goods_price "
+			+ "	      , wish_date"
+			+ " from goods g join wish w"
+			+ " on g.goods_num = w.goods_num "
+			+ " where member_num = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberNum);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				WishListDTO dto = new WishListDTO();
+				dto.setGoodsMainStore(rs.getString("goods_Main_Store"));
+				dto.setGoodsName(rs.getString("goods_name"));
+				dto.setGoodsNum(rs.getString("goods_num"));
+				dto.setGoodsPrice(rs.getInt("goods_price"));
+				dto.setWishDate(rs.getDate("wish_date"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		return list;
+	}
 	public void wishGoodsDelete(String goodsNum, String memberNum) {
 		con = getConnection();
 		sql = " delete from wish"

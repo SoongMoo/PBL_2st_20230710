@@ -90,8 +90,13 @@
 		<tr>
 			<td>
 				<button type="button" id="cartBtn">장바구니</button> |
-				<button type="button" id="buyItem">바로구매</button> | 찜<img
-				src="images/left_arrow.png" id="wish" width="20" />
+				<button type="button" id="buyItem">바로구매</button> | 찜
+				<c:if test="${isTrue == 0 }">
+				<img src="images/left_arrow.png" id="wish" width="20" />
+				</c:if>
+				<c:if test="${isTrue == 1 }">
+				<img src="images/right_arrow.png" id="wish" width="20" />
+				</c:if>
 			</td>
 		</tr>
 		<tr>

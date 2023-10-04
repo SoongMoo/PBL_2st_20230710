@@ -105,6 +105,16 @@ public class ItemFrontController extends HttpServlet implements Servlet {
 			RequestDispatcher dispatcher = 
 					request.getRequestDispatcher("item/wishResult.jsp");
 			dispatcher.forward(request, response);
+		}else if(command.equals("/wishList.item")) {
+			WishListService action = new WishListService();
+			action.execute(request);
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("item/wishList.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/wishDelete.item")) {
+			WishDeleteService action = new WishDeleteService();
+			action.execute(request);
+			response.sendRedirect("wishList.item");
 		}
 	}
 	@Override
