@@ -23,6 +23,25 @@ public class DeliveryFrontController extends HttpServlet
 			RequestDispatcher dispatcher = 
 					request.getRequestDispatcher("delivery/deliveryList.jsp");
 			dispatcher.forward(request, response);
+		}else if(command.equals("/deliveryRegist.deli")) {
+			request.setAttribute("purchaseNum", request.getParameter("purchaseNum"));
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("delivery/deliveryRegist.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/deliveryWrite.deli")) {
+			DeliveryWriteService action = new DeliveryWriteService();
+			action.execute(request);
+			response.sendRedirect("memPurchaseList.deli");
+		}else if(command.equals("/deliveryModify.deli")) {
+			DeliveryModifyService action = new DeliveryModifyService();
+			action.execute(request);
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("delivery/deliveryModify.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/deliveryUpdate.deli")) {
+			DeliveryUpdateService action = new DeliveryUpdateService();
+			action.execute(request);
+			response.sendRedirect("memPurchaseList.deli");
 		}
 	}
 	@Override

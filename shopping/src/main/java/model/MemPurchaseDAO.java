@@ -10,7 +10,7 @@ public class MemPurchaseDAO extends DataBaseInfo{
 		con = getConnection();
 		sql = " select p.purchase_Num, purchase_price , MEMBER_NUM"
 			+ "       ,CONFIRMNUMBER "
-			+ "       , DELIVERY_NUM "
+			+ "       , DELIVERY_NUM , DELIVERY_STATE "
 			+ " from purchase p left outer join  payment pm "
 			+ " on p.purchase_Num = pm.purchase_Num "
 			+ "					left outer join DELIVERY d"
@@ -25,6 +25,7 @@ public class MemPurchaseDAO extends DataBaseInfo{
 				dto.setPurchaseNum(rs.getLong("purchase_Num"));
 				dto.setPurchasePrice(rs.getLong("purchase_price"));
 				dto.setMemberNum(rs.getString("MEMBER_NUM"));
+				dto.setDeliveryState(rs.getString("DELIVERY_STATE"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {

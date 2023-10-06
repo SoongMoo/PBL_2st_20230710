@@ -6,6 +6,14 @@ public class BuyListDTO {
 	String memberNum; 
 	Long confirmNum;
 	Long deliveryNum;
+	String deliveryState;
+	public String getDeliveryState() {
+		return deliveryState;
+	}
+	public void setDeliveryState(String deliveryState) {
+		this.deliveryState = deliveryState;
+	}
+	
 	public Long getPurchaseNum() {
 		return purchaseNum;
 	}
