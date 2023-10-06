@@ -117,6 +117,8 @@ CREATE TABLE delivery (
 	delivery_num VARCHAR(20),
 	delivery_date date
 );
+alter table DELIVERY
+add column DELIVERY_STATE varchar(20);
 /* 결제 */
 create table payment(
 	purchase_Num varchar(30),
