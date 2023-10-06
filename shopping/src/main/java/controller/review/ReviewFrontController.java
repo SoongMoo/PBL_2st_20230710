@@ -25,6 +25,16 @@ public class ReviewFrontController  extends HttpServlet
 			ReviewWriteService action = new ReviewWriteService();
 			action.execute(request);
 			response.sendRedirect("purchaseList.item");
+		}else if(command.equals("/goodsReviewUpdate.review")) {
+			ReviewDetailService action = new ReviewDetailService();
+			action.execute(request);
+			RequestDispatcher dispatcher =
+					request.getRequestDispatcher("review/reviewModify.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/goodsReviewModify.review")) {
+			GoodsReviewUpdateService action = new GoodsReviewUpdateService();
+			action.execute(request);
+			response.sendRedirect("purchaseList.item");
 		}
 	}
 	@Override
