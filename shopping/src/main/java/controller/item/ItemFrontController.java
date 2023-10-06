@@ -115,6 +115,10 @@ public class ItemFrontController extends HttpServlet implements Servlet {
 			WishDeleteService action = new WishDeleteService();
 			action.execute(request);
 			response.sendRedirect("wishList.item");
+		}else if(command.equals("/purchased.item")) {
+			PurchasedService action = new PurchasedService();
+			action.execute(request);
+			response.sendRedirect("purchaseList.item");
 		}
 	}
 	@Override

@@ -5,6 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDAO extends DataBaseInfo {
+	public void deliveryStatusUpdate(String purchaseNum) {
+		con = getConnection();
+		sql = " update purchase "
+			+ " set purchase_status = '구매확정' "
+			+ " where purchase_num = ? ";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, purchaseNum);
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 수정되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}		
+	}
+	
+	
 	public List<WishListDTO> wishListSelect(String memberNum){
 		List<WishListDTO> list = new ArrayList<WishListDTO>();
 		con = getConnection();
@@ -330,11 +348,19 @@ public class ItemDAO extends DataBaseInfo {
 		List<PurchaseInfoDTO> list = new ArrayList<PurchaseInfoDTO>();
 		con = getConnection();
 		sql = " select g.goods_num, goods_main_store, goods_name "
-				+ "   		,p.purchase_num, member_num , purchase_price, purchase_Status" + "         ,delivery_name "
-				+ "   		,goods_price * PURCHASE_QTY total_price " + "   		,confirmNumber   "
-				+ " from  goods g join purchase_list pl " + " on g.goods_num = pl.goods_num join purchase p "
+				+ "   		, p.purchase_num, member_num , purchase_price, purchase_Status" 
+				+ "         , delivery_name "
+				+ "   		, goods_price * PURCHASE_QTY total_price " 
+				+ "   		, confirmNumber  "
+				+ "         , delivery_State "
+				+ "         , review_num "
+				+ " from  goods g join purchase_list pl " 
+				+ " on g.goods_num = pl.goods_num join purchase p "
 				+ " on pl.purchase_num = p.purchase_num left outer join payment pm "
-				+ " on p.purchase_num = pm.purchase_num " + " where p.member_num = ?";
+				+ " on p.purchase_num = pm.purchase_num left outer join delivery d "
+				+ " on p.purchase_num = d.purchase_num left outer join review r "
+				+ " on p.purchase_num = r.purchase_num" 
+				+ " where p.member_num = ? ";
 
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -352,6 +378,8 @@ public class ItemDAO extends DataBaseInfo {
 				dto.setGoodsNum(rs.getString("goods_num"));
 				dto.setMemberNum(rs.getString("member_num"));
 				dto.setTotalPrice(rs.getInt("total_price"));
+				dto.setDeliveryState(rs.getString("delivery_State"));
+				dto.setReviewNum(rs.getString("review_num"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {

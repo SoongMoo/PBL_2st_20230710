@@ -10,9 +10,17 @@ public class PurchaseInfoDTO {
 	String deliveryStatus;
 	String reviewNum;
 	int totalPrice;
-	
 	int purchasePrice;
 	String deliveryName;
+	
+	String deliveryState;
+	public String getDeliveryState() {
+		return deliveryState;
+	}
+	public void setDeliveryState(String deliveryState) {
+		this.deliveryState = deliveryState;
+	}
+	
 	public int getPurchasePrice() {
 		return purchasePrice;
 	}
