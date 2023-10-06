@@ -37,7 +37,7 @@ function purchased(purchaseNum){
 		 		<button type="button" onclick="purchased('${dto.purchaseNum }');">구매확정</button>
 		 	</c:if>
 		 	<c:if test="${dto.deliveryStatus=='구매확정'  and empty dto.reviewNum}">
-		 		리뷰등록
+		 		<a href="reviewRegist.review?purchaseNum=${dto.purchaseNum }&goodsNum=${dto.goodsNum}">리뷰등록</a>
 		 	</c:if>
 		 	<c:if test="${dto.deliveryStatus=='구매확정'  and !empty dto.reviewNum}">
 		 		리뷰수정 | 리뷰삭제

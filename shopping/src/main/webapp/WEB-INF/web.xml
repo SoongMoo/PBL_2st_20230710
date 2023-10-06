@@ -104,4 +104,17 @@
   	<url-pattern>*.deli</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>review</servlet-name>
+  	<servlet-class>controller.review.ReviewFrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>review</servlet-name>
+  	<url-pattern>*.review</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  
 </web-app>
