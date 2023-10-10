@@ -1,13 +1,23 @@
 package model;
 
+import java.util.Date;
+
 public class ReviewDTO {
 	int reviewNum;
 	String goodsNum;
 	String purchaseNum;
 	String reviewContent;
 	String memberId;
-	
 	String goodsName;
+	
+	Date reviewDate;
+	public Date getReviewDate() {
+		return reviewDate;
+	}
+	public void setReviewDate(Date reviewDate) {
+		this.reviewDate = reviewDate;
+	}
+	
 	public String getGoodsName() {
 		return goodsName;
 	}

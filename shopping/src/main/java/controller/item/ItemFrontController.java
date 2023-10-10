@@ -119,6 +119,12 @@ public class ItemFrontController extends HttpServlet implements Servlet {
 			PurchasedService action = new PurchasedService();
 			action.execute(request);
 			response.sendRedirect("purchaseList.item");
+		}else if(command.equals("/descript.item")) {
+			GoodsDetailService action = new GoodsDetailService();
+			action.execute(request);
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("item/descript.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 	@Override

@@ -39,6 +39,12 @@ public class ReviewFrontController  extends HttpServlet
 			GoodsReviewDeleteService action = new GoodsReviewDeleteService();
 			action.execute(request);
 			response.sendRedirect("purchaseList.item");
+		}else if(command.equals("/reviewList.review")) {
+			ReviewListService action = new ReviewListService();
+			action.execute(request);
+			RequestDispatcher dispatcher =
+					request.getRequestDispatcher("review/reviewList.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 	@Override

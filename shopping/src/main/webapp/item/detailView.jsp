@@ -6,8 +6,59 @@
 
 <script>
 	$(function(){
+		
+		$("#inquire").click(function(){
+			//location.href = "inquireList.inq?goodsNum=${dto.goodsNum}";
+			option = {
+				type:"post",
+				url: "inquireList.inq",
+				data:{"goodsNum":"${dto.goodsNum}"},
+				dataType : "html",
+				success : function(result){
+					$("#content").html(result);
+				},
+				error : function(){
+					alert('에러가 나왔다 홀홀홀~');
+					return;
+				}
+			}
+			$.ajax(option);
+		});
+		
+		$("#descript").click(function(){
+			//location.reload();
+			//location.href = "descript.item?num=${dto.goodsNum}";
+			   option = {
+					type:"post",
+					url: "descript.item",
+					data:{"num":"${dto.goodsNum}"},
+					dataType : "html",
+					success : function(result){
+						$("#content").html(result);
+					},
+					error : function(){
+						alert('에러가 나왔다 홀홀홀~');
+						return;
+					}
+				}
+				$.ajax(option);
+		});
 		$("#review").click(function(){
-			location.href = "reviewList.review?goodsNum=${dto.goodsNum}";
+			//location.href = "reviewList.review?goodsNum=${dto.goodsNum}";
+			option = {
+				type:"post",
+				url: "reviewList.review",
+				data:{"goodsNum":"${dto.goodsNum}"},
+				dataType : "html",
+				success : function(result){
+					$("#content").html(result);
+				},
+				error : function(){
+					alert('에러가 나왔다 홀홀홀~');
+					return;
+				}
+			}
+			$.ajax(option);
 		});
 		$("#wish").click(function(){
 			$.ajax({
@@ -93,32 +144,33 @@
 		<tr>
 			<td>
 				<button type="button" id="cartBtn">장바구니</button> |
-				<button type="button" id="buyItem">바로구매</button> | 찜
-				<c:if test="${isTrue == 0 }">
-				<img src="images/left_arrow.png" id="wish" width="20" />
-				</c:if>
-				<c:if test="${isTrue == 1 }">
-				<img src="images/right_arrow.png" id="wish" width="20" />
+				<button type="button" id="buyItem">바로구매</button> | 찜 <c:if
+					test="${isTrue == 0 }">
+					<img src="images/left_arrow.png" id="wish" width="20" />
+				</c:if> <c:if test="${isTrue == 1 }">
+					<img src="images/right_arrow.png" id="wish" width="20" />
 				</c:if>
 			</td>
 		</tr>
 	</table>
 	<table width="800" align="center">
-		<tr><td><span id="descript">제품 상세 설명</span> | 
-				<span id="review">리뷰</span> | 
-				<span id="inquire">상품문의</span></td></tr>
-	</table>
-	<div id="content">
-	<table width="800" align="center">		
 		<tr>
-			<td colspan="2">${fn:replace(dto.goodsContent,newLine,"<br />") }<br />
-				<c:forTokens items="${dto.goodsImages }" delims="`" var="img">
-					<img src="goods/images/${img }" height="300" />
-					<br />
-				</c:forTokens>
-			</td>
+			<td><span id="descript">제품 상세 설명</span> | 
+				<span id="review">리뷰</span> | 
+				<span id="inquire">상품문의</span></td>
 		</tr>
 	</table>
+	<div id="content">
+		<table width="800" align="center">
+			<tr>
+				<td colspan="2">${fn:replace(dto.goodsContent,newLine,"<br />") }<br />
+					<c:forTokens items="${dto.goodsImages }" delims="`" var="img">
+						<img src="goods/images/${img }" height="300" />
+						<br />
+					</c:forTokens>
+				</td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>

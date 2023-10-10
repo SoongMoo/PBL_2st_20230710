@@ -113,7 +113,14 @@
   	<url-pattern>*.review</url-pattern>
   </servlet-mapping>
   
-  
+  <servlet>
+  	<servlet-name>inquire</servlet-name>
+  	<servlet-class>controller.inquire.InquireFrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>inquire</servlet-name>
+  	<url-pattern>*.inq</url-pattern>
+  </servlet-mapping> 
   
   
   
