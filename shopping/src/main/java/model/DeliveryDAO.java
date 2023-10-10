@@ -21,7 +21,6 @@ public class DeliveryDAO extends DataBaseInfo{
 		}finally {
 			close();
 		}
-		
 	}
 	public DeliveryDTO deliverySelect(String purchaseNum) {
 		DeliveryDTO dto = null;

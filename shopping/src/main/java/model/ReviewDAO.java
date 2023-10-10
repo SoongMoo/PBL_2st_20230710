@@ -3,6 +3,20 @@ package model;
 import java.sql.SQLException;
 
 public class ReviewDAO extends DataBaseInfo{
+	public void reviewDelete(String reviewNum) {
+		con = getConnection();
+		sql = " delete from review "
+			+ " where review_Num= ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(reviewNum));
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 삭제되었습니다.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {close();}
+	}
 	public void reviewUpdate(String reviewNum,String reviewContent) {
 		con = getConnection();
 		sql = "update review"

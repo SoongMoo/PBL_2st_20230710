@@ -43,7 +43,7 @@ function purchased(purchaseNum){
 		 		<a href="goodsReviewUpdate.review?purchaseNum=${dto.purchaseNum }&goodsNum=${dto.goodsNum}">
 		 			리뷰수정
 		 		</a> 
-		 	  | 리뷰삭제
+		 	  | <a href="goodsReviewDelete.review?reviewNum=${dto.reviewNum }">리뷰삭제</a>
 		 	</c:if>
 		 </c:if>
 	</td></tr>

@@ -6,6 +6,9 @@
 
 <script>
 	$(function(){
+		$("#review").click(function(){
+			location.href = "reviewList.review?goodsNum=${dto.goodsNum}";
+		});
 		$("#wish").click(function(){
 			$.ajax({
 				type:"post",
@@ -99,6 +102,14 @@
 				</c:if>
 			</td>
 		</tr>
+	</table>
+	<table width="800" align="center">
+		<tr><td><span id="descript">제품 상세 설명</span> | 
+				<span id="review">리뷰</span> | 
+				<span id="inquire">상품문의</span></td></tr>
+	</table>
+	<div id="content">
+	<table width="800" align="center">		
 		<tr>
 			<td colspan="2">${fn:replace(dto.goodsContent,newLine,"<br />") }<br />
 				<c:forTokens items="${dto.goodsImages }" delims="`" var="img">
@@ -108,5 +119,6 @@
 			</td>
 		</tr>
 	</table>
+	</div>
 </body>
 </html>

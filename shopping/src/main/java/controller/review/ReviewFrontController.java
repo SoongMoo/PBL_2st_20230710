@@ -35,6 +35,10 @@ public class ReviewFrontController  extends HttpServlet
 			GoodsReviewUpdateService action = new GoodsReviewUpdateService();
 			action.execute(request);
 			response.sendRedirect("purchaseList.item");
+		}else if(command.equals("/goodsReviewDelete.review")) {
+			GoodsReviewDeleteService action = new GoodsReviewDeleteService();
+			action.execute(request);
+			response.sendRedirect("purchaseList.item");
 		}
 	}
 	@Override
