@@ -16,7 +16,7 @@ $(function(){
 });
 function inquireUpdate(inquireNum){
 	window.open("inquireUpdate.inq?inquireNum="+inquireNum,"문의수정",
-				"width=700, height=650, top=100, left=100");
+	"width=700, height=650, top=100, left=100");
 }
 function inquireDelete(inquireNum){
 	$.ajax({

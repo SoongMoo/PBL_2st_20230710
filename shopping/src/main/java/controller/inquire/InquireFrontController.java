@@ -47,6 +47,23 @@ implements Servlet{
 			String inquireNum = request.getParameter("inquireNum");
 			InquireDAO dao = new InquireDAO();
 			dao.inquireDelete(inquireNum);
+		}else if(command.equals("/inquireUpdate.inq")) {
+			InquireDetailService action = new InquireDetailService();
+			action.execute(request);
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("inquire/inquireUpdate.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/inquireModify.inq")) {
+			InquireUpdateService action = new InquireUpdateService();
+			action.execute(request);
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			String str=  "<script language='javascript'>" 
+					  +  " opener.parent.inquire();"
+			          +  " window.self.close();"
+			          +  "</script>";
+			 out.print(str);
+			 out.close();
 		}
 	}
 	@Override
