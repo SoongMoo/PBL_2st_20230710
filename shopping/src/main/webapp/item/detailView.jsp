@@ -3,10 +3,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
-
 <script>
+
+	function inquire(){
+		option = {
+				type:"post",
+				url: "inquireList.inq",
+				data:{"goodsNum":"${dto.goodsNum}"},
+				dataType : "html",
+				success : function(result){
+					$("#content").html(result);
+				},
+				error : function(){
+					alert('에러가 나왔다 홀홀홀~');
+					return;
+				}
+			}
+			$.ajax(option);
+	}
+	
 	$(function(){
-		
+		/*
 		$("#inquire").click(function(){
 			//location.href = "inquireList.inq?goodsNum=${dto.goodsNum}";
 			option = {
@@ -24,6 +41,7 @@
 			}
 			$.ajax(option);
 		});
+		*/
 		
 		$("#descript").click(function(){
 			//location.reload();
@@ -157,7 +175,7 @@
 		<tr>
 			<td><span id="descript">제품 상세 설명</span> | 
 				<span id="review">리뷰</span> | 
-				<span id="inquire">상품문의</span></td>
+				<span id="inquire" onclick="inquire();">상품문의</span></td>
 		</tr>
 	</table>
 	<div id="content">
