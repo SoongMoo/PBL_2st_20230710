@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,9 +21,8 @@ public class LoginFrontController extends HttpServlet
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length());
 		if(command.equals("/login.login")) {
-			UserLoginService action =
-					new UserLoginService();
-			int i = action.execute(request);
+			UserLoginService action = new UserLoginService();
+			int i = action.execute(request, response);
 			if(i == 1) {
 				response.sendRedirect(request.getContextPath()+ "/");
 			}else {
@@ -31,6 +31,11 @@ public class LoginFrontController extends HttpServlet
 				dispatcher.forward(request, response);
 			}
 		}else if(command.equals("/logout.login")) {
+			Cookie cookie = new Cookie("autoLogin","");
+			cookie.setPath("/");
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+			
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect(request.getContextPath()+"/");
@@ -40,7 +45,7 @@ public class LoginFrontController extends HttpServlet
 			dispatcher.forward(request, response);
 		}else if(command.equals("/login1.login")) {
 			UserLoginService action = new UserLoginService();
-			action.execute(request);
+			action.execute(request, response);
 			PrintWriter out = response.getWriter();
 			response.setContentType("text/html; charset=utf-8");
 			out.print("<script language='javascript'>");

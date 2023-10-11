@@ -61,8 +61,10 @@ function answerOpen(inquireNum){
 			</c:if>
 		</th></tr>
 	<tr><td colspan="3">${dto.inquireKind } : ${dto.inquireSubject }
-		<button type="button" id="ingu_${dto.inquireNum }" 
+		<c:if test="${!empty dto.inquireAnswer }">
+			<button type="button" id="ingu_${dto.inquireNum }" style="float:right;"
 				onclick="answerOpen('${dto.inquireNum }')">답변열기</button>
+		</c:if>
 		</td></tr>
 	<tr><td colspan="3">${fn:replace(dto.inquireContent, newLine, "<br />") }</td></tr>
 <c:if test="${!empty dto.inquireAnswer }">
