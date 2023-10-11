@@ -64,6 +64,22 @@ implements Servlet{
 			          +  "</script>";
 			 out.print(str);
 			 out.close();
+		}else if(command.equals("/inquire.inq")) {
+			InquireListEmpService action = new InquireListEmpService();
+			action.execute(request);
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("inquire/inquireListEmp.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/inquireAnswer.inq")) {
+			InquireDetailService action = new InquireDetailService();
+			action.execute(request);
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("inquire/inquireAnswer.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/inquireRepleUpdate.inq")) {
+			InquireAnswerService action = new InquireAnswerService();
+			action.execute(request);
+			response.sendRedirect("inquire.inq");
 		}
 	}
 	@Override

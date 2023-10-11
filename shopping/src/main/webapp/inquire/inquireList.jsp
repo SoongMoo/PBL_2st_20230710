@@ -32,6 +32,15 @@ function inquireDelete(inquireNum){
 		}
 	});
 }
+function answerOpen(inquireNum){
+	if($("#ingu" + inquireNum).css('display') == 'none'){
+		$("#ingu" + inquireNum).css('display','');
+		$("#ingu_" + inquireNum).text('답변접기')
+	}else{
+		$("#ingu" + inquireNum).css('display','none');
+		$("#ingu_" + inquireNum).text('답변열기')
+	}
+}
 </script>
 </head>
 <body>
@@ -51,10 +60,13 @@ function inquireDelete(inquireNum){
 			       <button type="button" onclick="inquireDelete('${dto.inquireNum}');">삭제하기</button>
 			</c:if>
 		</th></tr>
-	<tr><td colspan="3">${dto.inquireKind } : ${dto.inquireSubject }</td></tr>
+	<tr><td colspan="3">${dto.inquireKind } : ${dto.inquireSubject }
+		<button type="button" id="ingu_${dto.inquireNum }" 
+				onclick="answerOpen('${dto.inquireNum }')">답변열기</button>
+		</td></tr>
 	<tr><td colspan="3">${fn:replace(dto.inquireContent, newLine, "<br />") }</td></tr>
 <c:if test="${!empty dto.inquireAnswer }">
-	<tr><td>답변</td>
+	<tr style="display:none;" id="ingu${dto.inquireNum }"><td>답변</td>
 		<td colspan="2">${dto.inquireAnswerDate}<br />
 		    ${fn:replace(dto.inquireAnswer, newLine, "<br />")}</td></tr>
 </c:if>

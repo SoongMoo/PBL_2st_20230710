@@ -15,7 +15,7 @@ public class InquireListService {
 	public void execute(HttpServletRequest request) {
 		String goodsNum = request.getParameter("goodsNum");
 		InquireDAO dao = new InquireDAO();
-		List<InquireDTO> list = dao.InquireSelectAll(goodsNum);
+		List<InquireDTO> list = dao.inquireSelectAll(goodsNum);
 		request.setAttribute("goodsNum", goodsNum);
 		request.setAttribute("list", list);
 		request.setAttribute("newLine", "\n");

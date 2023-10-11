@@ -5,6 +5,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InquireDAO extends DataBaseInfo {
+	public void inquireReplyUpdate(InquireDTO dto) {
+		con = getConnection();
+		sql = " update goods_Inquire "
+			+ " set  inquire_answer = ? "
+			+ "     ,emp_num = ? "
+			+ "     ,inquire_answer_date = now() "
+			+ " where inquire_Num = ? ";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getInquireAnswer());
+			pstmt.setString(2, dto.getEmpNum());
+			pstmt.setLong(3, dto.getInquireNum());
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 수정되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {close();}
+	}
+	
+	
 	public void inquireUpdate(String inquireNum, String inquireSubject, String inquireContent) {
 		con = getConnection();
 		sql = " update goods_inquire " 
@@ -73,17 +93,25 @@ public class InquireDAO extends DataBaseInfo {
 		}
 	}
 
-	public List<InquireDTO> InquireSelectAll(String goodsNum) {
+	public List<InquireDTO> inquireSelectAll(String goodsNum) {
 		List<InquireDTO> list = new ArrayList<InquireDTO>();
+		String condition ="";
+		if (goodsNum != null) {
+			condition = " and  GOODS_NUM = ?";
+		}
 		con = getConnection();
 		sql = " select INQUIRE_NUM, MEMBER_NUM, GOODS_NUM, INQUIRE_SUBJECT"
 				+ "       ,INQUIRE_CONTENT, inquire_kind, inquire_date "
-				+ "       ,inquire_answer, inquire_answer_date,emp_num" + " from goods_inquire "
-				+ " where GOODS_NUM = ? ";
+				+ "       ,inquire_answer, inquire_answer_date,emp_num" 
+				+ " from goods_inquire "
+				+ " where 1= 1 " + condition;
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, goodsNum);
+			if (goodsNum != null) {
+				pstmt.setString(1, goodsNum);
+			}
 			rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
 				InquireDTO dto = new InquireDTO();
 				dto.setEmpNum(rs.getString("emp_num"));
