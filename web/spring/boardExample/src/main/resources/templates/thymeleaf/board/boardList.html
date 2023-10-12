@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+게시글 목록<br />
+<table border= 1 width="600px" align="center">
+	<tr><th>글번호</th><th>글쓴이</th><th>제목</th></tr>
+	<tr th:each="dto : ${dtos}">
+		<td><a th:href="|boardDetail?num=${dto.boardNum}|">
+			[[${dto.boardNum}]]</a>
+		</td><!-- url을 정의하는 방법은 두가지 방법이 있다. EL을 사용하려면 th를 붙여줘야 한다. -->
+		<td><a th:href="@{boardDetail(num=${dto.boardNum})}">
+			[[${dto.boardWriter}]]</a>
+		</td>
+		<td>[[${dto.boardSubject}]]</td>
+	</tr>
+</table><br />
+<a href="boardWrite">글쓰기</a>   
+</body>
+</html>
