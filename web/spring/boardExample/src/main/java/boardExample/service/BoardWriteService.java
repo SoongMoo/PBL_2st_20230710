@@ -6,20 +6,19 @@ import org.springframework.stereotype.Service;
 import boardExample.command.BoardCommand;
 import boardExample.domain.BoardDTO;
 import boardExample.mapper.BoardMapper;
+
 @Service
 public class BoardWriteService {
-	@Autowired
-	BoardMapper boardMapper;
+	@Autowired //  dependency injection (DI)
+	BoardMapper boardMapper;// mapper에 있는 객체 생성
 	public void execute(BoardCommand boardCommand) {
-		String boardWriter = boardCommand.getBoardWriter();
-		String boardSubject =boardCommand.getBoardSubject();
-		String boardContent = boardCommand.getBoardContent();
-		
+		String writer = boardCommand.getBoardWriter();
+		String subject = boardCommand.getBoardSubject();
+		String contents = boardCommand.getBoardContent();
 		BoardDTO dto = new BoardDTO();
-		dto.setBoardContent(boardContent);
-		dto.setBoardSubject(boardSubject);
-		dto.setBoardWriter(boardWriter);
+		dto.setContents(contents);
+		dto.setSubject(subject);
+		dto.setWriter(writer);
 		boardMapper.boardInsert(dto);
-		
 	}
 }

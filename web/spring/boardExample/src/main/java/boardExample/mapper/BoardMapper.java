@@ -10,7 +10,7 @@ import boardExample.domain.BoardDTO;
 public interface BoardMapper {
 	public void boardInsert(BoardDTO dto);
 	public List<BoardDTO> selectAll();
-	public BoardDTO selectOne(Integer num);	
+	public BoardDTO selectOne(Integer num);
 	public void boardUpdate(BoardDTO dto);
-	public void boardDel(Integer num);
+	public void boardDel(Integer boardNum);
 }

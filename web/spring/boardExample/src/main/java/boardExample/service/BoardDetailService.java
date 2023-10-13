@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 
 import boardExample.domain.BoardDTO;
 import boardExample.mapper.BoardMapper;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class BoardDetailService {
@@ -14,5 +15,6 @@ public class BoardDetailService {
 	public void execute(Integer num, Model model) {
 		BoardDTO dto = boardMapper.selectOne(num);
 		model.addAttribute("dto", dto);
+	    // request.setAttribute("dto", dto);
 	}
 }

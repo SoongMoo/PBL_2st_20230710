@@ -53,12 +53,18 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.6.0</version>
 			<scope>runtime</scope>
-		</dependency>  
+		</dependency> 
+		<!-- oracle -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<!-- jdbc -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>		
+		</dependency>
 		<!-- mybatis -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -70,7 +76,12 @@
 			<groupId>org.bgee.log4jdbc-log4j2</groupId>
 			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
 			<version>1.16</version>
-		</dependency>
+		</dependency>	
+		<!-- 서버 재시작 없이 바로 적용하기  spring boot auto restart -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>			
 	</dependencies>
 
 	<build>

@@ -13,10 +13,10 @@ public class BoardModifyService {
 	BoardMapper boardMapper;
 	public void execute(BoardCommand boardCommand) {
 		BoardDTO dto = new BoardDTO();
-		dto.setBoardContent(boardCommand.getBoardContent());
-		dto.setBoardNum( boardCommand.getBoardNum());
-		dto.setBoardSubject(boardCommand.getBoardSubject());
-		dto.setBoardWriter(boardCommand.getBoardWriter());
-		boardMapper.boardUpdate(dto); 
+		dto.setContents(boardCommand.getBoardContent());
+		dto.setNum(boardCommand.getBoardNum());
+		dto.setSubject(boardCommand.getBoardSubject());
+		dto.setWriter(boardCommand.getBoardWriter());
+		boardMapper.boardUpdate(dto);
 	}
 }

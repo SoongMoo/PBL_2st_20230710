@@ -29,7 +29,6 @@ public class BoardContoller {
 	BoardModifyService boardModifyService;
 	@Autowired
 	BoardDelService boardDelService;
-	
 	@RequestMapping("boardList")
 	public String boardList(Model model) {
 		boardListService.execute(model);
@@ -41,31 +40,40 @@ public class BoardContoller {
 	}
 	@RequestMapping(value="boardRegist" ,method = RequestMethod.POST)
 	// boardForm.html에 있는 데이터를 BoardComman가 받아온다.
-	public String boardRegist(BoardCommand boardCommand) { 
+	public String boardRegist(BoardCommand boardCommand) {
 		boardWriteService.execute(boardCommand);
-		return "redirect:boardList"; // 게시글 저장한 후에 목록페이지로 이동
+		return "redirect:boardList";
 	}
 	@GetMapping(value="boardDetail")
-	public String boardDetail(Model model, @RequestParam(value = "num") Integer num) {
+	// @RequestParam(value = "num") Integer num 는
+	// Integer num = Integer.parseInt(request.getParamter("num"))과 같다.
+	public String boardDetail(@RequestParam(value = "num") Integer num,
+			Model model) {
 		boardDetailService.execute(num, model);
 		return "thymeleaf/board/boardInfo";
 	}
 	@RequestMapping(value="boardUpdate" ,method = RequestMethod.GET)
-	public String boardUpdate(Model model, @RequestParam(value = "num") Integer num) {
+	public String boardUpdate(@RequestParam(value = "num") Integer num,
+			Model model) {
 		boardDetailService.execute(num, model);
 		return "thymeleaf/board/boardModifyForm";
 	}
-	@PostMapping(value="boardModify" )
+	@PostMapping("boardModify" )
 	public String boardModify(BoardCommand boardCommand) {
 		boardModifyService.execute(boardCommand);
 		return "redirect:boardDetail?num="+boardCommand.getBoardNum();
 	}
-	@RequestMapping(value="boardDel" ,method = RequestMethod.GET)
+	@RequestMapping(value="boardDelete" ,method = RequestMethod.GET)
 	public String boardDel(@RequestParam(value = "num") Integer num) {
 		boardDelService.execute(num);
 		return "redirect:boardList";
 	}
 }
+
+
+
+
+
 
 
 

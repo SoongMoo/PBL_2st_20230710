@@ -4,32 +4,33 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("board")
 public class BoardDTO {
-	Integer boardNum;
-	String boardWriter;
-	String boardSubject;
-	String boardContent;
-	public Integer getBoardNum() {
-		return boardNum;
+	Integer num;
+	String writer;
+	String subject;
+	String contents;
+	public Integer getNum() {
+		return num;
 	}
-	public void setBoardNum(Integer boardNum) {
-		this.boardNum = boardNum;
+	public void setNum(Integer num) {
+		this.num = num;
 	}
-	public String getBoardWriter() {
-		return boardWriter;
+	public String getWriter() {
+		return writer;
 	}
-	public void setBoardWriter(String boardWriter) {
-		this.boardWriter = boardWriter;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
-	public String getBoardSubject() {
-		return boardSubject;
+	public String getSubject() {
+		return subject;
 	}
-	public void setBoardSubject(String boardSubject) {
-		this.boardSubject = boardSubject;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
-	public String getBoardContent() {
-		return boardContent;
+	public String getContents() {
+		return contents;
 	}
-	public void setBoardContent(String boardContent) {
-		this.boardContent = boardContent;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
+	
 }
