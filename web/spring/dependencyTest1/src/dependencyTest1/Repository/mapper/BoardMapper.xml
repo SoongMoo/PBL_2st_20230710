@@ -7,25 +7,34 @@
 insert into board(WRITER,SUBJECT, CONTENTs) 
 values(#{writer},#{subject},#{contents})
 </insert>
+
 <select id="selectAll" resultType="board">
 select num , writer  ,subject  ,contents  
 from board  
 order by num desc
 </select>
-
-
-
 <select id="selectOne" resultType="board"  parameterType="integer">
-select num boardNum, writer boardWriter ,subject boardSubject ,contents  boardContent
+select num , writer  ,subject  ,contents  
 from board  
 where NUM = #{num}
 </select>
+
+
 <update id="boardUpdate" parameterType="board">
 update board
-set WRITER = #{boardWriter} , SUBJECT = #{boardSubject}
-  , CONTENTS = #{boardContent}
-where num =  #{boardNum}
+set SUBJECT = #{subject}
+  , CONTENTS = #{contents}
+where num =  #{num}
 </update>
+
+
+
+
+
+
+
+
+
 <delete id="boardDel" parameterType="integer">
 delete from board where num =  #{num}
 </delete>

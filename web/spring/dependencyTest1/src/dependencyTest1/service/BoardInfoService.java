@@ -1,17 +1,13 @@
 package dependencyTest1.service;
 
-import java.util.List;
-
 import dependencyTest1.Repository.BoardRepository;
 import dependencyTest1.model.BoardDTO;
 
-public class BoardListService {
-	public void execute() {
+public class BoardInfoService {
+	public void execute(Integer num) {
 		BoardRepository boardRepository = new BoardRepository();
-		List<BoardDTO> list = boardRepository.selectAll();
+		BoardDTO dto = boardRepository.selectOne(num);
 		BoardPrintService boardPrintService = new BoardPrintService();
-		for(BoardDTO dto : list) {
-			boardPrintService.print(dto);
-		}
+		boardPrintService.print(dto);
 	}
 }

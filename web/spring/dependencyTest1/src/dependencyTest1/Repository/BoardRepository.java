@@ -23,11 +23,28 @@ public class BoardRepository extends DataBaseInfoRepository{
 		list  = sqlSession.selectList(statement);
 		return list;
 	}
+	public BoardDTO selectOne(Integer num) {
+		BoardDTO dto = null;
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		String statement = namespace + ".selectOne";
+		dto = sqlSession.selectOne(statement, num);
+		return dto;
+	}
+	public void boardUpdate(BoardDTO dto) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		String statement = namespace + ".boardUpdate";
+		int i = sqlSession.update(statement, dto);
+		System.out.println(i + "개가 수정되었습니다. ");
+		sqlSession.commit();
+		sqlSession.close();
+	}
 	
-	
-	
-	
-	
-	
-	
+	public void boardDel(Integer num) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		String statement = namespace + ".boardDel";
+		int i = sqlSession.delete(statement, num);
+		System.out.println(i + "개가 삭제되었습니다. ");
+		sqlSession.commit();
+		sqlSession.close();
+	}
 }
