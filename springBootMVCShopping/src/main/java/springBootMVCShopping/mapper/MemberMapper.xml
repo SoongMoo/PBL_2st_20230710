@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springBootMVCShopping.mapper.MemberMapper">
+<insert id="memberInsert" parameterType="mem">
+	insert into members(member_num,member_id,member_pw,member_name,member_addr
+					,member_addr_detail,member_post,member_phone1,member_phone2
+					,member_regist,member_birth,gender,member_email
+					,member_email_conf,point)
+	values(#{memberNum},#{memberId},#{memberPw},#{memberName}
+		  ,#{memberAddr},#{memberAddrDetail},#{memberPost},#{memberPhone1}
+		  ,#{memberPhone2},now(),#{memberBirth},#{gender},#{memberEmail},null,0);
+</insert>
+</mapper>
