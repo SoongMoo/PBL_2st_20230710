@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+ 	   xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="
+	   http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	   "
+>
+	<!-- 의존 객체 자동주입 -->
+	<context:annotation-config />
+	<bean id="boardRepository" class="dependencyTest4.Repository.BoardRepository" />
+	<bean id="boardPrintService" class="dependencyTest4.service.BoardPrintService" />
+	<bean id="boardDeleteService" class="dependencyTest4.service.BoardDeleteService" />
+	<bean id="boardInfoService" class="dependencyTest4.service.BoardInfoService" />
+	<bean id="boardListService" class="dependencyTest4.service.BoardListService" />
+	<bean id="boardModifyService" class="dependencyTest4.service.BoardModifyService" />
+	<bean id="boardWriteService" class="dependencyTest4.service.BoardWriteService" />
+</beans>

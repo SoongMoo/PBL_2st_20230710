@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dependencyTest1.Repository.mapper.BoardMapper">
+<insert id="boardInsert" parameterType="board">
+insert into board(WRITER,SUBJECT, CONTENTs) 
+values(#{writer},#{subject},#{contents})
+</insert>
+
+<select id="selectAll" resultType="board">
+select num , writer  ,subject  ,contents  
+from board  
+order by num desc
+</select>
+<select id="selectOne" resultType="board"  parameterType="integer">
+select num , writer  ,subject  ,contents  
+from board  
+where NUM = #{num}
+</select>
+
+
+<update id="boardUpdate" parameterType="board">
+update board
+set SUBJECT = #{subject}
+  , CONTENTS = #{contents}
+where num =  #{num}
+</update>
+
+
+
+
+
+
+
+
+
+<delete id="boardDel" parameterType="integer">
+delete from board where num =  #{num}
+</delete>
+</mapper>
+
+
+
+
+
+
+
+
