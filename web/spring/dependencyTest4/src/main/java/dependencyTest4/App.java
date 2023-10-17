@@ -11,8 +11,7 @@ public class App {
 	static GenericXmlApplicationContext ctx;
 	public static void main(String[] args) {
 		ctx = new GenericXmlApplicationContext("classpath:appCtx.xml");
-		AppController controller = ctx.getBean("appController",
-				AppController.class);
+		AppController controller = ctx.getBean("appController", AppController.class);
 		controller.run();
 	}
 	
