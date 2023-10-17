@@ -1,0 +1,34 @@
+package dependencyTest2.model;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class DataBaseInfo {
+	String jdbcDriver;
+	String jdbcURL;
+	Connection con;
+	PreparedStatement pstmt;
+	ResultSet rs;
+	String sql;
+	public  DataBaseInfo() {
+		jdbcDriver = "org.postgresql.Driver";
+		jdbcURL = "jdbc:postgresql://localhost:5432/board_test";
+	}
+	public Connection getConnection() {
+				Connection conn= null;
+		try {
+			Class.forName(jdbcDriver);
+			conn = DriverManager.getConnection(jdbcURL,"postgres","1234");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		return conn;
+	}
+	public void close() {
+						if(rs != null) try{rs.close();}catch(Exception e) {}
+									if(pstmt != null) try{pstmt.close();}catch(Exception e) {}
+		if(con != null) try{con.close();}catch(Exception e) {}
+	}
+}
