@@ -12,6 +12,8 @@
 >
 	<!-- 의존 객체 자동주입 -->
 	<context:annotation-config />
+	
+	<bean id="appController" class="dependencyTest4.controller.AppController" />
 	<bean id="boardRepository" class="dependencyTest4.Repository.BoardRepository" />
 	<bean id="boardPrintService" class="dependencyTest4.service.BoardPrintService" />
 	<bean id="boardDeleteService" class="dependencyTest4.service.BoardDeleteService" />
