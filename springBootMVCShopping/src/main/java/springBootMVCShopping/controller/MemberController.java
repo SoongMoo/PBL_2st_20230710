@@ -2,11 +2,15 @@ package springBootMVCShopping.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import springBootMVCShopping.command.MemberCommand;
+import springBootMVCShopping.service.member.MemberAutoNumService;
 import springBootMVCShopping.service.member.MemberInsertService;
 
 @Controller
@@ -14,17 +18,29 @@ import springBootMVCShopping.service.member.MemberInsertService;
 public class MemberController {
 	@Autowired
 	MemberInsertService memberInsertService;
+	@Autowired
+	MemberAutoNumService memberAutoNumService;
+	
 	@RequestMapping(value="memberList", method = RequestMethod.GET)
 	public String list() {
 		return "thymeleaf/member/memberList";
 	}
 	@GetMapping("memberRegist")
-	public String form() {
+	public String form(MemberCommand memberCommand, Model model) {
+		memberAutoNumService.execute(model);
 		return "thymeleaf/member/memberForm";
 	}
 	@RequestMapping(value="memberRegist" , method = RequestMethod.POST)
-	public String form(MemberCommand memberCommand) {
-		memberInsertService.execute(memberCommand);
-		return "redirect:memberList";
+	public String form(@Validated MemberCommand memberCommand, BindingResult result) {
+		if(result.hasErrors()) {
+			return "thymeleaf/member/memberForm";
+		}
+		if(!memberCommand.isMemberPwEqualsMemberPwCon()) {
+			result.rejectValue("memberPwCon", "memberCommand.memberPwCon" , "비밀번호 확인이 틀렸습니다.");
+			return "thymeleaf/member/memberForm";
+		}else {
+			memberInsertService.execute(memberCommand);
+			return "redirect:memberList";
+		}
 	}
 }

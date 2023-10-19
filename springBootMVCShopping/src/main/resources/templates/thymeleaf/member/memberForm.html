@@ -3,24 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#memberId").on("change keyup",function(){
+		$.ajax({
+			type:'post',
+			url:"/login/userIdCheck",
+			data:{"userId":$("#memberId").val()},
+			dataType:'text',
+			success:function(result){
+				$("#idCheck").text(result);
+				if(result.trim() == "사용가능한 아이디입니다."){
+					$("#idCheck").css("color","blue");
+				}else{
+					$("#idCheck").css("color","red");
+				}
+			},
+			error:function(){
+				
+			}
+		});
+	});
+	$("#memberEmail").on("change keyup",function(){
+		$.ajax({
+			type:'post',
+			url:"/checkRest/userEmailCheck",
+			data:{"userEmail":$("#memberEmail").val()},
+			dataType:'text',
+			success:function(){
+				
+			},
+			error:function(){
+				
+			}
+		});
+	});
+});
+</script>
 </head>
 <body>
 회원등록 페이지입니다.<br />
-<form action="memberRegist" method="post" >
-회원번호 : <input type="text" name="memberNum" /><br />
-회원아이디 : <input type="text" name="memberId" id="memberId" /><br />
-회원비밀번호 : <input type="password" name="memberPw"/> <br />
-회원비밀번호 확인 :  <input type="password" name="memberPwCon"/><br />
-회원이름 : <input type="text" name="memberName" /><br />
-회원주소 : <input type="text" name="memberAddr" id="sample4_roadAddress" /><br />
-회원상세주소 : <input type="text" name="memberAddr2" /><br />
-우편번호 :  <input type="text" name="memberPost" id="sample4_postcode" /><br />
-성별 : <input type="radio" name="memberGender" value="M" />남자
-	  <input type="radio" name="memberGender" value="F" />여자<br />
-연락처1 : <input type="tel" name="memberPhone1" /> <br />
-연락처2 : <input type="tel" name="memberPhone2" /><br />
-이메일 : <input type="email" name="memberEmail" id="memberEmail" /><br />
-생년월일 : <input type="date" name="memberBirth"  /><br />
+<form action="memberRegist" method="post" th:object="${memberCommand}">
+회원번호 : <input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly"/>자동 부여<br />
+회원아이디 : <input type="text" name="memberId" id="memberId" 
+										th:value="${memberCommand.memberId}"/><br />
+<span id='idCheck'></span>
+<span style="color:red" th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}"></span><br />
+회원비밀번호 : <input type="password" name="memberPw" /> <br />
+<span style="color:red" th:if="${#fields.hasErrors('memberPw')}" th:errors="*{memberPw}"></span><br />
+회원비밀번호 확인 :  <input type="password" name="memberPwCon" /><br />
+<span style="color:red" th:if="${#fields.hasErrors('memberPwCon')}" th:errors="*{memberPwCon}"></span><br />
+회원이름 : <input type="text" name="memberName" th:value="${memberCommand.memberName}"/><br />
+<span style="color:red" th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}"></span><br />
+회원주소 : <input type="text" name="memberAddr" id="sample4_roadAddress" 
+										th:value="${memberCommand.memberAddr}"/><br />
+<span style="color:red" th:if="${#fields.hasErrors('memberAddr')}" th:errors="*{memberAddr}"></span><br />										
+회원상세주소 : <input type="text" name="memberAddr2" th:value="${memberCommand.memberAddr2}"/><br />
+우편번호 :  <input type="text" name="memberPost" id="sample4_postcode" 
+										th:value="${memberCommand.memberPost}"/><br />
+성별 : <input type="radio" name="memberGender" value="M" 
+					th:checked="${memberCommand.memberGender == 'M' or memberCommand.memberGender == null}"/>남자
+	  <input type="radio" name="memberGender" value="F" 
+	  				th:checked="${memberCommand.memberGender == 'F'}" />여자<br />
+연락처1 : <input type="tel" name="memberPhone1" 
+										th:value="${memberCommand.memberPhone1}"/> <br />
+<span style="color:red" th:if="${#fields.hasErrors('memberPhone1')}" th:errors="*{memberPhone1}"></span><br />					
+연락처2 : <input type="tel" name="memberPhone2" 
+										th:value="${memberCommand.memberPhone2}"/><br />
+이메일 : <input type="email" name="memberEmail" id="memberEmail" 
+										th:value="${memberCommand.memberEmail}"/><br />
+<span style="color:red" th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}"></span><br />								
+생년월일 : <input type="date" name="memberBirth" 
+										th:value="${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}" /><br />
+<span style="color:red" th:if="${#fields.hasErrors('memberBirth')}" th:errors="*{memberBirth}"></span><br />										
 <input type="submit" value="회원등록" />
 </form>
 </body>

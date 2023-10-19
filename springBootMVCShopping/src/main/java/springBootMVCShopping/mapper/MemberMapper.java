@@ -7,4 +7,5 @@ import springBootMVCShopping.domain.MemberDTO;
 @Mapper
 public interface MemberMapper {
 	public void memberInsert(MemberDTO dto);
+	public String memberAutoNum();
 }
