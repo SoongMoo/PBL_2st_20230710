@@ -10,4 +10,11 @@ union
 select emp_id from employees
 where emp_id = #{userId}
 </select>
+<select id="selectEmailCheck" parameterType="string" resultType="string">
+select member_email from members
+where member_email = #{userEmail}
+union
+select emp_email from employees
+where emp_email = #{userEmail}
+</select>
 </mapper>

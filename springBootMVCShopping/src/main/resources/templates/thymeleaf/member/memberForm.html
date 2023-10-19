@@ -4,8 +4,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/static/js/daumAddressScript.js"></script>
 <script type="text/javascript">
 $(function(){
+	$("#frm").submit(function(){
+		alert($("#idCheck").val());
+		if($("#idCheck").text()=="" || $("#idCheck").text()=="사용중인 아이디입니다."){
+			alert("아이디 중복확인을 해주세요");
+			return false;
+		}
+		if($("#emailCheck").text()=="" || $("emailCheck").text()=="사용중인 Email입니다."){
+			alert("이메일 중복확인을 해주세요");
+			return false;
+		}
+	});
 	$("#memberId").on("change keyup",function(){
 		$.ajax({
 			type:'post',
@@ -31,8 +44,13 @@ $(function(){
 			url:"/checkRest/userEmailCheck",
 			data:{"userEmail":$("#memberEmail").val()},
 			dataType:'text',
-			success:function(){
-				
+			success:function(result){
+				$("#emailCheck").text(result);
+				if(result.trim() == "사용가능한 Email입니다."){
+					$("#emailCheck").css("color","blue");
+				}else{
+					$("#emailCheck").css("color","red");
+				}
 			},
 			error:function(){
 				
@@ -44,7 +62,7 @@ $(function(){
 </head>
 <body>
 회원등록 페이지입니다.<br />
-<form action="memberRegist" method="post" th:object="${memberCommand}">
+<form action="memberRegist" method="post" th:object="${memberCommand}" id="frm">
 회원번호 : <input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly"/>자동 부여<br />
 회원아이디 : <input type="text" name="memberId" id="memberId" 
 										th:value="${memberCommand.memberId}"/><br />
@@ -56,11 +74,11 @@ $(function(){
 <span style="color:red" th:if="${#fields.hasErrors('memberPwCon')}" th:errors="*{memberPwCon}"></span><br />
 회원이름 : <input type="text" name="memberName" th:value="${memberCommand.memberName}"/><br />
 <span style="color:red" th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}"></span><br />
-회원주소 : <input type="text" name="memberAddr" id="sample4_roadAddress" 
-										th:value="${memberCommand.memberAddr}"/><br />
+회원주소 : <input type="text" name="memberAddr" id="sample4_roadAddress" readonly="readonly"
+				onclick="execDaumPostcode();" th:value="${memberCommand.memberAddr}"/><br />
 <span style="color:red" th:if="${#fields.hasErrors('memberAddr')}" th:errors="*{memberAddr}"></span><br />										
 회원상세주소 : <input type="text" name="memberAddr2" th:value="${memberCommand.memberAddr2}"/><br />
-우편번호 :  <input type="text" name="memberPost" id="sample4_postcode" 
+우편번호 :  <input type="text" name="memberPost" id="sample4_postcode" readonly="readonly"
 										th:value="${memberCommand.memberPost}"/><br />
 성별 : <input type="radio" name="memberGender" value="M" 
 					th:checked="${memberCommand.memberGender == 'M' or memberCommand.memberGender == null}"/>남자
@@ -73,6 +91,7 @@ $(function(){
 										th:value="${memberCommand.memberPhone2}"/><br />
 이메일 : <input type="email" name="memberEmail" id="memberEmail" 
 										th:value="${memberCommand.memberEmail}"/><br />
+<span id="emailCheck"></span>
 <span style="color:red" th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}"></span><br />								
 생년월일 : <input type="date" name="memberBirth" 
 										th:value="${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}" /><br />

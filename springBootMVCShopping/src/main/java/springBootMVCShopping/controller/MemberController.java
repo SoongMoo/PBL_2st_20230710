@@ -32,6 +32,7 @@ public class MemberController {
 	}
 	@RequestMapping(value="memberRegist" , method = RequestMethod.POST)
 	public String form(@Validated MemberCommand memberCommand, BindingResult result) {
+		System.out.println("svdagvb");
 		if(result.hasErrors()) {
 			return "thymeleaf/member/memberForm";
 		}

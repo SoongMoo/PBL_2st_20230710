@@ -14,7 +14,7 @@ import springBootMVCShopping.service.login.IdcheckService;
 public class LoginController {
 	@Autowired
 	IdcheckService idcheckService;
-	@RequestMapping("userIdCheck")
+	@PostMapping("userIdCheck")
 	public @ResponseBody String userIdCheck(
 			@RequestParam(value="userId") String userId) {
 		String resultId = idcheckService.execute(userId);
