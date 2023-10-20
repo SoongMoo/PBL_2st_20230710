@@ -16,7 +16,7 @@ from members;
 		  ,#{memberAddr},#{memberAddrDetail},#{memberPost},#{memberPhone1}
 		  ,#{memberPhone2},now(),#{memberBirth},#{gender},#{memberEmail},null,0);
 </insert>
-<select id="selectAll" resultType="mem">
+<select id="selectAll" resultType="mem" parameterType="string">
 select member_num memberNum,member_id memberId,member_pw memberPw
 	  ,member_name memberName,member_addr memberAddr
 	  ,member_addr_detail memberAddrDetail,member_post memberPost
@@ -25,6 +25,31 @@ select member_num memberNum,member_id memberId,member_pw memberPw
 	  ,member_email memberEmail ,member_email_conf memberEmailConf
 	  ,point ,gender
 from members
+<if test="searchWord != null">
+where MEMBER_NAME like '%' || #{searchWord} || '%'
+   or member_id like '%' || #{searchWord} || '%'
+   or member_num like '%' || #{searchWord} || '%'
+</if>
 </select>
+<delete id="membersDelete" parameterType="string">
+delete from members
+where member_num in
+	<foreach collection="membersNum" item="memberNum" open="(" close=")" 
+		index="index" separator=",">
+		#{memberNum}
+	</foreach>
+</delete>
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

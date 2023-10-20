@@ -17,7 +17,9 @@ public class SpingBootConfig {
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) 
 			throws Exception {
 		httpSecurity.csrf().disable() //csrf방지
-					.formLogin().disable(); 
+					.formLogin().disable()
+					.cors().disable()
+					.headers().frameOptions().disable(); 
 		return httpSecurity.build();
 	}
 }

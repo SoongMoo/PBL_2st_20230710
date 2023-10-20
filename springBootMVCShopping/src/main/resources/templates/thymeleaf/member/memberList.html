@@ -3,15 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script>
+$(function(){
+	$("#frm").submit(function(){
+		if($("input:checkbox[name=memDels]:checked").length < 1){
+			alert("하나이상 선택하세요.");
+			return false;
+		}
+	});
+});
+</script>
 </head>
 <body>
 <table border=1 width="600">
-	<tr><td>번호</td><td>이름</td><td>아이디</td><td>등록일</td></tr>
+<form  action="memberList" method="get" >
+	<tr><td colspan="5">검색 : 
+				<input type="search" name="searchWord" size="60" th:value="${searchWord}"/>
+				<input type="submit" value="검색" />
+		</td></tr>
+</form>
+<form action="membersDelete" method="post" id="frm">
+	<tr><td>번호</td><td>이름</td><td>아이디</td><td>등록일</td>
+		<td><input type="submit" value="삭제"></td></tr>
 	<tr th:each="dto : ${dtos}">
-		<td>[[${dto.memberNum}]]</td><td>[[${dto.memberName}]]</td>
+		<td>[[${dto.memberNum}]]</td>
+		<td>[[${dto.memberName}]]</td>
 		<td>[[${dto.memberId}]]</td>
 		<td>[[${#dates.format(dto.memberRegistDate,'yyyy-MM-dd')}]]</td>
+		<td><input type="checkbox" name="memDels" th:value="${dto.memberNum}" /></td>
 	</tr>
+</form>
 </table>
 <a href="memberRegist">회원 등록</a><br />
 </body>

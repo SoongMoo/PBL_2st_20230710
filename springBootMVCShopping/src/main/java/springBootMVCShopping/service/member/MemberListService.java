@@ -13,8 +13,13 @@ import springBootMVCShopping.mapper.MemberMapper;
 public class MemberListService {
 	@Autowired
 	MemberMapper memberMapper;
-	public void execute(Model model) {
-		List<MemberDTO> list = memberMapper.selectAll();
+	String searchWord;
+	public void execute(Model model, String searchWord) {
+		if(searchWord != null ) {
+			this.searchWord = searchWord.trim();
+		}
+		List<MemberDTO> list = memberMapper.selectAll(this.searchWord);
 		model.addAttribute("dtos", list);
+		model.addAttribute("searchWord", this.searchWord);
 	}
 }
