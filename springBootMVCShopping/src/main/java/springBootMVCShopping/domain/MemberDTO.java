@@ -21,4 +21,6 @@ public class MemberDTO { // member table의 컬럼명과 같아야 한다.
 	   String memberPhone2;
 	   String memberEmail;
 	   Date memberBirth;
+	   String memberEmailConf;
+	   Integer point;
 }

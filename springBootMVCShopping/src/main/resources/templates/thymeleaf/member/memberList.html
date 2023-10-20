@@ -5,6 +5,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+<table border=1 width="600">
+	<tr><td>번호</td><td>이름</td><td>아이디</td><td>등록일</td></tr>
+	<tr th:each="dto : ${dtos}">
+		<td>[[${dto.memberNum}]]</td><td>[[${dto.memberName}]]</td>
+		<td>[[${dto.memberId}]]</td>
+		<td>[[${#dates.format(dto.memberRegistDate,'yyyy-MM-dd')}]]</td>
+	</tr>
+</table>
 <a href="memberRegist">회원 등록</a><br />
 </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import springBootMVCShopping.command.MemberCommand;
 import springBootMVCShopping.service.member.MemberAutoNumService;
 import springBootMVCShopping.service.member.MemberInsertService;
+import springBootMVCShopping.service.member.MemberListService;
 
 @Controller
 @RequestMapping("member")
@@ -20,15 +21,21 @@ public class MemberController {
 	MemberInsertService memberInsertService;
 	@Autowired
 	MemberAutoNumService memberAutoNumService;
-	
+
+	@Autowired
+	MemberListService memberListService;
 	@RequestMapping(value="memberList", method = RequestMethod.GET)
-	public String list() {
+	public String list(Model model) {
+		memberListService.execute(model);
 		return "thymeleaf/member/memberList";
+		//return "member/memberList";
 	}
+	
 	@GetMapping("memberRegist")
 	public String form(MemberCommand memberCommand, Model model) {
 		memberAutoNumService.execute(model);
 		return "thymeleaf/member/memberForm";
+		//return "member/memberForm";
 	}
 	@RequestMapping(value="memberRegist" , method = RequestMethod.POST)
 	public String form(@Validated MemberCommand memberCommand, BindingResult result) {
