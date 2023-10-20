@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#frm").submit(function(){
+		if(  $("input:checkbox[name= empsDel]:checked").length < 1 ){
+			alert("하나이상 선택하세요.");
+			return false;
+		}
+	});
+	/// 체크박스를 모두 체크하거나 체크를 없앨 때 
+	$("#checkBoxs").click(function(){
+		if ($("#checkBoxs").prop("checked")){
+			$("input:checkbox[name=empsDel]").prop("checked",true);
+		}else{
+			$("input:checkbox[name=empsDel]").prop("checked",false);
+		}
+	});
+	
+	$("input:checkbox[name=empsDel]").click(function(){
+		var tot = $("input:checkbox[name=empsDel]").length;
+		var checked = $("input:checkbox[name=empsDel]:checked").length;
+		if (tot == checked){
+			$("#checkBoxs").prop("checked", true)
+		}else{
+			$("#checkBoxs").prop("checked", false)
+		}
+	});
+});
+</script>	
+</head>
+<body>
+직원 목록 페이지입니다.<br />
+<a href="empRegist">직원등록</a><br />
+<form action="empList" method="post"  >
+직원 검색 : <input type="search" name="searchWord" size=50 th:value="${searchWord}" />
+		    <input type="submit" value="검색" />
+</form>
+<form action="empsDelete" id="frm">
+<table border=1 width=600px>
+<tr><td>직원번호</td><td>직원아이디</td><td>직원이름</td><td>등록일</td><td>연락처</td>
+    <td><input type="checkbox" id="checkBoxs" /><input type="submit" value="삭제" /></td>
+</tr>
+<tr th:each="employeeVO : ${list}">
+	<td><a th:href="|employeeDetail?empNum=${employeeVO.empNum}|">[[${employeeVO.empNum}]]</a></td>
+	<td><a th:href="@{employeeDetail(empNum=${employeeVO.empNum})}">[[${employeeVO.empId}]]</a></td>
+	<td>[[${employeeVO.empName}]]</td>
+	<td>[[${#dates.format(employeeVO.empRegiDate,'yyyy-MM-dd')}]]</td>
+	<td>[[${employeeVO.empPhone}]]</td>
+	<td><input type="checkbox" name="empsDel" th:value="${employeeVO.empNum}"/></td>
+</tr>
+	<tr>
+		<th colspan="6">
+			<th:block th:if="${page <= 1}">
+				[이전]
+			</th:block>
+			<th:block th:if="${page > 1}">
+				[<a th:href="@{empList(page=${page - 1},searchWord=${searchWord})}">이전</a>]
+			</th:block>
+			<th:block th:each=" i  :  ${#numbers.sequence(startPage, endPage)}">
+			[ <a th:href="@{empList(page=${i},searchWord=${searchWord})}">[[${i}]]</a> ]
+			</th:block>
+			<th:block th:if="${page < maxPage}">
+			<a th:href="@{empList(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+			</th:block>
+			<th:block th:if="${page >= maxPage}">
+			[다음]
+			</th:block>
+		</th>
+	</tr>
+</table>
+</form>
+</body>
+</html>

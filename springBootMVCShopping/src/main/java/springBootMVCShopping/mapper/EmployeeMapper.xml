@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.shopping.mapper.EmployeeMapper">
+<sql id="employeeBaseColumns">
+	EMP_NUM, EMP_ID, EMP_PW, EMP_NAME, EMP_ADDR,EMP_ADDR_detail,EMP_POST,
+	EMP_REGI_DATE,EMP_PHONE,EMP_EMAIL, EMP_jumin
+</sql>
+<insert id="employeeInsert" parameterType="empVO" >
+	insert into employees( <include refid="employeeBaseColumns" /> )
+	values( #{empNum},#{empId} ,#{empPw} ,#{empName} ,#{empAddr} 
+			,#{empAddrDetail} ,#{empPost} 
+			,now() ,#{empPhone} ,#{empEmail},#{empJumin})
+</insert>
+
+<select id="autoNum"  resultType="string">
+select concat('emp' , coalesce(max(substr(emp_num,4)::Integer),100000) + 1) from employees
+</select>
+
+<sql id="employeeAliesColumns">
+ EMP_NUM empNum,EMP_ID empId, EMP_PW empPw, EMP_NAME empName, EMP_ADDR empAddr
+,EMP_ADDR2 empAddr2,EMP_POST empPost,EMP_REGI_DATE empRegiDate
+,EMP_PHONE empPhone, EMP_EMAIL empEmail, EMP_jumin empJumin
+</sql>
+
+<select id="employeeAllSelect" resultType="empVO" parameterType="startEndPageVO" >
+select *
+from   (select rownum rn, <include refid="employeeAliesColumns" />
+		from (select <include refid="employeeBaseColumns" />
+			from employees
+			<if test="searchWord != null">
+			where EMP_NUM  like '%' || #{searchWord} || '%'  
+			   or EMP_ID   like '%' || #{searchWord} || '%'  
+			   or EMP_NAME like '%' || #{searchWord} || '%'
+			</if>
+			order by EMP_NUM desc))
+where rn between #{startRow}  and #{endRow}
+</select>
+
+<select id="employeeOneSelect" resultType="empVO" parameterType="string">
+select <include refid="employeeAliesColumns" />
+from employees
+where EMP_NUM = #{empNum} or EMP_ID = #{empNum}
+</select>
+
+<update id="employeeUpdate" parameterType="empVO">
+	update employees
+set   EMP_NAME = #{empName}
+    , EMP_ADDR =#{empAddr}
+    <if test="empAddrDetail != null">
+    , EMP_ADDR_detail = #{empAddrDetail}
+    </if>
+    , EMP_POST =#{empPost}
+    , EMP_PHONE = #{empPhone}
+    , emp_jumin = #{empJumin}
+    , EMP_REGI_DATE = #{empRegiDate}
+where EMP_NUM = #{empNum}
+</update>
+<delete id="employeeDelete" parameterType="string">
+	delete from employees where EMP_NUM = #{empNum}
+</delete>
+
+<delete id="employeesDelete" parameterType="string">
+	delete from employees where EMP_NUM in
+	<foreach collection="empsDel" item="empNum" open="(" close=")" index="index" separator=",">
+		#{empNum}
+	</foreach>
+</delete>
+
+<select id="employeeCount" parameterType="string" resultType="integer">
+	select count(*) from employees
+	<if test="searchWord != null">
+	where EMP_NUM  like '%' || #{searchWord} || '%'  
+	   or EMP_ID   like '%' || #{searchWord} || '%'  
+	   or EMP_NAME like '%' || #{searchWord} || '%'
+	</if>
+</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

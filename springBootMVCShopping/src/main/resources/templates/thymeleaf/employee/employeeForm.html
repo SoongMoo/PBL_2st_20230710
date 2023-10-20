@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#empEmail").on("change keyup", function(){
+		$.ajax({
+			type:'post',
+			url:'/checkRest/emailCheck',
+			data:{'checkEmail':$("#empEmail").val()},
+			dataType:'text',
+			success:function(result){
+				$("#emailCheck").text(result);
+				if(result.trim() == '사용가능한 이메일입니다.'){
+					$("#emailCheck").css("color","blue");
+				}else{
+					$("#emailCheck").css("color","red");
+				}
+			},
+			error:function(){
+				alert("코드 에러")
+			}
+		});
+	});
+	$("#empId").on("keyup", function(){
+		$.ajax({
+			type:'get',
+			url:'/checkRest/idCheck',
+			data:{'checkId':$("#empId").val()},
+			dataType:'text',
+			success:function(result){
+				$("#idCheck").text(result);
+				if(result.trim() == '사용가능한 아이디입니다.'){
+					$("#idCheck").css("color","blue");
+				}else{
+					$("#idCheck").css("color","red");
+				}
+			},
+			error:function(){
+				alert("코드 에러")
+			}
+		});
+	});
+});
+</script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/static/js/daumAddressScript.js"></script>
+</head>
+<body>
+직원등록페이지입니다.<br />
+<form action="empRegist" method="post" th:object="${employeeCommand}">
+직원번호 : <input type="text" name="empNum"  id="empNum" readonly='readonly'  th:value="${employeeCommand.empNum}"/>
+		 <span style="color:red">자동 부여</span><br />
+아이디 : <input type="text" name="empId"  id="empId" th:value="${employeeCommand.empId}"/>
+		<span style="color:red" th:if="${#fields.hasErrors('empId')}" th:errors="*{empId}"></span>
+		<span id='idCheck'></span><br />
+비밀번호 : <input type="password" name="empPw" id="empPw" />
+		<span style="color:red" th:if="${#fields.hasErrors('empPw')}" th:errors="*{empPw}"></span><br />
+비밀번호 확인 : <input type="password" name="empPwCon"  id="empPwCon"  />
+		<span style="color:red" th:if="${#fields.hasErrors('empPwCon')}" th:errors="*{empPwCon}"></span><br />
+이름 : <input type="text" name="empName" th:value="${employeeCommand.empName}"/>
+		<span style="color:red" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></span><br />
+주소 : <input type="text" name="empAddr" id="sample4_roadAddress" th:value="${employeeCommand.empAddr}">
+		<button type="button" onclick="execDaumPostcode()">주소검색</button><br />
+상세주소 : <input type="text" name="empAddr2" th:value="${employeeCommand.empAddr2}"/><br />
+우편번호 : <input type="text" name="empPost" id="sample4_postcode" th:value="${employeeCommand.empPost}"/>
+		<span style="color:red" th:if="${#fields.hasErrors('empAddr')}" th:errors="*{empAddr}"></span><br />
+연락처 : <input type="text" name="empPhone" th:value="${employeeCommand.empPhone}"/>
+		<span style="color:red" th:if="${#fields.hasErrors('empPhone')}" th:errors="*{empPhone}"></span><br />
+이메일 : <input type="email" name="empEmail"  id="empEmail" th:value="${employeeCommand.empEmail}"/>
+		<span style="color:red" th:if="${#fields.hasErrors('empEmail')}" th:errors="*{empEmail}"></span>
+		<span id='emailCheck'></span><br />
+주민번호: <input type="text" name="empJumin" th:value="${employeeCommand.empJumin)}"/>
+		<span style="color:red" th:if="${#fields.hasErrors('empJumin')}" th:errors="*{empJumin}"></span><br />
+<input type="submit" value="등록" />
+</form>
+</body>
+</html>
+

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+직원 상세 페이지입니다.<br />
+직원번호 : [[${employeeCommand.empNum}]]<br />
+직원아이디 : [[${employeeCommand.empId}]]<br />
+직원이름 :  [[${employeeCommand.empName}]]<br />
+직원주소 : [[${employeeCommand.empAddr}]]<br />
+직원상세주소 : [[${employeeCommand.empAddrDetail}]]<br />
+우편번호 : [[${employeeCommand.empPost}]]<br />
+연락처 : [[${employeeCommand.empPhone}]]<br />
+이메일 : [[${employeeCommand.empEmail}]]<br />
+주민번호 : [[${employeeCommand.empJumin}]]<br />
+등록일 : [[${#dates.format(employeeCommand.empRegiDate,'yyyy-MM-dd')}]]<br />
+<a th:href="|empModify?empNum=${employeeCommand.empNum}|">직원 수정</a> | 
+<a th:href="@{empDelete?(empNum=${employeeCommand.empNum})}">직원 삭제</a>
+</body>
+</html>
