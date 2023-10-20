@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC 	
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.shopping.mapper.EmployeeMapper">
+<mapper namespace="springBootMVCShopping.mapper.EmployeeMapper">
 <sql id="employeeBaseColumns">
 	EMP_NUM, EMP_ID, EMP_PW, EMP_NAME, EMP_ADDR,EMP_ADDR_detail,EMP_POST,
 	EMP_REGI_DATE,EMP_PHONE,EMP_EMAIL, EMP_jumin
