@@ -38,4 +38,8 @@ public class EmployeeCommand {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date empRegiDate;
+	
+	public boolean isEmpPwEqualsEmpPwCon() {
+		return empPw.equals(empPwCon);
+	}
 }

@@ -7,7 +7,7 @@ import org.apache.ibatis.type.Alias;
 import lombok.Data;
 
 @Data
-@Alias("empVO")
+@Alias("emp")
 public class EmployeeDTO {
 	String empNum;
 	String empId;
