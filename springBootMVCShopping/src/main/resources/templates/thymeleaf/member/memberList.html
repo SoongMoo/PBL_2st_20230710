@@ -12,6 +12,22 @@ $(function(){
 			return false;
 		}
 	});
+	$("#checkBoxs").click(function(){
+		if($("#checkBoxs").prop("checked")){
+			$("input:checkbox[name=memDels]").prop("checked",true);
+		}else{
+			$("input:checkbox[name=memDels]").prop("checked",false);
+		}
+	});
+	$("input:checkbox[name=memDels]").click(function(){
+		var tot = $("input:checkbox[name=memDels]").length;
+		var checked = $("input:checkbox[name=memDels]:checked").length;
+		if(tot == checked){
+			$("#checkBoxs").prop("checked",true);
+		}else{
+			$("#checkBoxs").prop("checked",false);
+		}
+	});
 });
 </script>
 </head>
@@ -25,10 +41,12 @@ $(function(){
 </form>
 <form action="membersDelete" method="post" id="frm">
 	<tr><td>번호</td><td>이름</td><td>아이디</td><td>등록일</td>
-		<td><input type="submit" value="삭제"></td></tr>
+		<td><input type="checkbox" id="checkBoxs"/>
+			<input type="submit" value="삭제" /> 
+		</td></tr>
 	<tr th:each="dto : ${dtos}">
-		<td>[[${dto.memberNum}]]</td>
-		<td>[[${dto.memberName}]]</td>
+		<td><a th:href="|memberDetail?memberNum=${dto.memberNum}|">[[${dto.memberNum}]]</a></td>
+		<td><a th:href="@{memberDetail(memberNum=${dto.memberNum})}">[[${dto.memberName}]]</a></td>
 		<td>[[${dto.memberId}]]</td>
 		<td>[[${#dates.format(dto.memberRegistDate,'yyyy-MM-dd')}]]</td>
 		<td><input type="checkbox" name="memDels" th:value="${dto.memberNum}" /></td>

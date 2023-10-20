@@ -3,6 +3,17 @@
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="springBootMVCShopping.mapper.MemberMapper">
+
+<sql id="memberColumnsBase">
+	   member_num memberNum,member_id memberId,member_pw memberPw
+	  ,member_name memberName,member_addr memberAddr
+	  ,member_addr_detail memberAddrDetail,member_post memberPost
+	  ,member_phone1 memberPhone1,member_phone2 memberPhone2
+	  ,member_regist memberRegistDate ,member_birth memberBirth
+	  ,member_email memberEmail ,member_email_conf memberEmailConf
+	  ,point ,gender
+</sql>
+
 <select id="memberAutoNum" resultType="string">
 select concat('mem', coalesce(max(substring(member_num,4)::integer),100000) + 1)
 from members;
@@ -17,13 +28,7 @@ from members;
 		  ,#{memberPhone2},now(),#{memberBirth},#{gender},#{memberEmail},null,0);
 </insert>
 <select id="selectAll" resultType="mem" parameterType="string">
-select member_num memberNum,member_id memberId,member_pw memberPw
-	  ,member_name memberName,member_addr memberAddr
-	  ,member_addr_detail memberAddrDetail,member_post memberPost
-	  ,member_phone1 memberPhone1,member_phone2 memberPhone2
-	  ,member_regist memberRegistDate ,member_birth memberBirth
-	  ,member_email memberEmail ,member_email_conf memberEmailConf
-	  ,point ,gender
+select <include refid="memberColumnsBase" />
 from members
 <if test="searchWord != null">
 where MEMBER_NAME like '%' || #{searchWord} || '%'
@@ -39,11 +44,46 @@ where member_num in
 		#{memberNum}
 	</foreach>
 </delete>
+<select id="memberSelectOne" parameterType="string" resultType="mem">
+select <include refid="memberColumnsBase" />
+from members
+where member_num = #{memberNum}
+</select>
+<update id="memberUpdate" parameterType="mem" >
+		update members
+		<trim prefix="set"  suffixOverrides=",">
+			member_Name = #{memberName}, 
+			member_ADDR = #{memberAddr},
+			<if test="memberAddrDetail != null">
+			member_Addr_Detail = #{memberAddrDetail},
+			</if>
+			<if test="memberAddrDetail == null">
+			member_Addr_Detail = null,
+			</if>
+			member_Post = #{memberPost},
+			gender = #{gender},
+			member_Phone1 = #{memberPhone1},
+			<if test="memberPhone2 != null">
+			member_Phone2 =#{memberPhone2},
+			</if>
+			<if test="memberPhone2 == null">
+			member_Phone2 = null,
+			</if>
+			member_Email =#{memberEmail},
+			member_Birth = #{memberBirth},
+			point = #{point} 
+		</trim>
+		<where>		
+		member_num = #{memberNum}
+		</where>
+</update>
 
-
-
-
-
+<delete id="memberDelete" parameterType="string">
+	delete from members
+	<trim prefix="where" prefixOverrides="AND | OR" >
+	and member_num = #{memberNum}
+	</trim>
+</delete>
 
 
 

@@ -9,8 +9,11 @@ import springBootMVCShopping.domain.MemberDTO;
 
 @Mapper
 public interface MemberMapper {
-	public void memberInsert(MemberDTO dto);
+	public int memberInsert(MemberDTO dto);
 	public String memberAutoNum();
 	public List<MemberDTO> selectAll(String searchWord);
-	public void membersDelete(@Param("membersNum") String [] memDels);
+	public int membersDelete(@Param("membersNum") String [] memDels);
+	public MemberDTO memberSelectOne(String memberNum);
+	public int memberUpdate(MemberDTO dto);
+	public int memberDelete(String memberNum);
 }

@@ -34,8 +34,11 @@ public class MemberCommand { // html의 input name과 같아야 한다.
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message="생년월일을 입력해주세요.") /// NotNull은 String을 제외한 나머지
 	Date memberBirth;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date memberRegiDate;
+	
+	Integer point;
 	public boolean isMemberPwEqualsMemberPwCon() {
 		return memberPw.equals(memberPwCon);
 	}
