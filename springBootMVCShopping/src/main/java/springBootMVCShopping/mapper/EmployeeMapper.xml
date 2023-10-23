@@ -24,7 +24,7 @@ select concat('emp' , coalesce(max(substr(emp_num,4)::Integer),100000) + 1) from
 ,EMP_PHONE empPhone, EMP_EMAIL empEmail, EMP_jumin empJumin
 </sql>
 
-<select id="employeeAllSelect" resultType="emp" parameterType="startEndPageVO" >
+<select id="employeeAllSelect" resultType="emp" parameterType="startEndPageDTO" >
 select *
 from   (select ROW_NUMBER() OVER (ORDER BY EMP_NUM) AS rn, <include refid="employeeAliesColumns" />
 		from (select <include refid="employeeBaseColumns" />
@@ -34,7 +34,7 @@ from   (select ROW_NUMBER() OVER (ORDER BY EMP_NUM) AS rn, <include refid="emplo
 			   or EMP_ID   like '%' || #{searchWord} || '%'  
 			   or EMP_NAME like '%' || #{searchWord} || '%'
 			</if>
-			order by EMP_NUM desc) sub1 ) sub2
+		) sub1 ) sub2
 where rn between #{startRow}  and #{endRow}
 </select>
 

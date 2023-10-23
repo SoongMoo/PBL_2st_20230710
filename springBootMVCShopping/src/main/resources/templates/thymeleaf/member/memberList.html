@@ -52,7 +52,29 @@ $(function(){
 		<td><input type="checkbox" name="memDels" th:value="${dto.memberNum}" /></td>
 	</tr>
 </form>
+	<tr align="center"><td colspan="5">
+		<th:block th:if="${page <= 1}">
+		[이전]
+		</th:block>
+		<th:block th:if="${page > 1}">
+		<a th:href="@{memberList(page=${page - 1},
+						searchWord=${searchWord})}">[이전]</a>
+		</th:block>
+		
+		<th:block th:each=" i : ${#numbers.sequence(startPage, endPage)}">
+		<a th:href="@{memberList(page=${i},searchWord=${searchWord})}">[[${i}]]</a> 
+		</th:block>
+		<th:block th:if="${page >= maxPage}">
+		[다음]
+		</th:block>
+		<th:block th:if="${page < maxPage}">
+		<a th:href="@{memberList(page=${page + 1},
+						searchWord=${searchWord})}">[다음]</a>
+		</th:block>
+	</td></tr>
 </table>
 <a href="memberRegist">회원 등록</a><br />
 </body>
+[[${endPage}]],
+[[${startPage}]]
 </html>
