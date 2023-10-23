@@ -37,7 +37,7 @@ from members;
 					,member_email_conf,point)
 	values(#{memberNum},#{memberId},#{memberPw},#{memberName}
 		  ,#{memberAddr},#{memberAddrDetail},#{memberPost},#{memberPhone1}
-		  ,#{memberPhone2},now(),#{memberBirth},#{gender},#{memberEmail},null,0);
+		  ,#{memberPhone2},now(),#{memberBirth},#{gender},#{memberEmail},'T',0);
 </insert>
 
 

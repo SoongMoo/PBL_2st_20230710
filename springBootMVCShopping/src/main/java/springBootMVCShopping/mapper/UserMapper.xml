@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springBootMVCShopping.mapper.UserMapper">
+<update id="userCkeckUpdate" parameterType="string">
+	update members
+	set member_email_conf = 'T'
+	where member_email_conf is null 
+	and  member_email = #{email}
+</update>
+
+
+<insert id="userInsert" parameterType="mem">
+insert into members(member_num,member_id,member_pw,member_name,member_addr
+					,member_addr_detail,member_post,member_phone1,member_phone2
+					,member_regist,member_birth,gender,member_email
+					,member_email_conf,point)
+values((select concat('mem', coalesce(max(substring(member_num,4)::integer),100000) + 1)
+		from members)
+      ,#{memberId},#{memberPw},#{memberName}
+	  ,#{memberAddr},#{memberAddrDetail},#{memberPost},#{memberPhone1}
+	  ,#{memberPhone2},now(),#{memberBirth},#{gender},#{memberEmail},null,0);
+</insert>
+</mapper>

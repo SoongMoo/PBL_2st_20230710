@@ -62,7 +62,6 @@ $(function(){
 </head>
 <body>
 <form action="userRegist" method="post" th:object="${memberCommand}" id="frm">
-회원번호 : <input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly"/>자동 부여<br />
 회원아이디 : <input type="text" name="memberId" id="memberId" 
 										th:value="${memberCommand.memberId}"/><br />
 <span id='idCheck'></span>

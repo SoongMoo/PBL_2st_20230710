@@ -8,8 +8,9 @@ import org.springframework.ui.Model;
 import springBootMVCShopping.domain.StartEndPageDTO;
 @Service
 public class StartEndPageService {
+	int limit;
 	public StartEndPageDTO execute(int page, String searchWord) {
-		int limit = 3; // 한페이지에 몇개를 보여줄것인지?
+		limit = 3; // 한페이지에 몇개를 보여줄것인지?
 		// 2page == 4 ~ 6 // 1page = 1 ~ 3
  		int startRow = ((page - 1) * limit) + 1;
  		//             1      + 3     -1
@@ -25,8 +26,7 @@ public class StartEndPageService {
 		int limitPage = 10;
 		int startPage = (int)((double)page / limitPage + 0.95 -1) * limitPage + 1 ;
 		int endPage = startPage + limitPage -1 ;
-		int maxPage = count / limitPage; 
-		if (maxPage == 0) maxPage = 1;
+		int maxPage = (int)((double)count / limit + 0.95);
 		if(maxPage < endPage) endPage = maxPage;
 		model.addAttribute("dtos", list);
 		model.addAttribute("searchWord", searchWord);
@@ -36,11 +36,4 @@ public class StartEndPageService {
 		model.addAttribute("count", count);
 		model.addAttribute("maxPage", maxPage);
 	}
-	
-	
-	
-	
-	
-	
-	
 }
