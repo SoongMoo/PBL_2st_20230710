@@ -61,7 +61,6 @@ $(function(){
 </script>
 </head>
 <body>
-회원등록 페이지입니다.<br />
 <form action="userRegist" method="post" th:object="${memberCommand}" id="frm">
 회원번호 : <input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly"/>자동 부여<br />
 회원아이디 : <input type="text" name="memberId" id="memberId" 

@@ -65,7 +65,7 @@ $(function(){
 		<span style="color:red" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></span><br />
 주소 : <input type="text" name="empAddr" id="sample4_roadAddress" th:value="${employeeCommand.empAddr}">
 		<button type="button" onclick="execDaumPostcode()">주소검색</button><br />
-상세주소 : <input type="text" name="empAddr2" th:value="${employeeCommand.empAddr2}"/><br />
+상세주소 : <input type="text" name="empAddrDetail" th:value="${employeeCommand.empAddrDetail}"/><br />
 우편번호 : <input type="text" name="empPost" id="sample4_postcode" th:value="${employeeCommand.empPost}"/>
 		<span style="color:red" th:if="${#fields.hasErrors('empAddr')}" th:errors="*{empAddr}"></span><br />
 연락처 : <input type="text" name="empPhone" th:value="${employeeCommand.empPhone}"/>
@@ -73,7 +73,7 @@ $(function(){
 이메일 : <input type="email" name="empEmail"  id="empEmail" th:value="${employeeCommand.empEmail}"/>
 		<span style="color:red" th:if="${#fields.hasErrors('empEmail')}" th:errors="*{empEmail}"></span>
 		<span id='emailCheck'></span><br />
-주민번호: <input type="text" name="empJumin" th:value="${employeeCommand.empJumin)}"/>
+주민번호: <input type="text" name="empJumin" th:value="${employeeCommand.empJumin}"/>
 		<span style="color:red" th:if="${#fields.hasErrors('empJumin')}" th:errors="*{empJumin}"></span><br />
 <input type="submit" value="등록" />
 </form>

@@ -25,7 +25,6 @@ public class StartEndPageService {
 		int limitPage = 10;
 		int startPage = (int)((double)page / limitPage + 0.95 -1) * limitPage + 1 ;
 		int endPage = startPage + limitPage -1 ;
-		///            5        10  = 0.5 = 0
 		int maxPage = count / limitPage; 
 		if (maxPage == 0) maxPage = 1;
 		if(maxPage < endPage) endPage = maxPage;

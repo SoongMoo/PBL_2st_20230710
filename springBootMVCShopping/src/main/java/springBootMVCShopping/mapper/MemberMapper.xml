@@ -6,7 +6,7 @@
 
 <select id="memberCount" parameterType="string" resultType="integer">
 	select count(*) from members
-	<if test="searchWord != null">
+	<if test='searchWord != null'>
 		<where>
 		MEMBER_NAME like '%' || #{searchWord} || '%'
 		or member_id like '%' || #{searchWord} || '%'
@@ -47,11 +47,13 @@ select *
 from  ( select ROW_NUMBER() over (order by member_num) as rn,
 			<include refid="memberColumnsBase" />
 		from members
+		<where>
 		<if test="searchWord != null">
-		where MEMBER_NAME like '%' || #{searchWord} || '%'
+			MEMBER_NAME like '%' || #{searchWord} || '%'
 		   or member_id like '%' || #{searchWord} || '%'
 		   or member_num like '%' || #{searchWord} || '%'
 		</if>
+		</where>
 	   ) sub1
 where rn between #{startRow}  and #{endRow}
 </select>
@@ -76,21 +78,25 @@ where member_num = #{memberNum}
 		<trim prefix="set"  suffixOverrides=",">
 			member_Name = #{memberName}, 
 			member_ADDR = #{memberAddr},
-			<if test="memberAddrDetail != null">
-			member_Addr_Detail = #{memberAddrDetail},
-			</if>
-			<if test="memberAddrDetail == null">
-			member_Addr_Detail = null,
-			</if>
+			<choose>
+				<when test="memberAddrDetail != null">
+					member_Addr_Detail = #{memberAddrDetail},
+				</when>
+				<otherwise>
+				member_Addr_Detail = null,
+				</otherwise>
+			</choose>
 			member_Post = #{memberPost},
 			gender = #{gender},
 			member_Phone1 = #{memberPhone1},
-			<if test="memberPhone2 != null">
-			member_Phone2 =#{memberPhone2},
-			</if>
-			<if test="memberPhone2 == null">
-			member_Phone2 = null,
-			</if>
+			<choose>
+				<when test="memberPhone2 != null">
+					member_Phone2 =#{memberPhone2},
+				</when>
+				<when test="memberPhone2 == null">
+					member_Phone2 = null,
+				</when>	
+			</choose>
 			member_Email =#{memberEmail},
 			member_Birth = #{memberBirth},
 			point = #{point} 
