@@ -3,51 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/static/js/daumAddressScript.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("#empEmail").on("change keyup", function(){
+	$("#frm").submit(function(){
+		alert($("#idCheck").val());
+		if($("#idCheck").text()=="" || $("#idCheck").text()=="사용중인 아이디입니다."){
+			alert("아이디 중복확인을 해주세요");
+			return false;
+		}
+		if($("#emailCheck").text()=="" || $("emailCheck").text()=="사용중인 Email입니다."){
+			alert("이메일 중복확인을 해주세요");
+			return false;
+		}
+	});
+	$("#empId").on("change keyup",function(){
 		$.ajax({
 			type:'post',
-			url:'/checkRest/emailCheck',
-			data:{'checkEmail':$("#empEmail").val()},
-			dataType:'text',
-			success:function(result){
-				$("#emailCheck").text(result);
-				if(result.trim() == '사용가능한 이메일입니다.'){
-					$("#emailCheck").css("color","blue");
-				}else{
-					$("#emailCheck").css("color","red");
-				}
-			},
-			error:function(){
-				alert("코드 에러")
-			}
-		});
-	});
-	$("#empId").on("keyup", function(){
-		$.ajax({
-			type:'get',
-			url:'/checkRest/idCheck',
-			data:{'checkId':$("#empId").val()},
+			url:"/login/userIdCheck",
+			data:{"userId":$("#empId").val()},
 			dataType:'text',
 			success:function(result){
 				$("#idCheck").text(result);
-				if(result.trim() == '사용가능한 아이디입니다.'){
+				if(result.trim() == "사용가능한 아이디입니다."){
 					$("#idCheck").css("color","blue");
 				}else{
 					$("#idCheck").css("color","red");
 				}
 			},
 			error:function(){
-				alert("코드 에러")
+				
+			}
+		});
+	});
+	$("#empEmail").on("change keyup",function(){
+		$.ajax({
+			type:'post',
+			url:"/checkRest/userEmailCheck",
+			data:{"userEmail":$("#empEmail").val()},
+			dataType:'text',
+			success:function(result){
+				$("#emailCheck").text(result);
+				if(result.trim() == "사용가능한 Email입니다."){
+					$("#emailCheck").css("color","blue");
+				}else{
+					$("#emailCheck").css("color","red");
+				}
+			},
+			error:function(){
+				
 			}
 		});
 	});
 });
 </script>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/static/js/daumAddressScript.js"></script>
 </head>
 <body>
 직원등록페이지입니다.<br />

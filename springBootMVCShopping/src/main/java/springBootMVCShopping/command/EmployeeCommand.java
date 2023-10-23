@@ -35,7 +35,6 @@ public class EmployeeCommand {
 	String empEmail;
 	@NotEmpty(message = "주민번호를 입력하여 주세요.")
 	String empJumin;
-	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date empRegiDate;
 	
