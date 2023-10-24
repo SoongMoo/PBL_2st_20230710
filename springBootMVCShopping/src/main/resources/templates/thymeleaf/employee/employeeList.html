@@ -59,13 +59,13 @@ $(function(){
 				[이전]
 			</th:block>
 			<th:block th:if="${page > 1}">
-				[<a th:href="@{empList(page=${page - 1},searchWord=${searchWord})}">이전</a>]
+				[<a th:href="@{employeeList(page=${page - 1},searchWord=${searchWord})}">이전</a>]
 			</th:block>
 			<th:block th:each=" i  :  ${#numbers.sequence(startPage, endPage)}">
-			[ <a th:href="@{empList(page=${i},searchWord=${searchWord})}">[[${i}]]</a> ]
+			[ <a th:href="@{employeeList(page=${i},searchWord=${searchWord})}">[[${i}]]</a> ]
 			</th:block>
 			<th:block th:if="${page < maxPage}">
-			<a th:href="@{empList(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
+			<a th:href="@{employeeList(page=${page + 1},searchWord=${searchWord})}">[다음]</a>
 			</th:block>
 			<th:block th:if="${page >= maxPage}">
 			[다음]

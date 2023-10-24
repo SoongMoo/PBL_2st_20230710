@@ -5,18 +5,31 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div th:if="${session.auth != null}"  >
 <ul>
 	<li><a href="employee/employeeList">직원 목록</a></li>
 	<li><a href="member/memberList">회원목록</a></li>
+	<li><a href="login/logout">로그아웃</a></li>
 </ul>
+</div>
+<div th:if="${session.auth == null}">
+<form action="/login/login" method="post" th:object="${loginCommand}" >
 	<table border="1" align="center">
 		<tr><td colspan="2"></td></tr>
-		<tr><td><input type="text" placeholder="아이디" /></td>
+		<tr><td><input type="text" name="userId" placeholder="아이디" 
+												th:value="${loginCommand.userId}" /><br />
+				<span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" ></span></td>
 			<td rowspan="2">
 				<input type="image" src="/static/images/sbmt.png" width="60">
 			</td></tr>
-		<tr><td><input type="password" placeholder="비밀번호" /></td></tr>
-		<tr><td colspan="2"><a href="/register/userAgree">회원가입</a></td></tr>
+		<tr><td><input type="password" name="userPw" placeholder="비밀번호" 
+												th:value="${loginCommand.userPw}" /><br />
+			<span th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}" ></span></td></tr>
+		<tr><td colspan="2"><a href="/register/userAgree">회원가입</a> | 
+							<a href="/help/findId">아이디 찾기</a> | 
+							<a href="/help/findPassword">비밀번호 찾기</a></td></tr>
 	</table>
+</form>
+</div>
 </body>
 </html>

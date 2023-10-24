@@ -55,7 +55,7 @@ public class EmployeeController {
 			return "thymeleaf/employee/employeeForm";
 		}
 		employeeInsertService.execute(employeeCommand);
-		return "redirect:empList";
+		return "redirect:employeeList";
 	}
 
 	@Autowired
@@ -91,7 +91,7 @@ public class EmployeeController {
 	@RequestMapping("empDelete")
 	public String employeeDelete(@RequestParam(value = "empNum") String empNum) {
 		employeeDeleteService.execute(empNum);
-		return "redirect:empList";
+		return "redirect:employeeList";
 	}
 	
 	@Autowired
@@ -100,6 +100,6 @@ public class EmployeeController {
 	public String membersDelete(
 			@RequestParam(value="empsDel") String empsDel []) {
 		employeesDeleteService.execute(empsDel);
-		return "redirect:empList";
+		return "redirect:employeeList";
 	}
 }

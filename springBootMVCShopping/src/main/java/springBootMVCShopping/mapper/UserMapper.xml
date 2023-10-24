@@ -3,6 +3,27 @@
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="springBootMVCShopping.mapper.UserMapper">
+<resultMap type="authInfo" id="authInfoResultMap">
+	<constructor>
+		<arg column="member_id" javaType="string" />
+		<arg column="member_pw" javaType="string" />
+		<arg column="member_name" javaType="string" />
+		<arg column="grade" javaType="string" />
+		<arg column="member_email" javaType="string" />
+		<arg column="member_email_conf" javaType="string" />
+	</constructor>
+</resultMap>
+
+<select id="loginSelect" parameterType="string" resultMap="authInfoResultMap">
+select member_id ,member_pw ,member_name ,'mem' grade ,member_email ,member_email_conf 
+from members
+where member_id = #{userId}
+union 
+select emp_id, emp_pw, emp_name, 'emp', emp_email  , 'T'
+from employees
+where emp_id = #{userId}
+</select>
+
 <update id="userCkeckUpdate" parameterType="string">
 	update members
 	set member_email_conf = 'T'
