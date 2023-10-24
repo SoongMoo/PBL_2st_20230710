@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springBootMVCShopping.mapper.FindMapper">
+<update id="pwUpdate" parameterType="authInfo"> 
+update ${tableName}
+set ${pwColumName}  = #{userPw}
+where ${userIdColumName}  = #{userId}
+</update>
+
+
+<select id="userEmail" resultType="authInfo">
+select member_email userEmail , 'mem' grade
+from members
+where member_id = #{_userId} and member_phone1 = #{_userPhone} 
+union
+select emp_email  , 'emp'
+from employees 
+where emp_phone = #{_userPhone} and emp_id = #{_userId} 
+</select>
+<select id="findId" parameterType="string" resultType="string">
+select member_id
+from members
+where member_email = #{arg1} 
+and (member_phone1 = #{arg0} or member_phone2 = #{arg0})
+union
+select emp_id
+from employees
+where emp_phone = #{arg0} and emp_email =#{arg1}
+</select>
+</mapper>	

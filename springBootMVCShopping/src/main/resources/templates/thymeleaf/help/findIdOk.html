@@ -5,6 +5,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-안녕
+<div th:if="${userId != null}">
+당신의 아이디는 [[${#strings.substring(userId,0,4)}]]
+<th:block th:each=" i : ${#numbers.sequence(1, #strings.length(userId) - 4 )}">
+.
+</th:block>
+입니다
+</div>
+
+<div th:if="${userId == null}">
+	입력한 정보에 해당하는 아이디가 존재하지 않습니다. 
+</div>
 </body>
 </html>
