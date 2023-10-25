@@ -58,7 +58,7 @@ public class MemberMyPageController {
 			HttpSession session) {
 		int i = memberDropService.execute(memberPw, session, model);
 		if(i == 1) {
-			return "thymeleaf/memberShip/memberDrop";
+			return "redirect:/login/logout";
 		}else {
 			return "thymeleaf/memberShip/memberDrop";
 		}
