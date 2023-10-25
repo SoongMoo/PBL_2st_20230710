@@ -10,9 +10,8 @@
 	$(function(){
 		$("#frm").submit(function(){
 			$(this).ajaxSubmit({
-				type:'post',
+				type:'get',
 				url:'myPwUpdate',
-				data:{'userPw':$("#newPw").val(), "oldPw" :$("#oldPw").val() },
 				dataType:'text',
 				beforeSubmit: passwordChecked ,
 				success:resultOk,
@@ -31,12 +30,16 @@
 				$("#oldPw").val("");
 				$("#pwErr").text("비밀번호가 틀렸습니다.");
 				$("#pwErr").css("color","red");
+				$("#newPwErr").text("");
+				$("#pwConErr").text("");
+				$("#oldPw").focus();
 			}
 		}
 	}
 	function passwordChecked(){
 		if($("#oldPw").val() == ""){
-			alert("현재비밀번호를 입력해주세요.");
+			$("#pwErr").text("현재 비밀번호를 입력해 주세요.");
+			$("#pwErr").css("color","red");
 			return false;
 		}
 		if($("#newPw").val() != ""){
@@ -58,13 +61,20 @@
 </script>
 </head>
 <body>
+<ul>
+	<li><a href="myDetail">내정보 보기</a></li>
+	<li><a href="memberUpdate">내정보 수정</a></li>
+	<li><a href="userPwModify">비밀번호변경</a></li>
+	<li><a href="memberDrop">회원탈퇴</a></li>
+	<li><a href="/">홈</a></li>
+</ul>
 <form action="myPwUpdate" method="post" name="from" id="frm">
 현재비밀번호 : <input type="password" name="oldPw" id="oldPw" />
-			<span id="pwErr"></span><br />
+									<span id="pwErr"></span><br />
 새 비밀번호 : <input type="password" name="newPw" id="newPw" />
-			<sapn id="newPwErr"></sapn><br />
+									<sapn id="newPwErr"></sapn><br />
 새 비밀번호 확인 : <input type="password" name="newPwCon" id="newPwCon" />
-				<sapn id="pwConErr"></sapn><br />
+									<sapn id="pwConErr"></sapn><br />
 <input type="submit"  value="비밀번호 변경"/>
 </form>
 </body>

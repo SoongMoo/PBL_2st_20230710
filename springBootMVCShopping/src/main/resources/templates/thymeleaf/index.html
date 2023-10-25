@@ -10,6 +10,7 @@
 	<th:block th:if="${session.auth.grade == 'emp'}"  >
 		<li><a href="employee/employeeList">직원 목록</a></li>
 		<li><a href="member/memberList">회원목록</a></li>
+		<li><a href="employee/empMyPage">마이페이지</a></li>
 	</th:block>
 	
 	<th:block th:if="${session.auth.grade == 'mem'}"  >

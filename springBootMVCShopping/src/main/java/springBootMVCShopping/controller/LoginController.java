@@ -37,7 +37,6 @@ public class LoginController {
 		}
 		return "redirect:/";
 	}
-
 	@PostMapping("userIdCheck")
 	public @ResponseBody String userIdCheck(
 			@RequestParam(value="userId") String userId) {
