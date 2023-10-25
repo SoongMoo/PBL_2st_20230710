@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+내정보
+<ul>
+	<li><a href="memberMyPage">내정보 보기</a></li>
+	<li><a href="memberUpdate">내정보 수정</a></li>
+	<li><a href="userPwModify">비밀번호변경</a></li>
+	<li><a href="memberDrop">회원탈퇴</a></li>
+</ul>
+이름 : [[${memberCommand.memberName }]]<br />
+아이디 : [[${memberCommand.memberId }]]<br />
+주소 : [[${memberCommand.memberAddr }]]<br />
+상세주소 : [[${memberCommand.memberAddr2 }]]<br />
+우편번호 : [[${memberCommand.memberPost }]]<br />
+연락처1 : [[${memberCommand.memberPhone1 }]]<br />
+연락처2 : [[${memberCommand.memberPhone2 }]]<br />
+성별 : <span th:if="${memberCommand.memberGender == 'M'}">남자</span>
+	  <span th:if="${memberCommand.memberGender == 'F'}">여자</span><br />
+등록일 : [[${#dates.format(memberCommand.memberRegiDate,'yyyy-MM-dd')}]]<br />
+생년월일 : [[${#dates.format(memberCommand.memberBirth,'yyyy-MM-dd')}]]<br />
+이메일 : [[${memberCommand.memberEmail }]]<br />
+</body>
+</html>

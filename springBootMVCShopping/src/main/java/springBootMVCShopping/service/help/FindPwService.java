@@ -1,5 +1,6 @@
 package springBootMVCShopping.service.help;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class FindPwService {
 	@Autowired
 	EmailSendService emailSendService;
 	public void execute(String userId, String userPhone, Model model) {
+		AuthInfoDTO au = new AuthInfoDTO();
 		AuthInfoDTO dto = findMapper.userEmail(userId, userPhone);
 		if (dto != null) {
 			String newPw = UUID.randomUUID().toString().substring(0, 8);
@@ -37,9 +39,9 @@ public class FindPwService {
 			findMapper.pwUpdate(dto);
 			model.addAttribute("dto", dto);
 			String html= "<html><body>"
-					+ dto.getUserName() + "님의 임시 비밀번호는 " + newPw
+					+ dto.getUserEmail() + "님의 임시 비밀번호는 " + newPw
 					+ "입니다. </body></html>";
-			String subject = dto.getUserName()+"의 임시비밀번호";
+			String subject = dto.getUserEmail()+"의 임시비밀번호";
 			String fromEmail = "soongmoostudent@gmail.com";
 			String toEmail = dto.getUserEmail();
 			emailSendService.mailsend(html, subject, fromEmail, toEmail);

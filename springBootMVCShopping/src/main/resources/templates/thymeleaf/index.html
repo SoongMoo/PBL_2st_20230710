@@ -7,9 +7,18 @@
 <body>
 <div th:if="${session.auth != null}"  >
 <ul>
-	<li><a href="employee/employeeList">직원 목록</a></li>
-	<li><a href="member/memberList">회원목록</a></li>
+	<th:block th:if="${session.auth.grade == 'emp'}"  >
+		<li><a href="employee/employeeList">직원 목록</a></li>
+		<li><a href="member/memberList">회원목록</a></li>
+	</th:block>
+	
+	<th:block th:if="${session.auth.grade == 'mem'}"  >
+		<li><a href="/mypage/myDetail">내정보 보기</a></li>
+	</th:block>
+	
 	<li><a href="login/logout">로그아웃</a></li>
+	
+	
 </ul>
 </div>
 <div th:if="${session.auth == null}">
@@ -29,7 +38,7 @@
 							<a href="/help/findId">아이디 찾기</a> | 
 							<a href="/help/findPassword">비밀번호 찾기</a></td></tr>
 	</table>
-</form>
+</form>rgnc gknz qizc sygm
 </div>
 </body>
 </html>
