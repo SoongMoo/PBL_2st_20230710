@@ -5,18 +5,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="goodsWrite" method="post">
+<form action="goodsWrite" method="post" th:object="${goodsCommand}">
 <table border = "1" width ="600" align="center">
 	<tr><th width="100">상품번호</th>
-		<td><input type="text" name="goodsNum" /></td></tr>
+		<td><input type="text" name="goodsNum" th:value="${goodsCommand.goodsNum}" readonly="readonly"/></td></tr>
 	<tr><th>상품명</th>
-		<td><input type="text" name="goodsName"/></td></tr>
+		<td><input type="text" name="goodsName" th:value="${goodsCommand.goodsName}"/><br />
+		<span style="color:red" th:if="${#fields.hasErrors('goodsName')}" th:errors="*{goodsName}"></span></td></tr>
 	<tr><th>상품가격</th>
-		<td><input type="number" name="goodsPrice"/></td></tr>
+		<td><input type="number" name="goodsPrice" th:value="${goodsCommand.goodsPrice}"/><br />
+		<span style="color:red" th:if="${#fields.hasErrors('goodsPrice')}" th:errors="*{goodsPrice}"></span></td></tr>
 	<tr><th>배송비</th>
-		<td><input type="number" name="deliveryCost"/></td></tr>
+		<td><input type="number" name="deliveryCost" th:value="${goodsCommand.deliveryCost}"/><br />
+		<span style="color:red" th:if="${#fields.hasErrors('deliveryCost')}" th:errors="*{deliveryCost}"></span></td></tr>
 	<tr><th>상품설명</th>
-		<td><textarea rows="10" cols="50" name="goodsContent"></textarea></td></tr>
+		<td><textarea rows="10" cols="50" name="goodsContent" >[[${goodsCommand.goodsNum}]]</textarea><br />
+		<span style="color:red" th:if="${#fields.hasErrors('goodsContent')}" th:errors="*{goodsContent}"></span></td></tr>
 	<tr><th colspan="2"><input type="submit" value="상품등록" /></th></tr>
 </table>
 </form>

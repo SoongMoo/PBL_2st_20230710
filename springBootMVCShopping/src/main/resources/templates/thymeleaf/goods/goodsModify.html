@@ -6,24 +6,28 @@
 </head>
 <body>
 <form action="goodsUpdate" method="post" name="frm" id="frm">
-<table border=1 align="center" width="600">
+<table border=1 align="center" width="600" th:object="${goodsCommand}">
 <caption>상품 상세보기</caption>
 <tr><th width="150">상품번호</th>
-	<td><input type="text" name="goodsNum" th:value="${dto.goodsNum }" readonly="readonly"/></td></tr>
+	<td><input type="text" name="goodsNum" th:value="${goodsCommand.goodsNum }" readonly="readonly"/></td></tr>
 <tr><th>상품명</th>
-	<td><input type="text" name="goodsName" th:value="${dto.goodsName }"/></td></tr>
+	<td><input type="text" name="goodsName" th:value="${goodsCommand.goodsName }"/><br />
+		<span style="color:red" th:if="${#fields.hasErrors('goodsName')}" th:errors="*{goodsName}"></span></td></tr>
 <tr><th>상품가격</th>
-	<td><input type="number" name="goodsPrice" th:value="${dto.goodsPrice }"/></td></tr>
+	<td><input type="number" name="goodsPrice" th:value="${goodsCommand.goodsPrice }"/><br />
+		<span style="color:red" th:if="${#fields.hasErrors('goodsPrice')}" th:errors="*{goodsPrice}"></span></td></tr>
 <tr><th>배송비</th>
-	<td><input type="number" name="deliveryCost" th:value="${dto.deliveryCost }"/></td></tr>
+	<td><input type="number" name="deliveryCost" th:value="${goodsCommand.deliveryCost }"/><br />
+		<span style="color:red" th:if="${#fields.hasErrors('deliveryCost')}" th:errors="*{deliveryCost}"></span></td></tr>
 <tr><th>상품설명</th>
-	<td><textarea rows="5" cols="50" name="goodsContent">[[${dto.goodsContent}]]</textarea></td></tr>
+	<td><textarea rows="5" cols="50" name="goodsContent">[[${goodsCommand.goodsContent}]]</textarea><br />
+		<span style="color:red" th:if="${#fields.hasErrors('goodsContent')}" th:errors="*{goodsContent}"></span></td></tr>
 <tr><th>조회수</th>
-	<td><input type="number" th:value="${dto.visitCount }" min = "0" /></td></tr>
-<tr><th>등록한 사원</th><td>[[${dto.empNum }]]</td></tr>
-<tr><th>등록일</th><td>[[${#dates.format(dto.goodsRegist,'yyyy-MM-dd' )}]]</td></tr>
-<tr><th>마지막 수정 사원</th><td>[[${dto.updateEmpNum }]]</td></tr>
-<tr><th>마지막 수정일</th><td>[[${#dates.format(dto.goodsUpdateDate,'yyyy-MM-dd' )}]]</td></tr>
+	<td><input type="number" th:value="${goodsCommand.visitCount }" min = "0" name="visitCount"/></td></tr>
+<tr><th>등록한 사원</th><td>[[${goodsCommand.empNum }]]</td></tr>
+<tr><th>등록일</th><td>[[${#dates.format(goodsCommand.goodsRegist,'yyyy-MM-dd' )}]]</td></tr>
+<tr><th>마지막 수정 사원</th><td>[[${goodsCommand.updateEmpNum }]]</td></tr>
+<tr><th>마지막 수정일</th><td>[[${#dates.format(goodsCommand.goodsUpdateDate,'yyyy-MM-dd' )}]]</td></tr>
 <tr><th colspan="2"><input type="submit" value="수정완료" /></th></tr>
 </table>
 </form>

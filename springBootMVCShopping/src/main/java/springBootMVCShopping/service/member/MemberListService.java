@@ -22,10 +22,10 @@ public class MemberListService {
 		if(searchWord != null ) {
 			this.searchWord = searchWord.trim();
 		}
-		StartEndPageDTO sepDTO = startEndPageService.execute(page, this.searchWord);
- 		int count = memberMapper.memberCount(this.searchWord);
-		
+		StartEndPageDTO sepDTO = startEndPageService.execute(page, this.searchWord);		
  		List<MemberDTO> list = memberMapper.selectAll(sepDTO);
+ 		
+ 		int count = memberMapper.memberCount(this.searchWord);
  		startEndPageService.execute(page, count, model, list, this.searchWord);
 	}
 }

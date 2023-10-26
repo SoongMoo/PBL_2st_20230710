@@ -3,6 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script>
+$(function(){
+	$("#frm").submit(function(){
+		if($("input:checkbox[name=memDels]:checked").length < 1){
+			alert("하나이상 선택하세요.");
+			return false;
+		}
+	});
+	$("#checkBoxs").click(function(){
+		if($("#checkBoxs").prop("checked")){
+			$("input:checkbox[name=memDels]").prop("checked",true);
+		}else{
+			$("input:checkbox[name=memDels]").prop("checked",false);
+		}
+	});
+	$("input:checkbox[name=memDels]").click(function(){
+		var tot = $("input:checkbox[name=memDels]").length;
+		var checked = $("input:checkbox[name=memDels]:checked").length;
+		if(tot == checked){
+			$("#checkBoxs").prop("checked",true);
+		}else{
+			$("#checkBoxs").prop("checked",false);
+		}
+	});
+});
+</script>
 </head>
 <body>
 <ul>
@@ -13,19 +40,48 @@
 상품 목록<br/>
 <table border=1 width="600" align="center">
 <form  action="goodsList" method="get" >
-	<tr><td colspan="5">검색 : 
+	<tr><td colspan="6">검색 : 
 		<input type="search" name="searchWord" size="60" th:value="${searchWord}"/>
 		<input type="submit" value="검색" />
 		</td></tr>
 </form>
+<form action="productsDelete" method="post" id="frm">
 	<tr><td>번호</td><td>상품번호</td><td>상품명</td>
-	    <td>상품가격</td><td>등록일</td></tr>
+	    <td>상품가격</td><td>등록일</td>
+	    <td><input type="checkbox" id="checkBoxs"/>
+			<input type="submit" value="삭제" /> 
+		</td>
+	    </tr>
 	<tr th:each="dto, cnt : ${dtos}">
 		<td>[[${cnt.count }]]</td>
 		<td><a th:href="|goodsDetail?goodsNum=${dto.goodsNum}|">[[${dto.goodsNum}]]</a></td>
 		<td><a th:href="@{goodsDetail(goodsNum=${dto.goodsNum})}">[[${dto.goodsName}]]</a></td>
 	    <td>[[${dto.goodsPrice}]]</td>
-	    <td>[[${#dates.format(dto.goodsRegist,'yyyy-MM-dd')}]]</td></tr>
+	    <td>[[${#dates.format(dto.goodsRegist,'yyyy-MM-dd')}]]</td>
+		<td><input type="checkbox" name="memDels" th:value="${dto.goodsNum}" /></td>
+	</tr>
+</form>
+	<tr align="center"><td colspan="6">
+		<th:block th:if="${page <= 1}">
+		[이전]
+		</th:block>
+		<th:block th:if="${page > 1}">
+		<a th:href="@{goodsList(page=${page - 1},
+						searchWord=${searchWord})}">[이전]</a>
+		</th:block>
+		
+		<th:block th:each=" i : ${#numbers.sequence(startPage, endPage)}">
+		<a th:href="@{goodsList(page=${i},searchWord=${searchWord})}">[[${i}]]</a> 
+		</th:block>
+		<th:block th:if="${page >= maxPage}">
+		[다음]
+		</th:block>
+		<th:block th:if="${page < maxPage}">
+		<a th:href="@{goodsList(page=${page + 1},
+						searchWord=${searchWord})}">[다음]</a>
+		</th:block>
+	</td></tr>
+
 </table>
 </body>
 </html>

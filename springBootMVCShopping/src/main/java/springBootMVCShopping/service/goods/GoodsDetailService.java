@@ -13,7 +13,7 @@ public class GoodsDetailService {
 	GoodsMapper goodsMapper;
 	public void execute(String goodsNum, Model model) {
 		GoodsDTO dto = goodsMapper.selectOne(goodsNum);
-		model.addAttribute("dto", dto);
+		model.addAttribute("goodsCommand", dto);
 		model.addAttribute("newLine", "\n");
 	}
 }
