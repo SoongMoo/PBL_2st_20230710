@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import springBootMVCShopping.domain.EmployeeDTO;
 import springBootMVCShopping.domain.StartEndPageDTO;
 
-
 @Mapper
 public interface EmployeeMapper {
 	public Integer employeeInsert(EmployeeDTO dto);
@@ -18,6 +17,7 @@ public interface EmployeeMapper {
 	public Integer employeeDelete(String empNum);
 	public Integer employeesDelete(String empsDel[]);
 	public Integer employeeCount(String searchWord);
+	public String getEmpNum(String empId);
 }
 
 

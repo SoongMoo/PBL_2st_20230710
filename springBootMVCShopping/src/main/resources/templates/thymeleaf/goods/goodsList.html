@@ -6,10 +6,26 @@
 </head>
 <body>
 <ul>
-	<li><a href="goodsWrite.goods">상품 추가</a></li>
-	<li><a href="goodsIpgo.ipgo">상품 입고</a></li>
-	<li><a href="goodsIpgoList.ipgo">상품 입고 현황</a></li>
+	<li><a href="goodsWrite">상품 추가</a></li>
+	<li><a href="goodsIpgo">상품 입고</a></li>
+	<li><a href="goodsIpgoList">상품 입고 현황</a></li>
 </ul>
 상품 목록<br/>
+<table border=1 width="600" align="center">
+<form  action="goodsList" method="get" >
+	<tr><td colspan="5">검색 : 
+		<input type="search" name="searchWord" size="60" th:value="${searchWord}"/>
+		<input type="submit" value="검색" />
+		</td></tr>
+</form>
+	<tr><td>번호</td><td>상품번호</td><td>상품명</td>
+	    <td>상품가격</td><td>등록일</td></tr>
+	<tr th:each="dto, cnt : ${dtos}">
+		<td>[[${cnt.count }]]</td>
+		<td><a th:href="|goodsDetail?goodsNum=${dto.goodsNum}|">[[${dto.goodsNum}]]</a></td>
+		<td><a th:href="@{goodsDetail(goodsNum=${dto.goodsNum})}">[[${dto.goodsName}]]</a></td>
+	    <td>[[${dto.goodsPrice}]]</td>
+	    <td>[[${#dates.format(dto.goodsRegist,'yyyy-MM-dd')}]]</td></tr>
+</table>
 </body>
 </html>
