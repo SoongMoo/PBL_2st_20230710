@@ -101,7 +101,7 @@ public class GoodsController {
 			return "thymeleaf/goods/goodsForm";
 		}
 		if(goodsCommand.getGoodsMainStore().getOriginalFilename().isEmpty()) {
-			result.rejectValue("goodsMain", "goodsCommand.goodsMain", "대문이미지를 선택해주세요.");
+			result.rejectValue("goodsMainStore", "goodsCommand.goodsMainStore", "대문이미지를 선택해주세요.");
 			return "thymeleaf/goods/goodsForm";
 		}
 		goodsWriteService.execute(goodsCommand, session);
