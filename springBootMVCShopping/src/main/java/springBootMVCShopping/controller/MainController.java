@@ -13,7 +13,7 @@ public class MainController {
 	@RequestMapping("/")
 	public String index(
 			@ModelAttribute("loginCommand") LoginCommand loginCommand) {
-		URL resource = getClass().getClassLoader().getResource("templates/thymeleaf");
+		URL resource = getClass().getClassLoader().getResource("");
 		String filePath = resource.getFile();
 		System.out.println(filePath);
 		return "thymeleaf/index";

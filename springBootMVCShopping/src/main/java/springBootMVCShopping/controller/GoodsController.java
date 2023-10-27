@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
+import springBootMVCShopping.command.FileCommand;
 import springBootMVCShopping.command.GoodsCommand;
 import springBootMVCShopping.service.goods.GoodsAutoNumService;
 import springBootMVCShopping.service.goods.GoodsDeleteService;
@@ -61,7 +63,9 @@ public class GoodsController {
 	}
 	
 	@GetMapping("goodsUpdate")
-	public String goodsUpdate(@RequestParam("goodsNum") String goodsNum, Model model) {
+	public String goodsUpdate(@RequestParam("goodsNum") String goodsNum
+			, Model model, HttpSession session) {
+		session.removeAttribute("fileList");
 		goodsDetailService.execute(goodsNum, model);
 		return "thymeleaf/goods/goodsModify";
 	}
@@ -79,6 +83,11 @@ public class GoodsController {
 		goodsListService.execute(searchWord, model, page);
 		return "thymeleaf/goods/goodsList";
 	}
+	@GetMapping("goodsForm")
+	public String goodsForm() {
+		return "thymeleaf/goods/goodsWrite";
+	}
+	
 	@GetMapping("goodsWrite")
 	public String goodsWrite(Model model) {
 		goodsAutoNumService.execute(model);
@@ -91,7 +100,12 @@ public class GoodsController {
 		{
 			return "thymeleaf/goods/goodsForm";
 		}
+		if(goodsCommand.getGoodsMainStore().getOriginalFilename().isEmpty()) {
+			result.rejectValue("goodsMain", "goodsCommand.goodsMain", "대문이미지를 선택해주세요.");
+			return "thymeleaf/goods/goodsForm";
+		}
 		goodsWriteService.execute(goodsCommand, session);
-		return "redirect:goodsList";
+		//return "redirect:goodsList";
+		return "thymeleaf/goods/goodsRedirect";
 	}
 }

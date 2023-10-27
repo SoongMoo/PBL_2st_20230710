@@ -75,7 +75,7 @@ where goods_Num = #{goodsNum}
 
 <select id="allSelect" resultType="goods" parameterType="startEndPageDTO">
 select * from (
-	select ROW_NUMBER() over (order by goods_num) as rn,
+	select ROW_NUMBER() over (order by goods_num desc) as rn,
 		   goods_Num goodsNum, goods_name goodsName, goods_price goodsPrice 
 		  ,goods_content goodsContent, delivery_cost deliveryCost, emp_num empNum 
 		  ,goods_regist goodsRegist, goods_main_store goodsMainStore 
@@ -97,6 +97,9 @@ where rn between #{startRow}  and #{endRow}
 insert into goods ( <include refid="goodsColumnsBase" /> )
 values(#{goodsNum}, #{goodsName}, #{goodsPrice}, #{goodsContent}
 		, #{deliveryCost}, #{empNum}, now() 
-	  	, '1','1','1','1',0,null,null)
+	  	, #{goodsMainStore},#{goodsMainStoreImg}
+	  	<if test="goodsImages != null">,#{goodsImages},#{goodsImagesImg}</if>
+	  	<if test="goodsImages == null">,null,null</if>
+	  	,0,null,null)
 </insert>
 </mapper>

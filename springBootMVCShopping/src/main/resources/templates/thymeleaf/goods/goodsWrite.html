@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		url:"goodsWrite",
+		type:"get",
+		dataType:"html",
+		success:function(result){
+			$("#writeForm").html(result);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+});
+</script>
+</head>
+<body>
+<ul>
+	<li><a href="goodsForm">상품 추가</a></li>
+	<li><a href="goodsIpgo">상품 입고</a></li>
+	<li><a href="goodsIpgoList">상품 입고 현황</a></li>
+</ul>
+<div id="writeForm"></div>
+</body>
+</html>

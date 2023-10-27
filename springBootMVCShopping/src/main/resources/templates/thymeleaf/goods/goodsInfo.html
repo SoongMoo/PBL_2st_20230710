@@ -19,10 +19,19 @@
 <tr><th>등록일</th><td>[[${#dates.format(goodsCommand.goodsRegist,'yyyy-MM-dd') }]]</td></tr>
 <tr><th>마지막 수정 사원</th><td>[[${goodsCommand.updateEmpNum }]]</td></tr>
 <tr><th>마지막 수정일</th><td>[[${#dates.format(goodsCommand.goodsUpdateDate,'yyyy-MM-dd') }]]</td></tr>
+<tr><td colspan="2">
+	<img th:src="|/static/upload/${goodsCommand.goodsMainStore }|" />
+</td></tr>
+<tr><td colspan="2">
+	<th:block th:each="goodsImage : ${#strings.arraySplit(goodsCommand.goodsImages,'-') }">
+	<img th:src="|/static/upload/${goodsImage}|" /><br />
+	</th:block>
+</td></tr>
 <tr><th colspan="2">
 		<a th:href="@{goodsUpdate(goodsNum=${goodsCommand.goodsNum })}">상품 수정</a> | 
 		<a th:href="@{'goodsDel/'+${goodsCommand.goodsNum }}">상품 삭제</a> | 
 		<a href="goodsList">상품목록</a></th></tr>
 </table>
+
 </body>
 </html>

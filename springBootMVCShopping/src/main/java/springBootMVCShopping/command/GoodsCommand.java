@@ -2,6 +2,8 @@ package springBootMVCShopping.command;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -23,4 +25,7 @@ public class GoodsCommand {
 	Date goodsRegist;
 	String updateEmpNum;
 	Date goodsUpdateDate;
+	
+	MultipartFile goodsMainStore;
+	MultipartFile goodsImages[];
 }

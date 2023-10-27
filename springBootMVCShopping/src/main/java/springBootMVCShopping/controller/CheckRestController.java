@@ -1,12 +1,17 @@
 package springBootMVCShopping.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpSession;
+import springBootMVCShopping.command.FileCommand;
 import springBootMVCShopping.service.EmailCheckService;
+import springBootMVCShopping.service.FileDelService;
 import springBootMVCShopping.service.UserEmailCheckService;
 
 @RestController
@@ -15,6 +20,13 @@ public class CheckRestController {
 	EmailCheckService emailCheckService;
 	@Autowired
 	UserEmailCheckService userEmailCheckService;
+	@Autowired
+	FileDelService fileDelService;
+	@PostMapping("goods/fileDel")
+	public String fileDel(FileCommand fileCommand, HttpSession session) {
+		return fileDelService.execute(fileCommand, session);
+	}
+	
 	@RequestMapping("userConfirm")
 	public String userConfirm(
 			@RequestParam(value="chk") String chk) {
