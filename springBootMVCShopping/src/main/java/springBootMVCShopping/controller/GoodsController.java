@@ -54,11 +54,11 @@ public class GoodsController {
 	}
 	@PostMapping("goodsUpdate")
 	public String goodsUpdate(@Validated GoodsCommand goodsCommand,BindingResult result,
-			HttpSession session) {
+			HttpSession session, Model model) {
+		goodsUpdateService.execute(goodsCommand, session, result, model);
 		if(result.hasErrors()) {
 			return "thymeleaf/goods/goodsModify";
 		}
-		goodsUpdateService.execute(goodsCommand, session);
 		return "redirect:goodsDetail?goodsNum="+goodsCommand.getGoodsNum();
 	}
 	
@@ -83,6 +83,7 @@ public class GoodsController {
 		goodsListService.execute(searchWord, model, page);
 		return "thymeleaf/goods/goodsList";
 	}
+	
 	@GetMapping("goodsForm")
 	public String goodsForm() {
 		return "thymeleaf/goods/goodsWrite";

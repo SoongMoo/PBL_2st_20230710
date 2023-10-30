@@ -39,6 +39,14 @@ update goods
 set GOODS_NAME = #{goodsName}, GOODS_PRICE = #{goodsPrice}
 	,delivery_cost =#{deliveryCost}, GOODS_CONTENT = #{goodsContent}
     ,update_emp_num = #{updateEmpNum}, goods_update_date = now()
+	<if test="goodsMainStore != null">
+	,goods_main_store = #{goodsMainStore}
+	,goods_main_store_img = #{goodsMainStoreImg}
+	</if>
+	<if test="goodsImages != null">
+	,goods_images = #{goodsImages}
+	,goods_images_img = #{goodsImagesImg}	
+	</if>
 where goods_num = #{goodsNum}
 </update>
 

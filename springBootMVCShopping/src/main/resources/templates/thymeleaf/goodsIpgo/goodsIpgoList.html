@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>goodsIpgoList.html</title>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script type="text/javascript">
+function ipgoList(){
+	$.ajax({
+		url:"goodsIpgoList1",
+		type:"post",
+		datatype: "json",
+		success:function(result){
+			var item = "<table width=600 border=1>";
+			    item+= "<tr><th>번호</th><th>상품 번호</th><th>수량</th><th>입고일</th><th>가격</th></tr>";
+				$.each(result.list , function(idx, ipgoCommand){
+					var date = new Date(ipgoCommand.ipgoDate);
+					var year = date.getFullYear();
+					var month = ("0" + (date.getMonth() + 1)).slice(-2);
+					var day = ("0" + date.getDate()).slice(-2); 
+					item += "<tr><th>"+ eval(idx + 1) +"</th>"
+						  + "<th><a href='goodsIpgoDetail?goodsIpgoNum="+ipgoCommand.goodsIpgoNum+"'>"
+							                                            + ipgoCommand.goodsNum +"</a></th>"
+						  + "<th>"+ ipgoCommand.ipgoQty +"</th>"
+						  + "<th>"+ year + "-" + month + "-" + day +"</th>"
+						  + "<th>"+ ipgoCommand.goodsPrice +"</th></tr>";
+				});
+			    item+= "</table>";
+			$("#list").html(item);    
+			    
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+}
+</script>
+</head>
+<body>
+<div id="list"></div>
+</body>
+</html>

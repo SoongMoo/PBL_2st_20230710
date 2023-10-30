@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @Component
 public class SpingBootConfig {
@@ -22,4 +23,8 @@ public class SpingBootConfig {
 					.headers().frameOptions().disable(); 
 		return httpSecurity.build();
 	}
+	@Bean(value = "jsonView")
+    public MappingJackson2JsonView jsonView() {
+        return new MappingJackson2JsonView();
+    }
 }

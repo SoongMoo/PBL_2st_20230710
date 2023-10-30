@@ -10,7 +10,7 @@ function fileDel(orgFile, storeFile, btn, kind ){
 		type:'post',
 		url:'fileDel',
 		dataType:'text',
-		data:{"orgFile": orgFile , "storeFile" : storeFile },
+		data:{"orgFile": orgFile , "storeFile" : storeFile , "kind" : kind},
 		success:function(result){
 			if(result.trim() == "1"){
 				$(btn).text("삭제취소");
@@ -31,7 +31,7 @@ function fileDel(orgFile, storeFile, btn, kind ){
 </script>
 </head>
 <body>
-<form action="goodsUpdate" method="post" name="frm" id="frm">
+<form action="goodsUpdate" method="post" name="frm" id="frm" enctype="multipart/form-data" >
 <table border=1 align="center" width="600" th:object="${goodsCommand}">
 <caption>상품 상세보기</caption>
 <tr><th width="150">상품번호</th>
@@ -59,7 +59,9 @@ function fileDel(orgFile, storeFile, btn, kind ){
 		<span id="main">[[${goodsCommand.goodsMainStoreImg}]]</span>
 		<button type="button" th:attr="onclick=|fileDel('${goodsCommand.goodsMainStoreImg}'
 											           ,'${goodsCommand.goodsMainStore}'
-											           , this,'main')|">삭제</button></td>
+											           , this,'main')|">삭제</button>
+		<br /><span style="color:red"  >[[${error}]]</span>
+											           </td>
 </tr>
 <tr><th>설명이미지</th>
 	<td>
