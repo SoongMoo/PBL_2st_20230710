@@ -12,7 +12,7 @@ public class GoodsAutoNumService {
 	@Autowired
 	GoodsMapper goodsMapper;
 	public void execute(Model model) {
-		String goodsNum = goodsMapper.goodsAutoNum();
+		String goodsNum = goodsMapper.goodsAutoNum("goods","goods_num","gd");
 		GoodsCommand goodsCommand = new GoodsCommand();
 		goodsCommand.setGoodsNum(goodsNum);
 		model.addAttribute("goodsCommand", goodsCommand);

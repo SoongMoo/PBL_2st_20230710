@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>goodsItem.html</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script>
+	$(function(){
+		itemList();
+	});
+	function itemList(){
+		$.ajax({
+			url:"goodsItemList",
+			type:"post",
+			datatype: "json",
+			data : {'searchWord': $("#searchWord").val()},
+			success:function(result){ //
+				if(result.searchWord == null){
+					result.searchWord = "";
+				}
+				var item = "";
+					item +=	'<table>';
+					item +=	'	<tr><th>';
+					item +=	'		검색 : <input type="search" name="searchWord" id="searchWord" value="'+ result.searchWord  + '">'; 
+					item +=	'			  <input type="button" value="확인" id="btn" onclick="itemList();">';
+					item +=	'	</th></tr>';
+					item +=	'</table>';
+					item +=	'<table border=1 width="600" align="center">';
+					item +=	'	<tr>';
+					item +=	'		<th>번호</th><th>상품 번호</th><th>상품명</th><th>각격</th>';
+					item +=	'	</tr>';
+					$.each(result.dtos , function(idx, goodsDTO){
+						item +=	'	<tr> ';
+						item +=	'		<th>'+ eval(idx + 1) +'</th><th>'+ goodsDTO.goodsNum 
+						       +'       </th><th>'+ goodsDTO.goodsName +'</th>'
+						       +'       <th>'+ goodsDTO.goodsPrice +'</th>';
+						item +=	'	</tr>';
+					});
+					item +=	'</table>';
+				$("#goodsList").html(item);
+			},
+			error:function(){
+				alert("서버오류");
+			}
+		});
+	}
+	function goodsItem(goodsNum, goodsName){
+		$(opener.document).find("#goodsNum").val(goodsNum);
+		$(opener.document).find("#goodsName").val(goodsName);
+		window.self.close();
+	}
+</script>
+</head>
+<body>
+<span id="goodsList"></span>
+</body>
+</html>

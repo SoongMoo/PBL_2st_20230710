@@ -27,8 +27,7 @@ public class GoodsUpdateService {
 	@Autowired
 	GoodsMapper goodsMapper;
 
-	public void execute(GoodsCommand goodsCommand, HttpSession session, BindingResult result
-			, Model model) {
+	public void execute(GoodsCommand goodsCommand, HttpSession session, BindingResult result, Model model) {
 		GoodsDTO dto = new GoodsDTO();
 		dto.setGoodsContent(goodsCommand.getGoodsContent());
 		dto.setGoodsName(goodsCommand.getGoodsName());
@@ -42,7 +41,7 @@ public class GoodsUpdateService {
 
 		List<FileCommand> list = (List<FileCommand>) session.getAttribute("fileList");
 		GoodsDTO goodsDTO = goodsMapper.selectOne(goodsCommand.getGoodsNum());
-		
+
 		///// 파일정보
 		URL resource = getClass().getClassLoader().getResource("static/upload");
 		String fileDir = resource.getFile(); // springBootMVCShopping/bin/main
@@ -53,7 +52,7 @@ public class GoodsUpdateService {
 		String storeName;
 		String storeFileName;
 		File file;
-		if (!goodsCommand.getGoodsMainStore().getOriginalFilename().isEmpty() ) {
+		if (!goodsCommand.getGoodsMainStore().getOriginalFilename().isEmpty()) {
 			/// 대문이미지
 			mf = goodsCommand.getGoodsMainStore();
 			originalFile = mf.getOriginalFilename(); // a.b.c.d.hwp
@@ -95,21 +94,15 @@ public class GoodsUpdateService {
 			}
 			// session에 있는 값을 list에서 삭제
 			if (list != null) {
-				System.out.println("실행");
-				System.out.println(goodsImages);
 				for (FileCommand fileCommand : list) {
 					for (String str : goodsImages) {
 						if (fileCommand.getStoreFile().equals(str)) {
-							System.out.println(fileCommand.getStoreFile());
-							System.out.println(str);
-							System.out.println(fileCommand.getOrgFile());
 							goodsImages.remove(fileCommand.getStoreFile());
 							goodsOrgImages.remove(fileCommand.getOrgFile());
 							break;
 						}
 					}
 				}
-				System.out.println(goodsImages);
 			}
 		}
 		///// 설명이미지
@@ -131,7 +124,7 @@ public class GoodsUpdateService {
 				storeTotal += storeFileName + "-";
 			}
 		}
-		// 추가된 이미지 추가
+		// 변경된 내용 저장
 		for (String img : goodsImages) {
 			storeTotal += img + "-";
 		}
@@ -142,30 +135,15 @@ public class GoodsUpdateService {
 		dto.setGoodsImagesImg(originalTotal);
 		int i = goodsMapper.goodsUpdate(dto);
 		/// session에 있는 파일을 삭제
-		if(i > 0 ) {
-			if(list != null) {
-				for(FileCommand fileCommand : list) {
+		if (i > 0) {
+			if (list != null) {
+				for (FileCommand fileCommand : list) {
 					file = new File(fileDir + "/" + fileCommand.getStoreFile());
-					if(file.exists())file.delete();					
+					if (file.exists())
+						file.delete();
 				}
 			}
 		}
 		session.removeAttribute("fileList");
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

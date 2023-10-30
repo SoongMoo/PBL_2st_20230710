@@ -26,8 +26,8 @@ where goods_num in
 
 <select id="goodsAutoNum" resultType="string">
 select
-concat('gd' , coalesce(max(substr(goods_num,3))::integer,1000000) + 1)
-from goods
+concat(#{sep} , coalesce(max(substr(${columnName},3))::integer,1000000) + 1)
+from ${tableName}
 </select>
 
 <delete id="goodsDelete" parameterType="string">
