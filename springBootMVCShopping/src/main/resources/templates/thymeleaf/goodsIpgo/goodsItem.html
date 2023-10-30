@@ -8,12 +8,12 @@
 	$(function(){
 		itemList();
 	});
-	function itemList(){
+	function itemList(page){
 		$.ajax({
 			url:"goodsItemList",
 			type:"post",
 			datatype: "json",
-			data : {'searchWord': $("#searchWord").val()},
+			data : {'searchWord': $("#searchWord").val(), "page":page },
 			success:function(result){ //
 				if(result.searchWord == null){
 					result.searchWord = "";
@@ -36,6 +36,26 @@
 						       +'       <th>'+ goodsDTO.goodsPrice +'</th>';
 						item +=	'	</tr>';
 					});
+					item +=	'<tr align="center"><td colspan="6">';
+					if(result.page <= 1){
+					item +=	'[이전]';
+					}
+					if(result.page > 1){
+					item +=	'<a href="javascript:itemList('+ eval(result.page - 1) + ')">[이전]</a>';
+					}					
+					var startPage = result.startPage; console.log(startPage);
+					var endPage = result.endPage; console.log(endPage);
+					while (startPage <= endPage){
+					item +=	'<a href="javascript:itemList('+ startPage + ')">['+startPage+']</a> ';
+						startPage++;
+					}
+					if(result.page >= result.maxPage){
+						item +=	'[다음]';
+					}
+					if(result.page < result.maxPage){
+						item +=	'<a href="javascript:itemList('+ eval(result.page + 1) + ')">[다음]</a>';
+					}
+					item +=	'</td></tr>';
 					item +=	'</table>';
 				$("#goodsList").html(item);
 			},
