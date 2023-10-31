@@ -3,9 +3,25 @@
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="springBootMVCShopping.mapper.GoodsIpgoMapper">
-<select id="goodsIpgoAllSelect" resultType="goodsIpgo">
-	select IPGO_NUM ipgoNum, GOODS_NUM goodsNum, IPGO_QTY ipgoQty
-		 , IPGO_DATE ipgoDate, MADE_DATE madeDate, ipgo_PRICE ipgoPrice, EMP_NUM empNum
+<insert id="goodsIpgoInsert" parameterType="goodsIpgo">
+insert into goodsipgo (IPGO_NUM, GOODS_NUM, IPGO_QTY, IPGO_DATE, MADE_DATE, ipgo_PRICE, EMP_NUM)
+values(#{ipgoNum},#{goodsNum},#{ipgoQty},#{ipgoDate},#{madeDate},#{ipgoPrice},#{empNum})
+</insert>
+
+<resultMap type="goodsIpgo" id="goodsIpgoResultMap">
+	<constructor>
+		<idArg column="IPGO_NUM" javaType="string" />
+		<idArg column="GOODS_NUM" javaType="string" />
+		<arg column="IPGO_QTY" javaType="integer"/>
+		<arg column="IPGO_DATE" javaType="java.util.Date"/>
+		<arg column="MADE_DATE" javaType="java.util.Date"/>
+		<arg column="ipgo_PRICE" javaType="integer"/>
+		<arg column="EMP_NUM" javaType="string"/>
+	</constructor>
+</resultMap>
+<select id="goodsIpgoAllSelect" resultMap="goodsIpgoResultMap">
+	select IPGO_NUM , GOODS_NUM , IPGO_QTY , IPGO_DATE , MADE_DATE , ipgo_PRICE , EMP_NUM 
 	from goodsipgo
 </select>
+
 </mapper>

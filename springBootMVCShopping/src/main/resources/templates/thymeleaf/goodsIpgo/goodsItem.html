@@ -14,7 +14,7 @@
 			type:"post",
 			datatype: "json",
 			data : {'searchWord': $("#searchWord").val(), "page":page },
-			success:function(result){ //
+			success:function(result){ //map
 				if(result.searchWord == null){
 					result.searchWord = "";
 				}
@@ -31,10 +31,13 @@
 					item +=	'	</tr>';
 					$.each(result.dtos , function(idx, goodsDTO){
 						item +=	'	<tr> ';
-						item +=	'		<th>'+ eval(idx + 1) +'</th><th>'+ goodsDTO.goodsNum 
-						       +'       </th><th>'+ goodsDTO.goodsName +'</th>'
-						       +'       <th>'+ goodsDTO.goodsPrice +'</th>';
-						item +=	'	</tr>';
+						item +=	'		<th>'+ eval(idx + 1) +'</th>'
+							 +'         <th> <a href="javascript:goodsItem(\''+goodsDTO.goodsNum+'\',\''
+							 +                goodsDTO.goodsName+'\');">'+ goodsDTO.goodsNum +'</a></th>' 
+						     +'         <th> <a href="javascript:goodsItem(\''+goodsDTO.goodsNum+'\',\''
+						     +       	      goodsDTO.goodsName+'\');">'+ goodsDTO.goodsName +'</a></th>'
+						     +'         <th>'+ goodsDTO.goodsPrice +'</th>'; 
+						item += '	</tr>';
 					});
 					item +=	'<tr align="center"><td colspan="6">';
 					if(result.page <= 1){

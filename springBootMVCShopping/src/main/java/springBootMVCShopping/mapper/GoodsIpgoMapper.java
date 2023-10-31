@@ -9,4 +9,5 @@ import springBootMVCShopping.domain.GoodsIpgoDTO;
 @Mapper
 public interface GoodsIpgoMapper {
 	public List<GoodsIpgoDTO> goodsIpgoAllSelect();
+	public int goodsIpgoInsert(GoodsIpgoDTO dto);
 }
