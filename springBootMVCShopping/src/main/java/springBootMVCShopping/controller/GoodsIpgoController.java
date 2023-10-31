@@ -15,9 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpSession;
 import springBootMVCShopping.command.GoodsIpgoCommand;
+import springBootMVCShopping.domain.GoodsIpgoDTO;
 import springBootMVCShopping.service.goodsIpgo.GoodsIpgoAutoNumservice;
+import springBootMVCShopping.service.goodsIpgo.GoodsIpgoDeleteService;
+import springBootMVCShopping.service.goodsIpgo.GoodsIpgoDetailService;
 import springBootMVCShopping.service.goodsIpgo.GoodsIpgoListService;
 import springBootMVCShopping.service.goodsIpgo.GoodsIpgoService;
+import springBootMVCShopping.service.goodsIpgo.GoodsIpgoUpdateService;
 import springBootMVCShopping.service.goodsIpgo.GoodsItemService;
 
 @Controller
@@ -55,7 +59,7 @@ public class GoodsIpgoController {
 	}
 	
 	@GetMapping("goodsIpgoList")
-	public String g이숭무oodsIpgoList() {
+	public String goodsIpgoList() {
 		return "thymeleaf/goodsIpgo/goodsIpgoList";
 	}
 
@@ -66,6 +70,45 @@ public class GoodsIpgoController {
 		goodsIpgoListService.execute(model);
 		return mav;
 	}
-
+	@Autowired
+	GoodsIpgoDetailService goodsIpgoDetailService;
+	@PostMapping("goodsIpgoDetail")
+	public @ResponseBody GoodsIpgoDTO detail(
+			@RequestParam("ipgoNum") String ipgoNum,
+			@RequestParam("goodsNum") String goodsNum) {
+		GoodsIpgoDTO dto = goodsIpgoDetailService.execute(ipgoNum,goodsNum);
+		return dto;
+	}
+	
+	@Autowired
+	GoodsIpgoDeleteService goodsIpgoDeleteService;
+	@GetMapping("goodsIpgoDelete")
+	public String goodsIpgoDelete(
+			@RequestParam("ipgoNum") String ipgoNum,
+			@RequestParam("num") String goodsNum) {
+		goodsIpgoDeleteService.execute(ipgoNum, goodsNum);
+		return "redirect:goodsIpgoList";
+	}
+	
+	@RequestMapping(value="goodsIpgoUpdate" ,method=RequestMethod.GET)
+	public String goodsIpgoUpdate(
+			@RequestParam("ipgoNum") String ipgoNum,
+			@RequestParam("num") String goodsNum,
+			Model model) {
+		GoodsIpgoDTO dto = goodsIpgoDetailService.execute(ipgoNum,goodsNum);
+		model.addAttribute("dto", dto);
+		return "thymeleaf/goodsIpgo/goodsIpgoUpdate";
+	}
+	@Autowired
+	GoodsIpgoUpdateService goodsIpgoUpdateService;
+	@PostMapping("goodsIpgoModify")
+	public String goodsIpgoModify(GoodsIpgoCommand goodsIpgoCommand) {
+		goodsIpgoUpdateService.execute(goodsIpgoCommand);
+		return "redirect:goodsIpgoList";
+	}
+	
+	
+	
+	
 	
 }

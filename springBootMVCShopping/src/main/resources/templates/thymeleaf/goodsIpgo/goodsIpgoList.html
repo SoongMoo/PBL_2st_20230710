@@ -14,11 +14,20 @@ $(function(){
 			var item = "";
 				item +='<table width=600 border=1>';
 				item +='	<tr><th>번호</th><th>상품 번호</th><th>수량</th><th>입고일</th><th>가격</th></tr>';
-				item +='	<tr>';
-				item +='		<th>idx.index + 1</th><th>dto.goodsNum</th>';
-				item +='        <th>dto.ipgoQty</th>';
-				item +='		<th>dto.ipgoDate</th><th>dto.ipgoPrice</th>';
-				item +='    </tr>';
+				$.each(result.list , function(idx, dto){
+					var date = new Date(dto.ipgoDate);
+					var year = date.getFullYear();
+					var month = ("0"+(date.getMonth() + 1)).slice(-2); 
+					var day = ("0" + date.getDate()).slice(-2);
+					item +='	<tr>';
+					item +='		<th>' + eval(idx + 1) +'</th>'
+					     + '<th><a href="javascript:goodsIpgoDetail(\''+ dto.ipgoNum + '\',\''
+					    		                                       + dto.goodsNum + '\')">'
+					    		                                       + dto.goodsNum + '</a></th>';
+					item +='        <th>' + dto.ipgoQty +'</th>';
+					item +='		<th>' + year + "-" + month + "-" + day + '</th><th>' + dto.ipgoPrice + '</th>';
+					item +='    </tr>';
+				});
 				item +='</table>';
 			$("#list").html(item);
 		},
@@ -27,10 +36,47 @@ $(function(){
 		}
 	});
 });
+function goodsIpgoDetail(ipgoNum,goodsNum){
+	$.ajax({
+		type:"post",
+		url:"goodsIpgoDetail",
+		data:{"ipgoNum":ipgoNum,"goodsNum":goodsNum},
+		success : function(dto){
+			var item="";
+			item += '입고번호 : ' + dto.ipgoNum +'<br />';
+			item += '상품번호 : ' + dto.goodsNum+'<br />';
+			item += '입고일 : ' + dto.ipgoDate +'<br />';
+			item += '입고 수량 : ' + dto.ipgoQty +'<br />';
+			item += '제조일 : ' + dto.madeDate +'<br />';
+			item += '가격 : ' + dto.ipgoPrice +'<br />';
+			item += '<button type="button" onclick="ipgoUpdate(\''+dto.ipgoNum+'\',\''+dto.goodsNum+'\');">입고 수정</button>'; 
+			item += '<button type="button" onclick="ipgoDelte(\''+dto.ipgoNum+'\',\''+dto.goodsNum+'\');">입고 삭제</button>';
+			$("#list").html(item);
+		},
+		error:function(){
+			alert("서버오류");
+		}
+	});
+}
+function ipgoUpdate(ipgoNum, goodsNum){
+	location.href="goodsIpgoUpdate?ipgoNum="+ipgoNum+"&num="+goodsNum;
+			
+}
+function ipgoDelte(ipgoNum, goodsNum){
+	location.href="goodsIpgoDelete?ipgoNum="+ipgoNum+"&num="+goodsNum;
+}
 </script>
 </head>
 <body>
 입고리스트<br />
 <div id="list"></div>
+
 </body>
 </html>
+
+
+
+
+
+
+

@@ -19,9 +19,29 @@ values(#{ipgoNum},#{goodsNum},#{ipgoQty},#{ipgoDate},#{madeDate},#{ipgoPrice},#{
 		<arg column="EMP_NUM" javaType="string"/>
 	</constructor>
 </resultMap>
+<sql id="baseColumns">
+IPGO_NUM , GOODS_NUM , IPGO_QTY , IPGO_DATE , MADE_DATE , ipgo_PRICE , EMP_NUM 
+</sql>
 <select id="goodsIpgoAllSelect" resultMap="goodsIpgoResultMap">
-	select IPGO_NUM , GOODS_NUM , IPGO_QTY , IPGO_DATE , MADE_DATE , ipgo_PRICE , EMP_NUM 
+	select <include refid="baseColumns"/>
 	from goodsipgo
 </select>
+<select id="selectIpgoGoods" resultMap="goodsIpgoResultMap">
+	select <include refid="baseColumns"/>
+	from goodsipgo
+	where IPGO_NUM = #{arg0} and GOODS_NUM = #{arg1}
+</select>
+
+<delete id="ipgoGoodsNumDelete">
+	delete from goodsipgo
+	where ipgo_num = #{ipgoNum} and goods_num = #{goodsNum}
+</delete>
+<update id="goodsIpgoUpdate" parameterType="goodsIpgo">
+update goodsIpgo 
+set ipgo_Date = #{ipgoDate}, ipgo_Qty =#{ipgoQty} 
+	, made_Date = #{madeDate} , ipgo_Price = #{ipgoPrice}
+where ipgo_Num = #{ipgoNum} and goods_Num = #{goodsNum}
+</update>
+
 
 </mapper>

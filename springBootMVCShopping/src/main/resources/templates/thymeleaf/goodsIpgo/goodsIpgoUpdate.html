@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="goodsIpgoModify" method="post">
+입고번호 : <input type="text" name="goodsIpgoNum" readonly="readonly" 
+				th:value="${dto.ipgoNum }"/><br />
+상품번호 : <input type="text" name="goodsNum" readonly="readonly" 
+				th:value="${dto.goodsNum }"/><br />
+입고일 : <input type="date" name="ipgoDate" 
+		th:value="${#dates.format(dto.ipgoDate,'yyyy-MM-dd' )}" /><br />
+입고 수량 : <input type="number" name="ipgoQty" th:value="${dto.ipgoQty }"/><br />
+제조일 : <input type="datetime-local" name="madeDate" 
+		th:value="${#dates.format(dto.madeDate,'yyyy-MM-dd HH:mm:ss')}"/><br />
+가격 : <input type="number" name="ipgoPrice" th:value="${dto.ipgoPrice }"/><br />
+<input type="submit" value="수정완료" />
+</form>
+</body>
+</html>
