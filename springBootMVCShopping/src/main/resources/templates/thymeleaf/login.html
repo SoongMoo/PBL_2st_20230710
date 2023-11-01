@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="item.login" method="post" th:object="${loginCommand}" >
+	<table border="1" align="center">
+		<tr><td colspan="2"></td></tr>
+		<tr><td><input type="text" name="userId" placeholder="아이디" 
+												th:value="${loginCommand.userId}" /><br />
+				<span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" ></span></td>
+			<td rowspan="2">
+				<input type="image" src="/static/images/sbmt.png" width="60">
+			</td></tr>
+		<tr><td><input type="password" name="userPw" placeholder="비밀번호" 
+												th:value="${loginCommand.userPw}" /><br />
+			<span th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}" ></span></td></tr>
+		<tr><td colspan="2"><a href="/register/userAgree">회원가입</a> | 
+							<a href="/help/findId">아이디 찾기</a> | 
+							<a href="/help/findPassword">비밀번호 찾기</a></td></tr>
+	</table>
+</form>
+</body>
+</html>

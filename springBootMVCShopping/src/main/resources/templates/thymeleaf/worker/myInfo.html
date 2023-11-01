@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<ul>
+	<li><a href="empMyPage">내정보 보기</a></li>
+	<li> <a  href="employeeUpdate">내정보 수정</a></li>
+	<li> <a href="employeePwModify"> 비밀번호변경</a></li>
+	<li><a href="/">홈</a> </li>
+</ul>
+내정보
+직원번호 :[[ ${employeeCommand.empNum } ]] <br />
+직원명 :[[ ${employeeCommand.empName }]] <br />
+직원아이디 :[[${employeeCommand.empId }]] <br />
+직원연락처 :[[${employeeCommand.empPhone }]] <br />
+직원이메일 :[[ ${employeeCommand.empEmail }]]<br />
+직원주소 :[[${employeeCommand.empAddr }]] <br />
+직원상세주소 :[[${employeeCommand.empAddrDetail }]] <br />
+직원우편번호 :[[ ${employeeCommand.empPost }]]<br />
+직원주민번호 : [[${employeeCommand.empJumin }]]<br />
+직원입사일 : [[${#dates.format(employeeCommand.empRegiDate, 'yyyy-MM-dd') }]] <br />
+</body>
+</html>

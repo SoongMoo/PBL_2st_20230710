@@ -10,7 +10,7 @@
 	$(function(){
 		$("#frm").submit(function(){
 			$(this).ajaxSubmit({
-				type:'get',
+				type:'post',
 				url:'myPwUpdate',
 				dataType:'text',
 				beforeSubmit: passwordChecked ,

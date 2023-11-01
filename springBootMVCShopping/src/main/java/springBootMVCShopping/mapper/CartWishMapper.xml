@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springBootMVCShopping.mapper.CartWishMapper">
+<resultMap type="goods" id="goodsResultMap">
+	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+	<result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+	<result column="goods_price" jdbcType="BIGINT" property="goodsPrice"/>
+	<result column="delivery_cost" jdbcType="BIGINT" property="deliveryCost"/>
+	<result column="goods_content" jdbcType="VARCHAR" property="goodsContent"/>
+	<result column="emp_num" jdbcType="VARCHAR" property="empNum"/>
+	<result column="goods_main_store" jdbcType="VARCHAR" property="goodsMainStore"/>
+	<result column="goods_main_store_img" jdbcType="VARCHAR" property="goodsMainStoreImg"/>
+	<result column="goods_images" jdbcType="VARCHAR" property="goodsImages"/>
+	<result column="goods_images_img" jdbcType="VARCHAR" property="goodsImagesImg"/>
+	<result column="visit_count" jdbcType="BIGINT" property="visitCount"/>
+	<result column="goods_regist" jdbcType="DATE" property="goodsRegist"/>
+	<result column="update_emp_num" jdbcType="VARCHAR" property="updateEmpNum"/>
+	<result column="goods_update_date" jdbcType="DATE" property="goodsUpdateDate"/>
+</resultMap>
+<select id="goodsSelectAll" resultMap="goodsResultMap">
+select goods_num, goods_name,goods_price,goods_content,goods_main_store,
+	   goods_main_store_img,goods_images,goods_images_img,delivery_cost,visit_count,
+	   emp_num,goods_regist,update_emp_num,goods_update_date
+from goods
+<where>
+	<if test="goodsNum != null">
+		goods_Num = #{goodsNum} 
+	</if>
+</where>
+</select>
+<select id="wishGoodsSelect" resultType="integer">
+select 1 from wish
+where goods_num = #{arg0} and member_num = #{arg1}
+</select>
+<insert id="wishInsert">
+	insert into wish (goods_num, member_num , wish_date )
+	values(#{arg0},#{arg1},now())
+</insert>
+<delete id="wishDelete">
+	DELETE FROM wish
+	where goods_num = #{arg0} and member_num = #{arg1}
+</delete>
+
+
+
+
+
+
+
+</mapper>

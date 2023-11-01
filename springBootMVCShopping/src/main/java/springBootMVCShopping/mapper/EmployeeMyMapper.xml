@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="springBootMVCShopping.mapper.EmployeeMyMapper">
+<sql id="employeeAliesColumns">
+ EMP_NUM empNum,EMP_ID empId, EMP_PW empPw, EMP_NAME empName, EMP_ADDR empAddr
+,EMP_ADDR_detail empAddrDetail,EMP_POST empPost,emp_enter_date empRegiDate
+,EMP_PHONE empPhone, EMP_EMAIL empEmail, EMP_jumin empJumin
+</sql>
+<select id="employeeInfo" resultType="emp" parameterType="string">
+select <include refid="employeeAliesColumns" />
+from employees where emp_id = #{empId}
+
+</select>
+<update id="employeePwUpdate" parameterType="string">
+
+update employees set emp_pw = #{arg0} where emp_id = #{arg1}
+
+</update>
+
+<update id="employeeInfoUpdate" parameterType="emp">
+	update employees
+set   EMP_NAME = #{empName}
+    , EMP_ADDR =#{empAddr}
+    <if test="empAddrDetail != null">
+    , EMP_ADDR_detail = #{empAddrDetail}
+    </if>
+    , EMP_POST =#{empPost}
+    , EMP_PHONE = #{empPhone}
+    , emp_jumin = #{empJumin}
+    
+where EMP_id = #{empId}
+</update>
+
+
+</mapper>

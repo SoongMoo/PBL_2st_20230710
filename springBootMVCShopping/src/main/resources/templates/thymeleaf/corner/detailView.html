@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#qty").click(function(){
+		const money = [[${list[0].goodsPrice}]] * $("#qty").val();
+		const moneyFormatter = new Intl.NumberFormat('ko-KR',{style:'currency',currency:'KRW'});
+		const formattedMoney = moneyFormatter.format(money);
+		$("#tot").text(formattedMoney + '원');
+	});
+	
+	$("#wish").click(function(){
+		if([[${session.auth == null}]]){
+			window.open("/login/item.login","login","width=315, height=200,top = 100, left=100");
+		}else{
+			$.ajax({
+				type:'post',
+				url:"../goodsWishAdd",
+				dataType:"text",
+				data:{"goodsNum":"[[${list[0].goodsNum}]]"},
+				success:function(result){
+					if(result.trim() == "1"){
+						$("#wish").attr("src","/static/images/hart.jpg");
+					}else if(result.trim() == "0"){
+						$("#wish").attr("src","/static/images/hart1.jpg");
+					}
+				},
+				error : function(){
+					alert("관리자는 사용할 수 없습니다.");
+				}
+			});
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<table width="800" align="center">
+		<tr><td colspan="2">[[${list[0].goodsName}]]상품 설명입니다.</td></tr>
+		<tr>
+			<td rowspan="6" width="300px">
+				<img th:src="|/static/upload/${list[0].goodsMainStore}|" alt="상품이미지"/>
+			</td>
+			<td>상품명 : [[${list[0].goodsName}]]</td>
+		</tr>
+		<tr><td>가격 : [[${#numbers.formatCurrency(list[0].goodsPrice) + '원'}]]</td></tr>
+		<tr><td>배송비 : <span th:if="${list[0].deliveryCost == 0}">무료배송</span>
+					   <span th:if="${list[0].deliveryCost != 0}">
+					   	[[${#numbers.formatCurrency(list[0].deliveryCost) + '원'}]]</span>
+			</td></tr>
+		<tr><td>수량 : <input type="number" min=1 step="1" value="1" id="qty" name="qty" />
+			</td></tr>
+		<tr><td>
+				총 상품금액 : <span id="tot">
+				[[${#numbers.formatCurrency(list[0].goodsPrice) + '원'}]]</span>
+			</td></tr>
+		<tr><td>
+				<button type="button" id="cartBtn">장바구니</button> |
+				<button type="button" id="buyItem">바로구매</button> | 
+				찜 
+				<th:block th:if="${wish == null}">
+					<img src="/static/images/hart1.jpg" id="wish" width="20" />
+				</th:block>
+				<th:block th:if="${wish != null}">
+					<img src="/static/images/hart.jpg" id="wish" width="20" />
+				</th:block>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<ul>
+	<li><a href="empMyPage">내정보 보기</a></li>
+	<li> <a  href="employeeUpdate">내정보 수정</a></li>
+	<li> <a href="employeePwModify"> 비밀번호변경</a></li>
+	<li><a href="/">홈</a> </li>
+</ul>
+비밀번호 확인 <br />
+<form action="employeePwModify" method="post" name="frm" id="frm">
+비밀번호 확인 : <input type="password" name="empPw" required="required"/>
+<input type="submit" value="확인" />
+<div style="color:red">[[${errPw }]]</div>
+</form>
+</body>
+</html>

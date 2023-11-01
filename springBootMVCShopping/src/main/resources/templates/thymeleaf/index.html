@@ -13,14 +13,10 @@
 		<li><a href="employee/empMyPage">마이페이지</a></li>
 		<li><a href="goods/goodsList">상품리스트</a></li>
 	</th:block>
-	
 	<th:block th:if="${session.auth.grade == 'mem'}"  >
 		<li><a href="/mypage/myDetail">내정보 보기</a></li>
 	</th:block>
-	
 	<li><a href="login/logout">로그아웃</a></li>
-	
-	
 </ul>
 </div>
 <div th:if="${session.auth == null}">
@@ -42,5 +38,36 @@
 	</table>
 </form>
 </div>
+<table align="center" width="600">
+	<tr>
+		<th:block th:each=" dto, idx : ${list}">
+		<td><a th:href="|corner/detailView/${dto.goodsNum}|">
+			<img th:src="|/static/upload/${dto.goodsMainStore}|" /><br />
+			[[${dto.goodsName}]]<br />
+			[[${dto.goodsPrice}]]<br />
+			<span th:if="${dto.deliveryCost == 0}" >무료배송</span>
+			<span th:if="${dto.deliveryCost != 0}" th:text="${dto.deliveryCost}"></span>
+			</a>
+		</td>
+			<th:block th:if="${idx.count % 3 == 0}" th:utext="'</tr><tr>'" />
+		</th:block>
+	</tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
