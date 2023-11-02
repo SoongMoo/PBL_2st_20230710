@@ -15,10 +15,12 @@
 <span th:utext="${#strings.replace(goodsCommand.goodsContent,newLine,'&lt;br /&gt;')}"></span>
 </td></tr>
 <tr><th>조회수</th><td>[[${goodsCommand.visitCount }]]</td></tr>
+<th:block th:if="${session.auth.grade == 'emp'}">
 <tr><th>등록한 사원</th><td>[[${goodsCommand.empNum }]]</td></tr>
 <tr><th>등록일</th><td>[[${#dates.format(goodsCommand.goodsRegist,'yyyy-MM-dd') }]]</td></tr>
 <tr><th>마지막 수정 사원</th><td>[[${goodsCommand.updateEmpNum }]]</td></tr>
 <tr><th>마지막 수정일</th><td>[[${#dates.format(goodsCommand.goodsUpdateDate,'yyyy-MM-dd') }]]</td></tr>
+</th:block>
 <tr><td colspan="2">
 	<img th:src="|/static/upload/${goodsCommand.goodsMainStore }|" />
 </td></tr>
@@ -28,9 +30,13 @@
 	</th:block>
 </td></tr>
 <tr><th colspan="2">
+	<th:block th:if="${session.auth.grade == 'emp'}">
 		<a th:href="@{goodsUpdate(goodsNum=${goodsCommand.goodsNum })}">상품 수정</a> | 
 		<a th:href="@{'goodsDel/'+${goodsCommand.goodsNum }}">상품 삭제</a> | 
-		<a href="goodsList">상품목록</a></th></tr>
+		<a href="goodsList">상품목록</a> |
+	</th:block> 
+		<a href="javascript:history.back();">뒤로가기</a>		
+		</th></tr>
 </table>
 
 </body>
