@@ -59,8 +59,33 @@ and goods_num in
 		#{goodsNum}
 </foreach>
 </delete>
-
-
+<insert id="cartInsert" parameterType="cart" >
+merge into cart c
+using (select goods_Num from goods where goods_num = #{goodsNum}) g
+on (c.goods_num = g.goods_num and c.member_num = #{memberNum})
+WHEN MATCHED THEN
+update set
+cart_qty = cart_qty + #{cartQty}
+WHEN not MATCHED THEN
+insert (MEMBER_NUM, GOODS_NUM, CART_DATE, CART_QTY)
+values(#{memberNum},#{goodsNum},now(),#{cartQty})
+</insert>
+<resultMap type="cartGoodsDTO" id="CartListResultMap">
+	<result column="total_price" jdbcType="BIGINT"  property="totalPrice"/>
+	
+	<association property="goodsDTO" javaType="goods" resultMap="goodsResultMap" />
+	<association property="cartDTO" javaType="cart" >
+		<result column="CART_QTY" jdbcType="BIGINT" property="cartQty"/>
+		<result column="CART_DATE" jdbcType="DATE" property="cartDate"/>
+	</association>
+</resultMap>
+<select id="cartList" parameterType="string" resultMap="CartListResultMap">
+select MEMBER_NUM, c.GOODS_NUM, goods_name, goods_price, goods_main_store
+	  ,CART_QTY , CART_DATE 
+	  , goods_price * CART_QTY total_price
+from cart c, goods g
+where c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = #{memberNum}
+</select>
 
 
 </mapper>

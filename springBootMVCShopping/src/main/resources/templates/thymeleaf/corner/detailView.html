@@ -6,6 +6,32 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
+	$("#cartBtn").click(function(){
+		if([[${session.auth == null}]]){
+			window.open("/login/item.login","login","width=315, height=200,top = 100, left=100");
+		}else{
+			$.ajax({
+				type:"get",
+				url:"../cartAdd",
+				dataType:"text",
+				data:{"goodsNum" : "[[${list[0].goodsNum}]]","qty":$("#qty").val()},
+				success:function(result){
+					if(result.trim() == "200"){
+						if(confirm("계속 쇼핑하려면 '취소'를 클릭하세요.")){
+							location.href="../cartList";
+						}
+					}else if(result.trim() == "999"){
+						alert("관리자는 사용할 수 없는 페이지입니다.");
+					}else{
+						alert("장바구니에 담기지 않았습니다.");
+					}
+				},
+				error:function(){
+					alert("서버오류!!!!");
+				}
+			});
+		}
+	});
 	$("#qty").click(function(){
 		const money = [[${list[0].goodsPrice}]] * $("#qty").val();
 		const moneyFormatter = new Intl.NumberFormat('ko-KR',{style:'currency',currency:'KRW'});

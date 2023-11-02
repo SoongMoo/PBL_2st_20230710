@@ -6,7 +6,12 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-
+	$("#frm").submit(function(){
+		if($("input:checkbox[name=wishGoodsDel]:checked").length < 1){
+			alert("하나이상 선택하세요.");
+			return false;
+		}
+	});
 	$("#checkBoxs").click(function(){
 		if($("#checkBoxs").prop("checked")){
 			$("input:checkbox[name=wishGoodsDel]").prop("checked", true);
