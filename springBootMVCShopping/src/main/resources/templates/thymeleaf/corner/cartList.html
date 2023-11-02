@@ -3,16 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#checkBoxs").click(function(){
+		if($("#checkBoxs").prop("checked")){
+			$("input:checkbox[name=prodCk]").prop("checked", true);
+		}else{
+			$("input:checkbox[name=prodCk]").prop("checked", false);
+		}
+	});
+	$("input:checkbox[name=prodCk]").click(function(){
+		var tot = $("input:checkbox[name=prodCk]").length;
+		var checked = $("input:checkbox[name=prodCk]:checked").length;
+		if(tot == checked){
+			$("#checkBoxs").prop("checked",true);
+		}else{
+			$("#checkBoxs").prop("checked",false);
+		}
+	});
+});
+</script>
 </head>
 <body>
 <table width="800" align="center" >
-	<tr><td>이미지</td><td>제품명</td><td>수량</td><td>합계금액</td><td>배송비</td></tr>
+	<tr><td><input type="checkbox" id="checkBoxs" checked="checked"/></td>
+		<td>이미지</td><td>제품명</td><td>수량</td><td>합계금액</td><td>배송비</td></tr>
 	<tr th:each="dto : ${list}">
-		<td>이미지</td>
+		<td><input type="checkbox" name="prodCk" checked="checked"/></td>
+		<td><img th:src="|/static/upload/${dto.goodsDTO.goodsMainStore}|" /></td>
 		<td>[[${dto.goodsDTO.goodsName}]]</td>
 		<td>[[${dto.cartDTO.cartQty}]]</td>
 		<td>[[${dto.totalPrice}]]</td>
 		<td>[[${dto.goodsDTO.deliveryCost}]]</td>
+	</tr>
+	<tr>
+		<td colspan="6" align="right">
+			상품수 : <span id="prodCnt">[[${list.size}]]</span><br />
+			전체 금액 : <span id="sumprice">[[${sumPrice}]]</span>
+		</td>
 	</tr>
 </table>
 </body>

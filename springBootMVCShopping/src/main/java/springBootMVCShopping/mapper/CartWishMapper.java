@@ -20,4 +20,5 @@ public interface CartWishMapper {
 			@Param("memberNum") String memberNum);
 	public int cartInsert(CartDTO dto);
 	public List<CartGoodsDTO> cartList(String memberNum);
+	public Integer sumPrice(String memberNum);
 }

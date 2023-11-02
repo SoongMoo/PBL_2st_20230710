@@ -77,15 +77,27 @@ values(#{memberNum},#{goodsNum},now(),#{cartQty})
 	<association property="cartDTO" javaType="cart" >
 		<result column="CART_QTY" jdbcType="BIGINT" property="cartQty"/>
 		<result column="CART_DATE" jdbcType="DATE" property="cartDate"/>
+		<result column="MEMBER_NUM" jdbcType="VARCHAR" property="memberNum"/>
 	</association>
 </resultMap>
 <select id="cartList" parameterType="string" resultMap="CartListResultMap">
-select MEMBER_NUM, c.GOODS_NUM, goods_name, goods_price, goods_main_store
-	  ,CART_QTY , CART_DATE 
+select c.GOODS_NUM, goods_name, goods_price, goods_main_store, delivery_Cost 
+	  ,CART_QTY , CART_DATE, MEMBER_NUM 
 	  , goods_price * CART_QTY total_price
 from cart c, goods g
 where c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = #{memberNum}
 </select>
-
-
+<select id="sumPrice" parameterType="string" resultType="integer">
+	select sum(goods_price * CART_QTY + delivery_Cost) 
+	from goods g, cart c
+	where g.goods_num = c.goods_num and member_num = #{memberNum}
+	group by member_num
+</select>
 </mapper>
+
+
+
+
+
+
+
