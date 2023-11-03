@@ -28,11 +28,11 @@ public class GoodsBuyService {
 		Integer sumDeliveryCost = 0;
 		String goodsNums = "";
 		for(CartGoodsDTO dto : list) {
-			sumPrice += dto.getGoodsDTO().getGoodsPrice() * dto.getCartDTO().getCartQty();
 			sumTotalPrice += dto.getTotalPrice();
 			sumDeliveryCost += dto.getGoodsDTO().getDeliveryCost();
 			goodsNums += dto.getGoodsDTO().getGoodsNum() + "-";
 		}
+		sumPrice = sumTotalPrice + sumDeliveryCost;
 		model.addAttribute("list", list);
 		model.addAttribute("sumPrice", sumPrice);
 		model.addAttribute("sumTotalPrice", sumTotalPrice);
