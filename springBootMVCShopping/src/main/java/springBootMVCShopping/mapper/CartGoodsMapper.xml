@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springBootMVCShopping.mapper.CartGoodsMapper">
+<resultMap type="goods" id="goodsResultMap">
+	<id column="goods_Num" jdbcType="VARCHAR" property="goodsNum"/>
+	<result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+	<result column="goods_price" jdbcType="BIGINT" property="goodsPrice"/>
+	<result column="goods_content" jdbcType="VARCHAR" property="goodsContent"/>
+	<result column="delivery_cost" jdbcType="BIGINT" property="deliveryCost"/>
+	<result column="emp_num" jdbcType="VARCHAR" property="empNum"/>
+	<result column="goods_regist" jdbcType="DATE" property="goodsRegist"/>
+	<result column="goods_main_store" jdbcType="VARCHAR" property="goodsMainStore"/>
+	<result column="goods_main_store_img" jdbcType="VARCHAR" property="goodsMainStoreImg"/>
+	<result column="goods_images" jdbcType="VARCHAR" property="goodsImages"/>
+	<result column="goods_images_img" jdbcType="VARCHAR" property="goodsImagesImg"/>
+	<result column="visit_count" jdbcType="BIGINT" property="visitCount"/>
+	<result column="update_Emp_Num" jdbcType="VARCHAR" property="updateEmpNum"/>
+	<result column="goods_Update_Date" jdbcType="DATE" property="goodsUpdateDate"/>
+</resultMap>
+<select id="goodsSelect" parameterType="string" resultMap="goodsResultMap">
+	select goods_Num , goods_name , goods_price ,goods_content , delivery_cost , emp_num  
+	  		,goods_regist , goods_main_store ,goods_main_store_img , goods_images 
+	  		,goods_images_img , visit_count ,update_Emp_Num , goods_Update_Date
+	from goods  
+	where goods_Num = #{goodsNum}
+</select>
+<resultMap type="cart" id="cartResultMap">
+	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+	<id column="member_num" jdbcType="VARCHAR" property="memberNum"/>
+	<result column="cart_Num" jdbcType="BIGINT" property="cartNum"/>
+	<result column="cart_date" jdbcType="DATE" property="cartDate"/>
+	<result column="cart_qty" jdbcType="BIGINT" property="cartQty"/>
+</resultMap>
+<select id="cartSelect" resultMap="cartResultMap">
+	select cart_num , goods_num,member_num,cart_date,cart_qty
+	from cart
+	where cart_num = #{cartNum} 
+</select>
+
+<resultMap type="cartGoodsDTO" id="CartGoodsResultMap">
+	<association property="goodsDTO" javaType="goods" select="goodsSelect" column="goodsNum" />
+	<association property="cartDTO" javaType="cart" select="cartSelect" column="cartNum"/>
+</resultMap>
+
+<select id="goodsPriceMulCartQty"  resultMap="CartGoodsResultMap">
+select GOODS_NUM goodsNum, cart_num cartNum
+from cart
+where goods_num = #{goodsNum} and member_num = #{memberNum}
+</select>
+
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+

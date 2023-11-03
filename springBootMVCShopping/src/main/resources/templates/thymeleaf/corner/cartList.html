@@ -92,7 +92,7 @@ function checkQty(goodsNum){
 				var data = JSON.parse(result);
 				console.log(data);
 				$("#"+goodsNum).text(data.cartDTO.cartQty);
-				$("#t"+goodsNum).text(data.cartDTO.cartQty * data.goodsDTO.goodsPrice);
+				$("#t_"+goodsNum).text(data.cartDTO.cartQty * data.goodsDTO.goodsPrice);
 			},
 			error : function(){
 				alert('에러가 나왔다 홀홀홀~');
@@ -118,7 +118,7 @@ function checkQty(goodsNum){
 		<td><a th:href="|javascript:checkQty('${dto.goodsDTO.goodsNum}')|"> - </a> 
 			<span th:id="${dto.goodsDTO.goodsNum}">[[${dto.cartDTO.cartQty}]]</span> 
 			<a th:href="|javascript:cartAdd('${dto.goodsDTO.goodsNum}')|"> + </a></td>
-		<td><span th:id="${'t'+ dto.goodsDTO.goodsNum}">[[${dto.totalPrice}]]</span></td>
+		<td><span th:id="${'t_'+ dto.goodsDTO.goodsNum}">[[${dto.totalPrice}]]</span></td>
 		<td>[[${dto.goodsDTO.deliveryCost}]]</td>
 		<td><input type="button"  value="삭제" th:attr="onclick=|del('${dto.goodsDTO.goodsNum}');|"/></td>
 	</tr>
