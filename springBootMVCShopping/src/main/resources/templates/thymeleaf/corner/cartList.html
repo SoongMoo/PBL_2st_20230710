@@ -82,14 +82,17 @@ function cartAdd(goodsNum){
 	});
 }
 function checkQty(goodsNum){
-	if($("#"+goodsNum).text() > 1){
+	if($("#"+goodsNum).text() > 1 ){
 		$.ajax({
-			type : "POST",
+			type : "get",
 			dataType : "text",
 			url : "cartQtyDown",
 			data : {"goodsNum" : goodsNum},
 			success : function(result){
-				$("#"+goodsNum).text(result);
+				var data = JSON.parse(result);
+				console.log(data);
+				$("#"+goodsNum).text(data.cartDTO.cartQty);
+				$("#t"+goodsNum).text(data.cartDTO.cartQty * data.goodsDTO.goodsPrice);
 			},
 			error : function(){
 				alert('에러가 나왔다 홀홀홀~');
@@ -98,7 +101,7 @@ function checkQty(goodsNum){
 	}else{
 		alert("최소 수량이 1이어야 합니다.");
 		return false;
-	}	
+	}
 }
 </script>
 </head>
@@ -112,10 +115,10 @@ function checkQty(goodsNum){
 										 th:value="${dto.goodsDTO.goodsNum}"/></td>
 		<td><img th:src="|/static/upload/${dto.goodsDTO.goodsMainStore}|" /></td>
 		<td>[[${dto.goodsDTO.goodsName}]]</td>
-		<td><a th:href="|javascript:checkQty(${dto.goodsDTO.goodsNum})|"> - </a> 
+		<td><a th:href="|javascript:checkQty('${dto.goodsDTO.goodsNum}')|"> - </a> 
 			<span th:id="${dto.goodsDTO.goodsNum}">[[${dto.cartDTO.cartQty}]]</span> 
 			<a th:href="|javascript:cartAdd('${dto.goodsDTO.goodsNum}')|"> + </a></td>
-		<td>[[${dto.totalPrice}]]</td>
+		<td><span th:id="${'t'+ dto.goodsDTO.goodsNum}">[[${dto.totalPrice}]]</span></td>
 		<td>[[${dto.goodsDTO.deliveryCost}]]</td>
 		<td><input type="button"  value="삭제" th:attr="onclick=|del('${dto.goodsDTO.goodsNum}');|"/></td>
 	</tr>

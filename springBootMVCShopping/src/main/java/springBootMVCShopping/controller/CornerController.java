@@ -1,5 +1,7 @@
 package springBootMVCShopping.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import springBootMVCShopping.domain.CartGoodsDTO;
 import springBootMVCShopping.service.corner.CartInsertService;
 import springBootMVCShopping.service.corner.CartListService;
+import springBootMVCShopping.service.corner.CartQtyDownService;
 import springBootMVCShopping.service.corner.GoodsCartDelService;
 import springBootMVCShopping.service.corner.GoodsCartDelsService;
 import springBootMVCShopping.service.corner.GoodsWishListService;
@@ -104,12 +111,22 @@ public class CornerController {
 		return "redirect:cartList";
 	}
 	
-	@PostMapping("cartQtyDown")
-	@ResponseBody
-	public String cartQtyDown(
+	@Autowired
+	CartQtyDownService cartQtyDownService;
+	@GetMapping("cartQtyDown")
+	public void cartQtyDown(
 			@RequestParam(value="goodsNum") String goodsNum,
-			HttpSession session) {
-		return "";
+			HttpSession session,HttpServletResponse response) {
+		CartGoodsDTO dto = cartQtyDownService.execute(goodsNum, session);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		response.setCharacterEncoding("utf-8");
+		try {
+			response.getWriter().print(mapper.writeValueAsString(dto));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 

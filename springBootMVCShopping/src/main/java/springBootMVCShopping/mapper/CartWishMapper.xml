@@ -110,11 +110,6 @@ where c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = #{memberNum}
 	set cart_qty = cart_qty - 1
 	where goods_num = #{arg0} and member_num = #{arg1}
 </update>
-<select id="cartPrice" resultType="integer">
-	select goods_price , cart_qty
-	from goods g , cart c
-	where g.goods_num = c.goods_num and goods_num = #{arg0} and member_num = #{arg1}
-</select>
 </mapper>
 
 

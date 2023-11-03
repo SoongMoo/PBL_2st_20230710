@@ -24,5 +24,4 @@ public interface CartWishMapper {
 	public int goodsNumsDelete(CartDTO dto);
 	public int goodsNumDelete(@Param("goodsNum") String goodsNum,@Param("memberNum") String memberNum);
 	public int cartQtyDown(String goodsNum,String memberNum);
-	public Integer cartPrice(String goodsNum,String memberNum);
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 @Alias("cart")
 public class CartDTO {
+	Integer cartNum;
 	String memberNum;
 	String goodsNum;
 	Integer cartQty;
