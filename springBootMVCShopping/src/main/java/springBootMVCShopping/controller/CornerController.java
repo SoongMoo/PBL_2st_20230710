@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.servlet.http.HttpSession;
 import springBootMVCShopping.service.corner.CartInsertService;
 import springBootMVCShopping.service.corner.CartListService;
+import springBootMVCShopping.service.corner.GoodsCartDelService;
+import springBootMVCShopping.service.corner.GoodsCartDelsService;
 import springBootMVCShopping.service.corner.GoodsWishListService;
 import springBootMVCShopping.service.corner.GoodsWishService;
 import springBootMVCShopping.service.corner.WishDelService;
@@ -81,6 +83,33 @@ public class CornerController {
 	public String cartList(Model model, HttpSession session) {
 		cartListService.execute(model, session);
 		return "thymeleaf/corner/cartList";
+	}
+	@Autowired
+	GoodsCartDelsService goodsCartDelsService;
+	@PostMapping(value = "cartDels")
+	@ResponseBody
+	public String cartdel(
+			@RequestParam("goodsNums[]") String goodsNums[],
+			HttpSession session) {
+		System.out.println("goodsNums.length : " + goodsNums.length);
+		return goodsCartDelsService.execute(goodsNums, session);
+	}
+	@Autowired
+	GoodsCartDelService goodsCartDelService;
+	@GetMapping("cartDel")
+	public String cartDel(
+			@RequestParam("goodsNum") String goodsNum,
+			HttpSession session) {
+		goodsCartDelService.execute(goodsNum, session);
+		return "redirect:cartList";
+	}
+	
+	@PostMapping("cartQtyDown")
+	@ResponseBody
+	public String cartQtyDown(
+			@RequestParam(value="goodsNum") String goodsNum,
+			HttpSession session) {
+		return "";
 	}
 }
 

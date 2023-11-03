@@ -93,6 +93,28 @@ where c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = #{memberNum}
 	where g.goods_num = c.goods_num and member_num = #{memberNum}
 	group by member_num
 </select>
+<delete id="goodsNumsDelete" parameterType="cart">
+	delete from cart
+	where member_num = #{memberNum} 
+	and goods_num in <foreach collection="goodsNums" item="goodsNum" open="(" 
+			close=")" separator="," index="index">
+		#{goodsNum}
+	</foreach>
+</delete>
+<delete id="goodsNumDelete" >
+	delete from cart
+	where goods_num = #{goodsNum} and member_num = #{memberNum}
+</delete>
+<update id="cartQtyDown" >
+	update cart
+	set cart_qty = cart_qty - 1
+	where goods_num = #{arg0} and member_num = #{arg1}
+</update>
+<select id="cartPrice" resultType="integer">
+	select goods_price , cart_qty
+	from goods g , cart c
+	where g.goods_num = c.goods_num and goods_num = #{arg0} and member_num = #{arg1}
+</select>
 </mapper>
 
 
