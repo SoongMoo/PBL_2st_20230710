@@ -85,7 +85,16 @@ select c.GOODS_NUM, goods_name, goods_price, goods_main_store, delivery_Cost
 	  ,CART_QTY , CART_DATE, MEMBER_NUM 
 	  , goods_price * CART_QTY total_price
 from cart c, goods g
-where c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = #{memberNum}
+<trim prefix="where" prefixOverrides="AND | OR">
+	c.GOODS_NUM = g.GOODS_NUM and MEMBER_NUM = #{memberNum}
+	<if test="goodsNums != null">
+	    and g.goods_num in 
+		<foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator=","
+				index="index">
+			#{goodsNum}
+		</foreach>
+	</if>
+</trim>
 </select>
 <select id="sumPrice" parameterType="string" resultType="integer">
 	select sum(goods_price * CART_QTY + delivery_Cost) 

@@ -21,6 +21,7 @@ $(function(){
 		}else{
 			$("#checkBoxs").prop("checked",false);
 		}
+		prodChk();
 	});
 });
 function del1(){
@@ -96,16 +97,33 @@ function checkQty(goodsNum){
 			},
 			error : function(){
 				alert('에러가 나왔다 홀홀홀~');
-			}
+			},
+			complete:prodChk
 		});
 	}else{
 		alert("최소 수량이 1이어야 합니다.");
 		return false;
 	}
 }
+function prodChk(){
+	console.log("log...")
+	var chkLeng  = $("input[name=prodCk]");
+	var cnt = 0;
+	var sumPrice = 0;
+	for(var i = 0; i < chkLeng.length; i++){
+		if(chkLeng[i].checked == true){
+			cnt++;
+			sumPrice += Number($(".totalPrice:eq("+i+")").text()) 
+					  + Number($(".deliveryCost:eq("+i+")").text());
+		}
+	}
+	$("#prodCnt").text(cnt);
+	$("#sumPrice").text(sumPrice);
+}
 </script>
 </head>
 <body>
+<form action="/puchase/goodsBuy" method="post" >
 <table width="800" align="center" >
 	<tr><td><input type="checkbox" id="checkBoxs" checked="checked"/></td>
 		<td>이미지</td><td>제품명</td><td>수량</td><td>합계금액</td><td>배송비</td>
@@ -118,16 +136,18 @@ function checkQty(goodsNum){
 		<td><a th:href="|javascript:checkQty('${dto.goodsDTO.goodsNum}')|"> - </a> 
 			<span th:id="${dto.goodsDTO.goodsNum}">[[${dto.cartDTO.cartQty}]]</span> 
 			<a th:href="|javascript:cartAdd('${dto.goodsDTO.goodsNum}')|"> + </a></td>
-		<td><span th:id="${'t_'+ dto.goodsDTO.goodsNum}">[[${dto.totalPrice}]]</span></td>
-		<td>[[${dto.goodsDTO.deliveryCost}]]</td>
+		<td><span th:id="${'t_'+ dto.goodsDTO.goodsNum}" class="totalPrice">[[${dto.totalPrice}]]</span></td>
+		<td><span class="deliveryCost">[[${dto.goodsDTO.deliveryCost}]]</span></td>
 		<td><input type="button"  value="삭제" th:attr="onclick=|del('${dto.goodsDTO.goodsNum}');|"/></td>
 	</tr>
 	<tr>
-		<td colspan="6" align="right">
+		<td colspan="7" align="right">
 			상품수 : <span id="prodCnt">[[${list.size}]]</span><br />
-			전체 금액 : <span id="sumprice">[[${sumPrice}]]</span>
+			전체 금액 : <span id="sumPrice">[[${sumPrice}]]</span><br />
+			<input type="submit" value="구매하기" />
 		</td>
 	</tr>
 </table>
+</form>
 </body>
 </html>

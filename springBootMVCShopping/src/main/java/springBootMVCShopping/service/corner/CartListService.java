@@ -21,7 +21,7 @@ public class CartListService {
 	public void execute(Model model, HttpSession session) {
 		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
 		MemberDTO memDto = memberMyMapper.memberInfo(auth.getUserId());
-		List<CartGoodsDTO> list = cartWishMapper.cartList(memDto.getMemberNum());
+		List<CartGoodsDTO> list = cartWishMapper.cartList(memDto.getMemberNum(),null);
 		Integer sumPrice = cartWishMapper.sumPrice(memDto.getMemberNum());
 		model.addAttribute("list", list);
 		model.addAttribute("sumPrice", sumPrice);
