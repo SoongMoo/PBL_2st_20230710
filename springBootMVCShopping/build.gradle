@@ -69,6 +69,12 @@ dependencies {
 	
 	//websocket-api
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	
+	//iniPay - api // 외부 모듈 불러오기
+	implementation files('libs/INIpaySample_v1.3.jar')
+	
+	// 한번 외부 모둘을 불러오기
+	//implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 tasks.named('test') {

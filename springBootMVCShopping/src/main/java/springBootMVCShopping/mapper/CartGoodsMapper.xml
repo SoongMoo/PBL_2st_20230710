@@ -50,9 +50,14 @@ from cart
 where goods_num = #{goodsNum} and member_num = #{memberNum}
 </select>
 
-
-
-
+<delete id="cartGoodsDeletes" parameterType="cart">
+delete from cart 
+where goods_num in <foreach collection="goodsNums" item="goodsNum" close=")" open="("
+					separator="," index="index">
+						#{goodsNum}
+					</foreach>
+and member_num = #{memberNum}
+</delete>
 </mapper>
 
 

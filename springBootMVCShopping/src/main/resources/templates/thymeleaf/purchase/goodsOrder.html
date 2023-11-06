@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/static/js/daumAddressScript.js"></script>
 </head>
 <body>
 <table width="700" align="center">
@@ -23,25 +25,30 @@
 		</td>
 	</tr>
 </table>
+<form action="goodsOrder" method="post" >
+<input type="hidden" name="sumTotalPrice" th:value="${sumTotalPrice}" />
+<input type="hidden" name="sumDeliveryCost" th:value="${sumDeliveryCost}" />
+<input type="hidden" name="sumPrice" th:value="${sumPrice}" />
+<input type="hidden" name="goodsNums" th:value="${goodsNums}" />
 <table width="700"  align="center" >
 	<tr><td>
 			<table width="350">
 				<tr><th colspan=2>2. 배송지 정보 입력</th></tr>
 				<tr><td>받는 사람</td>
-					<td><input type="text" name="recieveName" /></td></tr>
-				<tr><td>받는 주소</td>
-					<td><input type="text" name="purchaseAddr" /></td></tr>		
+					<td><input type="text" name="deliverName" /></td></tr>
+				<tr><td>받는 주소<br />상세주소<br />우편번호</td>
+					<td><input type="text" name="deliveryAddr"  id="sample4_roadAddress" 
+													onclick="execDaumPostcode();" readonly="readonly"/>
+					<br />
+					<input type="text" name="deliveryAddrDetail" /><br />
+					<input type="text" name="deliveryPost" id="sample4_postcode" readonly="readonly" /></td>
+				</tr>		
 				<tr><td>받는 사람 연락처</td>
-					<td><input type="text" name="purchasePhone" /></td></tr>
+					<td><input type="text" name="deliveryPhone" /></td></tr>
 				<tr><td>주문메세지</td>
 					<td><input type="text" name="message" /></td></tr>
 			</table>
 	</td><td>
-		 <form action="goodsOrder" method="post">
-			<input type="hidden" name="sumTotalPrice" th:value="${sumTotalPrice}" />
-			<input type="hidden" name="sumDeliveryCost" th:value="${sumDeliveryCost}" />
-			<input type="hidden" name="sumPrice" th:value="${sumPrice}" />
-			<input type="hidden" name="goodsNums" th:value="${goodsNums}" />
 			<table width="300">
 				<tr><th colspan=2>3.결제금액</th></tr>
 				<tr><td align="left">상품금액 : </td><td align = "right">[[${sumTotalPrice}]] 원</td></tr>
@@ -49,18 +56,9 @@
 				<tr><td align="left">총 결제 금액 : </td><td align = "right">[[${sumPrice}]] 원</td></tr>
 				<tr><td align="center" colspan=2><input type="submit" value="결제하기"/></td></tr>
 			</table>
-		</form>
+		
 	</td></tr>
 </table>
+</form>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

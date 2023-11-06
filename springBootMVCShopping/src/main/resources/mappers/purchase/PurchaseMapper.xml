@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springBootMVCShopping.mapper.PurchaseMapper">
+<select id="selectNum" resultType="string">
+select concat(to_char(now(), 'YYYYMMDD'), coalesce(max(substr(PURCHASE_NUM,9))::integer,10000) + 1)
+from PURCHASE
+where substr(PURCHASE_NUM,1,8) = to_char(now(), 'YYYYMMDD')
+</select>
+
+<insert id="purchaseInsert" parameterType="purchase">
+insert into purchase(purchase_num,purchase_date,purchase_price,delivery_addr,delivery_addr_detail
+					,delivery_post,delivery_phone,message,purchase_status,member_num
+					,delivery_name)
+values(#{purchaseNum},now(),#{purchasePrice},#{deliveryAddr},#{deliveryAddrDetail}
+		,#{deliveryPost},#{deliveryPhone},#{message},#{purchaseStatus},#{memberNum}
+		,#{deliveryName})
+</insert>
+<insert id="purchaseListInsert" parameterType="purchaseList">
+insert into purchase_List(goods_num,purchase_num,purchase_qty,total_price)
+select c.goods_num, #{purchaseNum}, cart_qty , goods_price * cart_qty
+from goods g , cart c
+where g.goods_num = c.goods_num and member_num = #{memberNum}
+and g.goods_num in <foreach collection="goodsNums" item="goodsNum" close=")" open="(" separator=","
+					index="index">
+					#{goodsNum}
+				 </foreach>
+</insert>
+
+<insert id="paymentInsert" parameterType="payment">
+insert into payment(purchase_num,confirmnumber,cardnum,tid,totalprice,resultmessage,paymethod
+					,appldate,appltime,purchasename)
+values(#{purchaseNum},#{confirmnumber},#{cardnum},#{tid},#{totalprice},#{resultmessage}
+	  ,#{paymethod},#{appldate},#{appltime},#{purchasename})
+</insert>
+
+<update id="purchaseStatusUpdate" parameterType="string">
+update purchase
+set purchase_status = #{status}
+where purchase_num = #{purchaseNum}
+</update>
+
+<select id="purchaseSelect" parameterType="string" resultType="purchase">
+select purchase_num purchaseNum ,purchase_date purchaseDate,purchase_price purchasePrice
+		,delivery_addr deliveryAddr,delivery_addr_detail deliveryAddrDetail
+		,delivery_post deliveryPost,delivery_phone deliveryPhone,message message
+		,purchase_status purchaseStatus,member_num memberNum
+		,delivery_name deliveryName
+from purchase
+where purchase_num = #{purchaseNum}
+
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
