@@ -29,18 +29,15 @@ public class GoodsOrderService {
 	CartGoodsMapper cartGoodsMapper;
 	@Autowired 
 	CartWishMapper cartWishMapper;
-	public PurchaseDTO execute(PurchaseCommand purchaseCommand, HttpSession session, Model model) {
+	public String execute(PurchaseCommand purchaseCommand, HttpSession session, Model model) {
 		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
 		MemberDTO memDto = memberMyMapper.memberInfo(auth.getUserId());
 		String purchaseNum = purchaseMapper.selectNum();
 		//System.out.println(purchaseNum);
 		
 		String [] goodsNums = purchaseCommand.getGoodsNums().split("-");
-		List<GoodsDTO> list = cartWishMapper.goodsSelectAll(goodsNums[0]);
-		String purchaseName = list.get(0).getGoodsName() + "외_" + String.valueOf(goodsNums.length - 1);
 		
 		PurchaseDTO dto = new PurchaseDTO();
-		dto.setPurchaseName(purchaseName);
 		dto.setPurchaseNum(purchaseNum);
 		dto.setDeliveryAddr(purchaseCommand.getDeliveryAddr());
 		dto.setDeliveryAddrDetail(purchaseCommand.getDeliveryAddrDetail());
@@ -51,7 +48,6 @@ public class GoodsOrderService {
 		dto.setMessage(purchaseCommand.getMessage());
 		dto.setPurchasePrice(purchaseCommand.getSumPrice());
 		dto.setPurchaseStatus("입급대기중");
-		dto.setUserEmail(memDto.getMemberEmail());
 		purchaseMapper.purchaseInsert(dto);
 		
 		PurchaseListDTO plDto = new PurchaseListDTO();
@@ -65,7 +61,6 @@ public class GoodsOrderService {
 		cartDto.setGoodsNums(goodsNums);
 		cartGoodsMapper.cartGoodsDeletes(cartDto);
 		
-		
-		return dto;
+		return purchaseNum;
 	}
 }

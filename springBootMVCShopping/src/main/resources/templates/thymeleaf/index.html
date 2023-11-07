@@ -12,11 +12,13 @@
 		<li><a href="member/memberList">회원목록</a></li>
 		<li><a href="employee/empMyPage">마이페이지</a></li>
 		<li><a href="goods/goodsList">상품리스트</a></li>
+		<li><a href="/purchase/purchaseList">주문 내역</a></li>
 	</th:block>
 	<th:block th:if="${session.auth.grade == 'mem'}"  >
 		<li><a href="/mypage/myDetail">내정보 보기</a></li>
 		<li><a href="/corner/wishList">관심 목록</a></li>
 		<li><a href="/corner/cartList" >장바구니</a></li>
+		<li><a href="/purchase/orderList" >주문목록</a></li>
 	</th:block>
 	<li><a href="login/logout">로그아웃</a></li>
 </ul>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+구매목록<br />
+<table width="800" align = "center"><!-- purchase, payment,goods  -->
+	<tr><td>주문일(결제번호)</td> <td>상품명(이미지) / 주문번호</td>	
+		<td>주문상태</td></tr><!-- (결제대기중,상품준비중,배송중, 배송완료) -->
+		
+	<tr th:each=" orderListDTO : ${list}">
+		<td>[[${#dates.format(orderListDTO.purchaseDTO.purchaseDate,'yyyy-MM-dd')}]](
+			<th:block th:if="${orderListDTO.paymentDTO.appltime == null}">
+				결제대기중
+			</th:block>
+			<th:block th:if="${orderListDTO.paymentDTO.appltime != null}">
+				<th:block th:if="${orderListDTO.paymentDTO.confirmnumber == null}">
+					현금결제
+				</th:block>
+				<th:block th:if="${orderListDTO.paymentDTO.confirmnumber != null}">
+				[[${orderListDTO.paymentDTO.confirmnumber}]]
+				</th:block>
+			</th:block>)
+		</td> 
+		<td> 
+			<th:block th:each="dto : ${orderListDTO.purchaseListGoodsDTOs}" >
+				<img th:src="|/static/upload/${dto.goods.goodsMainStore}|" width="30" />
+				([[${dto.goods.goodsName}]]) 
+			</th:block> / [[${orderListDTO.purchaseDTO.purchaseNum}]]</td>	
+		<td>
+		<th:block th:if="${orderListDTO.paymentDTO.appltime != null}">
+			<a th:href="|paymentDel?purchaseNum=${orderListDTO.purchaseDTO.purchaseNum}|">결제취소</a>
+		</th:block>
+		<th:block th:if="${orderListDTO.paymentDTO.appltime == null}">
+			<a th:href="|paymentOk?purchaseNum=${orderListDTO.purchaseDTO.purchaseNum}|">결제하기</a>
+		</th:block>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

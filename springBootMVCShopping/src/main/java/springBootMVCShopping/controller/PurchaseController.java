@@ -1,8 +1,5 @@
 package springBootMVCShopping.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +13,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import springBootMVCShopping.command.PurchaseCommand;
-import springBootMVCShopping.domain.PurchaseDTO;
 import springBootMVCShopping.service.IniPayReqService;
 import springBootMVCShopping.service.purchase.GoodsBuyService;
 import springBootMVCShopping.service.purchase.GoodsOrderService;
 import springBootMVCShopping.service.purchase.IniPayReturnService;
+import springBootMVCShopping.service.purchase.OrderProcessListService;
+import springBootMVCShopping.service.purchase.PaymentDeleteService;
 
 @Controller
 @RequestMapping("purchase")
@@ -31,6 +29,8 @@ public class PurchaseController {
 	IniPayReqService iniPayReqService;
 	@Autowired
 	GoodsOrderService goodsOrderService;
+	@Autowired
+	OrderProcessListService orderProcessListService;
 	@RequestMapping(value="goodsBuy", method=RequestMethod.POST)
 	public String goodsBuy(
 			@RequestParam(value="prodCk") String [] prodCk,
@@ -41,27 +41,17 @@ public class PurchaseController {
 	@PostMapping("goodsOrder")
 	public String goodsOrder(PurchaseCommand purchaseCommand,HttpSession session, Model model,
 			HttpServletResponse response) {
-		PurchaseDTO dto = goodsOrderService.execute(purchaseCommand,session, model);
-		System.out.println("goodsOrder 끝");
-		String purchaseName = "";
-		try {
-			purchaseName = URLEncoder.encode(dto.getPurchaseName(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return "redirect:paymentOk?purchaseNum="+dto.getPurchaseNum()
-		                         +"&purchaseName="+purchaseName
-		                         +"&buyeremail="+dto.getUserEmail();
+		String purchaseNum = goodsOrderService.execute(purchaseCommand,session, model);
+		return "redirect:paymentOk?purchaseNum="+purchaseNum;
 		
 	}
 	@GetMapping("paymentOk")
 	public String paymentOk(
 			@RequestParam(value="purchaseNum") String purchaseNum
-			,@RequestParam(value="purchaseName") String purchaseName
-			,@RequestParam(value="buyeremail") String buyeremail
+			,HttpSession session
 			,Model model) {
 		try {
-			iniPayReqService.execute(purchaseNum,purchaseName, buyeremail ,model); // 호출메서드
+			iniPayReqService.execute(purchaseNum,model,session); // 호출메서드
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,5 +68,17 @@ public class PurchaseController {
 	public String close() {
 		return "thymeleaf/purchase/close";
 	}
-	
+	@RequestMapping("orderList")
+	public String orderList(HttpSession session, Model model) {
+		orderProcessListService.execute(session, model);
+		return "thymeleaf/purchase/orderList";
+	}
+	@Autowired
+	PaymentDeleteService paymentDeleteService;
+	@RequestMapping("paymentDel")
+	public String paymentDel(
+			@RequestParam("purchaseNum") String purchaseNum) {
+		paymentDeleteService.execute(purchaseNum);
+		return "redirect:orderList";
+	}
 }

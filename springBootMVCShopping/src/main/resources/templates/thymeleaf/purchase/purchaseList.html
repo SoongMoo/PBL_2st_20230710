@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+function detail(purchaseNum){
+	window.open("purchaseDetail?purchaseNum="+purchaseNum, 
+			"purchaseDetail","top='100',left='100',width=600,height=800");
+}
+</script>
+</head>
+<body>
+<table width="800" align="center">
+	<tr><td>주문일(결제번호)</td> 
+		<td>상품명/주문번호</td> 
+		<td>주문상태</td> 
+	</tr>
+	
+	<tr th:each=" orderListDTO : ${list}">
+		<td>[[${#dates.format(orderListDTO.purchaseDTO.purchaseDate,'yyyy-MM-dd')}]](
+			<th:block th:if="${orderListDTO.paymentDTO.appltime == null}">
+				결제대기중
+			</th:block>
+			<th:block th:if="${orderListDTO.paymentDTO.appltime != null}">
+				<th:block th:if="${orderListDTO.paymentDTO.confirmnumber == null}">
+					현금결제
+				</th:block>
+				<th:block th:if="${orderListDTO.paymentDTO.confirmnumber != null}">
+				[[${orderListDTO.paymentDTO.confirmnumber}]]
+				</th:block>
+			</th:block>
+		)</td> 
+		<td><th:block th:each="goodsDto : ${orderListDTO.goodsDTOs}" >
+				[[${goodsDto.goodsName}]]
+			</th:block>/[[${orderListDTO.purchaseDTO.purchaseNum}]]</td> 
+		<td><a th:href="|javascript:detail('${orderListDTO.purchaseDTO.purchaseNum}')|">주문상세보기</a>
+			<span th:if="${orderListDTO.purchaseDTO.purchaseStatus != '입급대기중'}">
+				<a th:href="@{purchaseStatus(
+								purchaseNum=${orderListDTO.purchaseDTO.purchaseNum}
+							)}">
+							[[${orderListDTO.purchaseDTO.purchaseStatus}]]
+				</a>	
+			</span>
+			<span th:if="${orderListDTO.purchaseDTO.purchaseStatus == '입급대기중'}">
+				결제대기중
+			</span>
+		</td> 
+	</tr>
+</table>
+</body>
+</html>

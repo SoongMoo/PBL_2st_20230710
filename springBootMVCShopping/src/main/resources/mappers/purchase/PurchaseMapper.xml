@@ -41,18 +41,102 @@ set purchase_status = #{status}
 where purchase_num = #{purchaseNum}
 </update>
 
-<select id="purchaseSelect" parameterType="string" resultType="purchase">
-select purchase_num purchaseNum ,purchase_date purchaseDate,purchase_price purchasePrice
-		,delivery_addr deliveryAddr,delivery_addr_detail deliveryAddrDetail
-		,delivery_post deliveryPost,delivery_phone deliveryPhone,message message
-		,purchase_status purchaseStatus,member_num memberNum
-		,delivery_name deliveryName
+<select id="purchaseSelect" parameterType="string" resultMap="purchaseResultMap">
+select  PURCHASE_NUM, PURCHASE_date, PURCHASE_PRICE, delivery_Addr
+	   ,delivery_Addr_Detail, delivery_Post,delivery_Phone,  message, purchase_Status
+	   ,delivery_name, member_num
 from purchase
 where purchase_num = #{purchaseNum}
-
 </select>
 
+<resultMap type="goods" id="goodsResultMap">
+<!-- setter -->
+	<id column="goods_num" jdbcType="VARCHAR" property="goodsNum"/>
+	<result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+	<result column="goods_price" jdbcType="BIGINT" property="goodsPrice"/>
+	<result column="delivery_cost" jdbcType="BIGINT" property="deliveryCost"/>
+	<result column="goods_content" jdbcType="VARCHAR" property="goodsContent"/>
+	<result column="emp_num" jdbcType="VARCHAR" property="empNum"/>
+	<result column="goods_main_store" jdbcType="VARCHAR" property="goodsMainStore"/>
+	<result column="goods_main_store_img" jdbcType="VARCHAR" property="goodsMainStoreImg"/>
+	<result column="goods_images" jdbcType="VARCHAR" property="goodsImages"/>
+	<result column="goods_images_img" jdbcType="VARCHAR" property="goodsImagesImg"/>
+	<result column="visit_count" jdbcType="BIGINT" property="visitCount"/>
+	<result column="goods_regist" jdbcType="DATE" property="goodsRegist"/>
+	<result column="update_emp_num" jdbcType="VARCHAR" property="updateEmpNum"/>
+	<result column="goods_update_date" jdbcType="DATE" property="goodsUpdateDate"/>
+</resultMap>
+<resultMap type="purchase" id="purchaseResultMap">
+<!-- 생성자 -->
+	<constructor>
+		<idArg column="purchase_Num" javaType="string" />
+		<arg column="purchase_Date" javaType="java.util.Date"/>
+		<arg column="purchase_Price" javaType="integer"/>
+		<arg column="delivery_Addr" javaType="string"/>
+		<arg column="delivery_Addr_Detail" javaType="string"/>
+		<arg column="delivery_Post" javaType="string"/>
+		<arg column="delivery_Phone" javaType="string"/>
+		<arg column="message" javaType="string"/>
+		<arg column="purchase_Status" javaType="string"/>
+		<arg column="member_num" javaType="string"/>
+		<arg column="delivery_name" javaType="string"/>
+	</constructor>
+</resultMap>
+<resultMap type="orderList" id="orderListResultMap">
+	<association property="purchaseDTO" javaType="purchase" resultMap="purchaseResultMap"/><!-- 1-->
+	<association property="paymentDTO" > <!-- 1 -->
+		<id  column="purchase_num" jdbcType="VARCHAR" property="purchaseNum"/>
+		<result column="confirmnumber" jdbcType="VARCHAR" property="confirmnumber"/>
+		<result column="appltime" jdbcType="VARCHAR" property="appltime"/>
+	</association>
+	<collection property="purchaseListGoodsDTOs" ofType="purchaseListGoods" >
+		<association property="purchaseList" javaType="purchaseList" >
+			<result column="purchase_qty" jdbcType="BIGINT" property="purchaseQty"/>
+			<result column="total_price" jdbcType="BIGINT" property="totalPrice"/>
+		</association>
+		<association property="goods" javaType="goods" resultMap="goodsResultMap"/>
+	</collection>
+</resultMap>
+<select id="orderList" parameterType="string" resultMap="orderListResultMap">
+select 	   p.PURCHASE_NUM, PURCHASE_date, PURCHASE_PRICE, delivery_Addr
+	 	,  delivery_Addr_Detail, delivery_Post,delivery_Phone,  message, purchase_Status
+	 	,  member_num, delivery_name
+		,  CONFIRMNUMBER, appltime 
+		,  purchase_qty, total_price
+		,  g.goods_Num, goods_Name, goods_main_store
+from purchase p left outer join payment pm
+on p.PURCHASE_NUM = pm.PURCHASE_NUM join purchase_list pl
+on p.PURCHASE_NUM = pl.PURCHASE_NUM join goods g
+on pl.goods_num = g.goods_num
+<trim prefix="where" prefixOverrides="AND | OR">
+	<if test="memberNum != null">
+	 	member_num = #{memberNum}
+	</if>
+	<if test="purchaseNum != null">
+	 	purchase_Num = #{purchaseNum}
+	</if>
+</trim>
+</select>
 
+<select id="purchaseGoodsCount" parameterType="string" resultType="integer">
+	select count(*) from purchase_list 
+	where purchase_num = #{purchaseNum}
+</select>
+
+<select id="firstGoods" parameterType="string" resultType="string">
+	select goods_name from goods
+	where goods_num = ( select goods_num from (				
+				select ROW_NUMBER() over(order by goods_num ) rn , goods_num from purchase_list
+				where purchase_num = #{purchaseNum} 
+				) sub 
+				where rn = 1
+	)
+</select>
+
+<delete id="paymentDelete" parameterType="string">
+	delete from payment
+	where purchase_num = #{purchaseNum}
+</delete>
 
 
 

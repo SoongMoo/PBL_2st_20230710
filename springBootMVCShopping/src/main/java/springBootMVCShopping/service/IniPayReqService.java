@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 
 import com.inicis.std.util.SignatureUtil;
 
+import jakarta.servlet.http.HttpSession;
+import springBootMVCShopping.domain.AuthInfoDTO;
 import springBootMVCShopping.domain.PurchaseDTO;
 import springBootMVCShopping.mapper.PurchaseMapper;
 
@@ -16,8 +18,14 @@ import springBootMVCShopping.mapper.PurchaseMapper;
 public class IniPayReqService {
 	@Autowired
 	PurchaseMapper purchaseMapper;
-	public void execute(String purchaseNum,String purchaseName, String buyeremail, Model model) throws Exception { // 피호출메서드
+	public void execute(String purchaseNum, Model model,HttpSession session) throws Exception { // 피호출메서드
 		PurchaseDTO dto = purchaseMapper.purchaseSelect(purchaseNum);
+		AuthInfoDTO authInfo = (AuthInfoDTO)session.getAttribute("auth");
+		String buyeremail = authInfo.getUserEmail();
+		int cnt = purchaseMapper.purchaseGoodsCount(purchaseNum);
+		String goodsNum = purchaseMapper.firstGoods(purchaseNum);
+		String purchaseName = goodsNum + "외 " + String.valueOf(cnt-1);
+		
 		String mid					= "INIpayTest";		                    // 상점아이디					
 		String signKey			    = "SU5JTElURV9UUklQTEVERVNfS0VZU1RS";	// 웹 결제 signkey
 		
@@ -26,7 +34,6 @@ public class IniPayReqService {
 		String timestamp			= SignatureUtil.getTimestamp();			// util에 의해서 자동생성
 		String orderNumber			= purchaseNum;	// 가맹점 주문번호(가맹점에서 직접 설정)
 		String price				= dto.getPurchasePrice().toString();								// 상품가격(특수기호 제외, 가맹점에서 직접 설정)
-
 
 		Map<String, String> signParam = new HashMap<String, String>();
 

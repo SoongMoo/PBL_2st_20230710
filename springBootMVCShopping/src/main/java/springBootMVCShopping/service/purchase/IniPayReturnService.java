@@ -15,16 +15,25 @@ import com.inicis.std.util.SignatureUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import springBootMVCShopping.domain.AuthInfoDTO;
+import springBootMVCShopping.domain.MemberDTO;
 import springBootMVCShopping.domain.PaymentDTO;
+import springBootMVCShopping.domain.PurchaseDTO;
+import springBootMVCShopping.mapper.MemberMapper;
 import springBootMVCShopping.mapper.PurchaseMapper;
+import springBootMVCShopping.mapper.UserMapper;
 
 @Service
 public class IniPayReturnService {
 	@Autowired
 	PurchaseMapper purchaseMapper;
+	@Autowired
+	MemberMapper memberMapper;
+	@Autowired
+	UserMapper userMapper;
 	public void execute(HttpServletRequest request,HttpSession session, Model model) {
 		Map<String, String> resultMap = new HashMap<String, String>();
-
+		
 		try{
 			//#############################
 			// 인증결과 파라미터 일괄 수신
@@ -128,6 +137,13 @@ public class IniPayReturnService {
 					if(i >= 1) {
 						purchaseMapper.purchaseStatusUpdate("결제완료", dto.getPurchaseNum());
 					}
+					
+					PurchaseDTO pDto = purchaseMapper.purchaseSelect(resultMap.get("MOID"));
+					MemberDTO memDto = memberMapper.memberSelectOne(pDto.getMemberNum());
+					AuthInfoDTO auth = userMapper.loginSelect(memDto.getMemberId());
+					session.setAttribute("auth", auth);
+					model.addAttribute("userId", auth.getUserId());
+					model.addAttribute("price", dto.getTotalprice());
 				} catch (Exception ex) {
 
 					//####################################
