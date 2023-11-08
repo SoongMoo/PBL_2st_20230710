@@ -87,7 +87,18 @@ where purchase_num = #{purchaseNum}
 	<association property="paymentDTO" > <!-- 1 -->
 		<id  column="purchase_num" jdbcType="VARCHAR" property="purchaseNum"/>
 		<result column="confirmnumber" jdbcType="VARCHAR" property="confirmnumber"/>
+		<result column="paymethod" jdbcType="VARCHAR" property="paymethod"/>
+		<result column="totalprice" jdbcType="VARCHAR" property="totalprice"/>
+		<result column="appldate" jdbcType="VARCHAR" property="appldate"/>
 		<result column="appltime" jdbcType="VARCHAR" property="appltime"/>
+		<result column="cardnum" jdbcType="VARCHAR" property="cardnum"/>
+	</association>
+	<association property="delivery" javaType="springBootMVCShopping.command.DeliveryCommand">
+		<id  column="purchase_num" jdbcType="VARCHAR" property="purchaseNum"/>
+		<result column="delivery_num" jdbcType="VARCHAR" property="deliveryNumber"/>
+		<result column="delivery_date" jdbcType="DATE" property="deliveryDate"/>
+		<result column="delivery_state" jdbcType="VARCHAR" property="deliveryState"/>
+		<result column="delivery_Company" jdbcType="VARCHAR" property="deliveryCompany" />
 	</association>
 	<collection property="purchaseListGoodsDTOs" ofType="purchaseListGoods" >
 		<association property="purchaseList" javaType="purchaseList" >
@@ -100,20 +111,23 @@ where purchase_num = #{purchaseNum}
 <select id="orderList" parameterType="string" resultMap="orderListResultMap">
 select 	   p.PURCHASE_NUM, PURCHASE_date, PURCHASE_PRICE, delivery_Addr
 	 	,  delivery_Addr_Detail, delivery_Post,delivery_Phone,  message, purchase_Status
-	 	,  member_num, delivery_name
-		,  CONFIRMNUMBER, appltime 
+	 	,  member_num, delivery_name 
+		,  CONFIRMNUMBER, appltime , paymethod, totalprice, appldate, cardnum
 		,  purchase_qty, total_price
-		,  g.goods_Num, goods_Name, goods_main_store
+		,  g.goods_Num, goods_Name, goods_main_store, delivery_Cost, goods_Price
+		, goods_Content
+		, delivery_num, delivery_date, delivery_state, delivery_Company
 from purchase p left outer join payment pm
 on p.PURCHASE_NUM = pm.PURCHASE_NUM join purchase_list pl
 on p.PURCHASE_NUM = pl.PURCHASE_NUM join goods g
-on pl.goods_num = g.goods_num
+on pl.goods_num = g.goods_num left outer join delivery d
+on p.PURCHASE_NUM = d.PURCHASE_NUM
 <trim prefix="where" prefixOverrides="AND | OR">
 	<if test="memberNum != null">
 	 	member_num = #{memberNum}
 	</if>
 	<if test="purchaseNum != null">
-	 	purchase_Num = #{purchaseNum}
+	 	p.purchase_Num = #{purchaseNum}
 	</if>
 </trim>
 </select>

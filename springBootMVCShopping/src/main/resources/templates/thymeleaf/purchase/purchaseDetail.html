@@ -11,57 +11,79 @@
 <hr />
 구매상품 정보<br />
 <table width="800" align = "center">
-	<tr>
-		<td>이미지</td>
-		<td>제품가격 | 주문수량 | 주문금액 | 배송비</td>
+	<th:block th:each=" dto  : ${dto.purchaseListGoodsDTOs}">
+	<tr >
+		<td><img src="|/static/upload/${dto.goods.goodsMainStore}|" /></td>
+		<td>제품가격 : [[${#numbers.formatCurrency(dto.goods.goodsPrice)}]]원 | 
+			주문수량 : [[${dto.purchaseList.purchaseQty}]]개 <br />
+			주문금액 : [[${#numbers.formatCurrency(dto.purchaseList.totalPrice)}]] | 
+			배송비 : 
+			<span th:if="${dto.goods.deliveryCost == 0}" th:text="무료배송"></span>
+			<span th:if="${dto.goods.deliveryCost != 0}" >
+				[[${#numbers.formatCurrency(dto.goods.deliveryCost)}]]원</span>
+		</td>
 	</tr>
 	<tr>
-		<td colspan="2"><b>상품설명</b><br /> 설명내용</td>
+		<td colspan="2"><b>상품설명</b><br />
+			<span th:utext="${#strings.replace(dto.goods.goodsContent,newLineChar,'&lt;br &gt;')}"></span>
+		</td>
 	</tr>
+	</th:block>
 	<tr>
 		<td width=400>
 			<h2>주문내용</h2>
-			 주문번호 : <br />
-			 주문날짜 : <br />
-			 주문금액 : <br />
-			 배송지 : <br />
-			 연락처 : <br />
-			 받는사람 : <br />
-			 주문메세지 : <br />
+			 주문번호 : [[${dto.purchaseDTO.purchaseNum}]]<br />
+			 주문날짜 : [[${#dates.format(dto.purchaseDTO.purchaseDate,'yyyy-MM-dd')}]]<br />
+			 주문금액 : [[${dto.purchaseDTO.purchasePrice}]]<br />
+			 배송지 : [[${dto.purchaseDTO.deliveryAddr +' '+ dto.purchaseDTO.deliveryAddrDetail}]]<br />
+			 연락처 : [[${dto.purchaseDTO.deliveryPhone}]]<br />
+			 받는사람 : [[${dto.purchaseDTO.deliveryName}]]<br />
+			 주문메세지 : [[${dto.purchaseDTO.message}]]<br />
 		</td>
 		<td width=400>
 			<h2>결제내용</h2>
 			<div>
-			 결제번호 : <br />
-			 결제방법 : <br />
-			 결제금액 : <br />
-			 결제 일 : <br />
-			 카드번호 : <br />
+			 결제번호 : [[${dto.paymentDTO.confirmnumber}]]<br />
+			 결제방법 : [[${dto.paymentDTO.paymethod}]]<br />
+			 결제금액 : [[${dto.paymentDTO.totalprice}]]<br />
+			 결제 일 : [[${dto.paymentDTO.appldate} + ${dto.paymentDTO.appltime}]]<br />
+			 카드번호 : [[${dto.paymentDTO.cardnum}]]<br />
 			 </div>
 			 <div>결제 정보가 없습니다.</div>
 		</td>
 	</tr>
 </table>
-<table width="800" align = "center">
-	<tr><td colspan="2">배송정보</td></tr>
-	<tr><td>택배사</td><td></td></tr>
-	<tr><td>송장번호</td><td></td></tr>
-	<tr><td colspan="2"><input type="button" value="배송정보삭제" id="btn" /></td></tr>
-</table> 
-<table width="800" align = "center">
-	<tr><td colspan="2">배송정보입력</td></tr>
-	<tr><td>배송회사</td>
-		<td><select name="deliveryCompany">
-				<option>한진택배</option>
-				<option>대한통운택배</option>
-				<option>우체국택배</option>
-			</select></td>
-	</tr>
-		<tr><td>송장번호</td>
-		<td><input type="text" name="deliveryNumber"/></td></tr>
-	<tr><td colspan="2">
-		<input type="submit" value="배송정보등록"/>
-		</td></tr>
-</table>
+<div th:if="${dto.paymentDTO.appldate != null">
+	<div th:if="${dto.delivery.deliveryNumber != null }">
+	<hr />
+	<table width="800" align = "center">
+		<tr><td colspan="2">배송정보</td></tr>
+		<tr><td>택배사</td><td>[[${dto.delivery.deliveryCompany}]]</td></tr>
+		<tr><td>송장번호</td><td>[[${dto.delivery.deliveryNumber}]]</td></tr>
+		<tr><td colspan="2"><input type="button" value="배송정보삭제" id="btn" /></td></tr>
+	</table>
+	</div>
+	<hr />
+	<div th:if="${dto.delivery.deliveryNumber == null}">
+	<form action="/delivery/deliveryAction" method="post"> 
+	<input type="hidden" name="purchaseNum" th:value="${dto.purchaseDTO.purchaseNum}"/>
+	<table width="800" align = "center">
+		<tr><td colspan="2">배송정보입력</td></tr>
+		<tr><td>배송회사</td>
+			<td><select name="deliveryCompany">
+					<option>한진택배</option>
+					<option>대한통운택배</option>
+					<option>우체국택배</option>
+				</select></td>
+		</tr>
+			<tr><td>송장번호</td>
+			<td><input type="text" name="deliveryNumber" required="required"/></td></tr>
+		<tr><td colspan="2">
+			<input type="submit" value="배송정보등록"/>
+			</td></tr>
+	</table>
+	</form>
+	</div>
+</div>
 </body>
 </html>
