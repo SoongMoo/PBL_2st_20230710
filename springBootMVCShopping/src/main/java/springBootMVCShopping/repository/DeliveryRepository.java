@@ -16,5 +16,12 @@ public class DeliveryRepository {
 		statement = namespace + ".deliveryInsert";
 		return sqlSession.insert(statement, deliveryCommand);
 	}
-	
+	public Integer deliveryDelete(String purchaseNum) {
+		statement = namespace + ".deliveryDelete";
+		return sqlSession.delete(statement,purchaseNum);
+	}
+	public Integer deliveryStateUpdate(String purchaseNum) {
+		statement = namespace + ".deliveryStateUpdate";
+		return sqlSession.update(statement,purchaseNum);
+	}
 }

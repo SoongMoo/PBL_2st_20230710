@@ -8,5 +8,13 @@
 						,delivery_Company )
 	values(#{purchaseNum},#{deliveryNumber}, now(), '배송중', #{deliveryCompany})
 </insert>
-
+<delete id="deliveryDelete" parameterType="string">
+	delete from delivery
+	where purchase_num = #{purchaseNum}
+</delete>
+<update id="deliveryStateUpdate" parameterType="string">
+	update delivery
+	set delivery_state = '배송완료'
+	where purchase_num = #{purchaseNum}
+</update>
 </mapper>
