@@ -82,6 +82,8 @@ tasks.named('test') {
 }
 
 
-
+war {
+    version = '1.0'
+}
 
 

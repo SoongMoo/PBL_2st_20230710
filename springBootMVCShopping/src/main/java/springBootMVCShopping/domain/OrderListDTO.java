@@ -11,5 +11,6 @@ import lombok.Data;
 public class OrderListDTO {
 	PurchaseDTO purchaseDTO; // 1
 	PaymentDTO paymentDTO;
+	
 	List<PurchaseListGoodsDTO> purchaseListGoodsDTOs; // n
 }
