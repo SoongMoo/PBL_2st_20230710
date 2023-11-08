@@ -31,8 +31,8 @@ function detail(purchaseNum){
 				</th:block>
 			</th:block>
 		)</td> 
-		<td><th:block th:each="goodsDto : ${orderListDTO.goodsDTOs}" >
-				[[${goodsDto.goodsName}]]
+		<td><th:block th:each="dto : ${orderListDTO.purchaseListGoodsDTOs}" >
+				[[${dto.goods.goodsName}]]
 			</th:block>/[[${orderListDTO.purchaseDTO.purchaseNum}]]</td> 
 		<td><a th:href="|javascript:detail('${orderListDTO.purchaseDTO.purchaseNum}')|">주문상세보기</a>
 			<span th:if="${orderListDTO.purchaseDTO.purchaseStatus != '입급대기중'}">
