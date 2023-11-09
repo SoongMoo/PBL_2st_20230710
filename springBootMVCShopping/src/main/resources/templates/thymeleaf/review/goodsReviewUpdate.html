@@ -11,13 +11,14 @@ $(function(){
         type: "post",
         data : { "reviewNum" : "[[${reviewNum}]]" },
         success : function(responseData){
-            var data = JSON.parse(responseData);
+        	result = responseData.replace(/[\x00-\x1F\x7F-\x9F]/g, ' ');
+            var data = JSON.parse(result);
             if(!data){
                 alert("존재하지 않는 ID입니다");
                 return false;
             }
             var html = '<table align="center" width="600"><tr><td>';
-            html += '<form action="goodsReviewUpdate" method="post" >';
+            html += '<form action="goodsReviewModify" method="post" >';
             html += '리뷰 번호 : <input type="text"  name="reviewNum" value="'+data.reviewNum+'" ><br />';
             html += '리뷰 내용 : <textarea rows="5" cols="30" name="reviewContent">'+data.reviewContent+'</textarea><br />';
             html += '리뷰 등록일 : <input type="Date"  name="reviewDate" value="'+data.reviewDate+'"><br />';

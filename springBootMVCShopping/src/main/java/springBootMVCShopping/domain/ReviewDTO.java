@@ -16,6 +16,6 @@ public class ReviewDTO {
 	String reviewContent;
 
 	Integer score;
-	Long reviewNum;
+	Integer reviewNum;
 	String memberId; /// 추가 속성
 }

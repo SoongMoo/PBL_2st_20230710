@@ -24,4 +24,8 @@ public class ReviewRepository {
 		statement = namespace + ".reviewSelect";
 		return sqlSession.selectOne(statement, reviewNum);
 	}
+	public Integer reviewUpdate(ReviewDTO dto) {
+		statement = namespace + ".reviewUpdate";
+		return sqlSession.update(statement, dto) ;
+	}
 }

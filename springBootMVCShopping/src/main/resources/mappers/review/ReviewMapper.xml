@@ -17,6 +17,11 @@ values( #{goodsNum}, #{purchaseNum}, now(),  #{reviewContent}, #{memberId}, 5)
 	from review 
 	where review_Num = #{reviewNum}
 </select>
+<update id="reviewUpdate" parameterType="review">
+update review
+set review_content = #{reviewContent}
+where review_num = #{reviewNum}
+</update>
 </mapper>
 
 

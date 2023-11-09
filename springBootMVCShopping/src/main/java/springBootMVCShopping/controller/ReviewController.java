@@ -18,6 +18,7 @@ import springBootMVCShopping.domain.ReviewDTO;
 import springBootMVCShopping.service.goods.GoodsDetailService;
 import springBootMVCShopping.service.review.ReviewDeleteService;
 import springBootMVCShopping.service.review.ReviewDetailService;
+import springBootMVCShopping.service.review.ReviewUpdateService;
 import springBootMVCShopping.service.review.ReviewWriteService;
 
 @Controller
@@ -58,7 +59,7 @@ public class ReviewController {
 	
 	@Autowired
 	ReviewDetailService reviewDetailService;
-	@RequestMapping(value="goodsReviewUpdate", method =RequestMethod.POST	)
+	@RequestMapping(value="goodsReviewUpdate", method =RequestMethod.POST)
 	public void goodsReviewUpdate(
 			@RequestParam(value="reviewNum") Integer reviewNum
 			,HttpServletResponse response) {
@@ -82,6 +83,16 @@ public class ReviewController {
 	public String goodsReviewDelete(
 			@RequestParam(value="reviewNum") String reviewNum) {
 		reviewDeleteService.execute(reviewNum);
+		return "redirect:/purchase/orderList";
+	}
+	@Autowired
+	ReviewUpdateService reviewUpdateService;
+	@RequestMapping(value="goodsReviewModify", method =RequestMethod.POST)
+	public String goodsReviewUpdate(
+			@RequestParam(value="reviewNum") Integer reviewNum,
+			@RequestParam(value="reviewContent") String reviewContent
+			) {
+		reviewUpdateService.execute(reviewNum, reviewContent);
 		return "redirect:/purchase/orderList";
 	}
 }
