@@ -6,6 +6,8 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
+	goodsDescript();
+	
 	$("#cartBtn").click(function(){
 		if([[${session.auth == null}]]){
 			window.open("/login/item.login","login","width=315, height=200,top = 100, left=100");
@@ -61,7 +63,41 @@ $(function(){
 			});
 		}
 	});
+	$("#review").click(function(){
+		$.ajax({
+			type : "post" ,
+			url : "/review/reviewList",
+			dataType : "html",
+			data : {"goodsNum" : "[[${list[0].goodsNum}]]"},
+			success : function(result){
+				$("#notice").html(result);
+			},
+			error : function(){
+				alert("서버오류!!!!");
+				return false;
+			}
+		});
+	});
+	$("#descript").click(function(){
+		goodsDescript();
+	});
 });
+function goodsDescript(){
+	//location.href="../goodsDescript?goodsNum=[[${list[0].goodsNum}]]";
+	$.ajax({
+		type : "post" ,
+		url : "../goodsDescript",
+		dataType : "html",
+		data : {"goodsNum" : "[[${list[0].goodsNum}]]"},
+		success : function(result){
+			$("#notice").html(result);
+		},
+		error : function(){
+			alert("서버오류!!!!");
+			return false;
+		}
+	});
+}
 </script>
 </head>
 <body>
@@ -96,6 +132,21 @@ $(function(){
 				</th:block>
 			</td>
 		</tr>
+		<tr><td colspan="2">
+			<p>
+			<span id="descript">제품 상세 설명</span> | 
+			<span id="review">리뷰</span> | 
+			<span id="inquire" >상품문의</span>
+			</p>
+			<div id="notice"></div>
+		</td></tr>
 	</table>
 </body>
 </html>
+
+
+
+
+
+
+

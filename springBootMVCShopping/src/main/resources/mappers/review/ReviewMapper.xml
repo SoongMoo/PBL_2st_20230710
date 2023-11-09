@@ -22,6 +22,12 @@ update review
 set review_content = #{reviewContent}
 where review_num = #{reviewNum}
 </update>
+<select id="goodsReviewList" parameterType="string" resultType="review">
+	select PURCHASE_NUM purchaseNum, REVIEW_DATE reviewDate, 
+			REVIEW_CONTENT reviewContent, MEMBER_ID memberId
+	from review 
+	where GOODS_NUM = #{goodsNum}
+</select>
 </mapper>
 
 

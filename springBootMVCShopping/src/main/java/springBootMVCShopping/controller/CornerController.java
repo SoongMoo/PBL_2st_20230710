@@ -27,6 +27,7 @@ import springBootMVCShopping.service.corner.GoodsWishListService;
 import springBootMVCShopping.service.corner.GoodsWishService;
 import springBootMVCShopping.service.corner.WishDelService;
 import springBootMVCShopping.service.corner.WishGoodsDelsService;
+import springBootMVCShopping.service.goods.GoodsDetailService;
 import springBootMVCShopping.service.goods.MainGoodsListService;
 
 @Controller
@@ -127,6 +128,15 @@ public class CornerController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	@Autowired
+	GoodsDetailService goodsDetailService;
+	@RequestMapping("goodsDescript")
+	public String goodsDescript(
+			@RequestParam(value="goodsNum") String goodsNum,
+			Model model) {
+		goodsDetailService.execute(goodsNum, model);
+		return "thymeleaf/corner/goodsDescript";
 	}
 }
 

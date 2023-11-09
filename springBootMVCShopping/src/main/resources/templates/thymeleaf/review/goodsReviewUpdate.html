@@ -11,7 +11,7 @@ $(function(){
         type: "post",
         data : { "reviewNum" : "[[${reviewNum}]]" },
         success : function(responseData){
-        	result = responseData.replace(/[\x00-\x1F\x7F-\x9F]/g, ' ');
+        	result = responseData.replace(/[\x00-\x1F\x7F-\x9F]/g, '\\n');
             var data = JSON.parse(result);
             if(!data){
                 alert("존재하지 않는 ID입니다");

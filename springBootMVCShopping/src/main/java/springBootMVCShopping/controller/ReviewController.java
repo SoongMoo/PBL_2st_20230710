@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import springBootMVCShopping.domain.ReviewDTO;
 import springBootMVCShopping.service.goods.GoodsDetailService;
 import springBootMVCShopping.service.review.ReviewDeleteService;
 import springBootMVCShopping.service.review.ReviewDetailService;
+import springBootMVCShopping.service.review.ReviewListService;
 import springBootMVCShopping.service.review.ReviewUpdateService;
 import springBootMVCShopping.service.review.ReviewWriteService;
 
@@ -94,6 +96,16 @@ public class ReviewController {
 			) {
 		reviewUpdateService.execute(reviewNum, reviewContent);
 		return "redirect:/purchase/orderList";
+	}
+	@Autowired
+	ReviewListService reviewListService;
+	@PostMapping("reviewList")
+	public String reviewList(
+			@RequestParam(value="goodsNum") String goodsNum,
+			Model model) {
+		reviewListService.execute(goodsNum, model);
+		model.addAttribute("newLineChar", "\n");
+		return "thymeleaf/review/reviewList";
 	}
 }
 

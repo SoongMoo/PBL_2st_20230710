@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table width="600" align="center" border="1">
+	<th:block th:each=" dto : ${list}">
+	<tr><th>[[${dto.memberId}]] | [[${dto.purchaseNum}]]</th>
+		<th>[[${#dates.format(dto.reviewDate,'yyyy-MM-dd')}]]</th></tr>
+	<tr><td colspan="2">
+		<span
+			th:utext="${#strings.replace(dto.reviewContent, newLineChar, '&lt;br /&gt;')}"></span></td></tr>
+	</th:block>
+</table>
+</body>
+</html>
