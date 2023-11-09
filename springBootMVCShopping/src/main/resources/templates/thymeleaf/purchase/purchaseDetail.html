@@ -71,13 +71,14 @@ $(function(){
 		<tr><td colspan="2">배송정보</td></tr>
 		<tr><td>택배사</td><td>[[${dto.delivery.deliveryCompany}]]</td></tr>
 		<tr><td>송장번호</td><td>[[${dto.delivery.deliveryNumber}]]</td></tr>
-		<th:block th:if="${dto.purchaseDTO.purchaseStatus != '구매확정'}">
+		<th:block th:if="${dto.purchaseDTO.purchaseStatus != '구매확정' and session.auth.grade == 'emp'}">
 			<tr><td colspan="2"><input type="submit" value="배송정보삭제" /></td></tr>
 		</th:block>
 	</table>
 	</form>
 	</div>
 	<hr />
+<th:block th:if="${session.auth.grade == 'emp'}">
 	<div th:if="${dto.delivery.deliveryNumber == null and dto.purchaseDTO.purchaseStatus != '구매확정'}">
 	<form action="/delivery/deliveryAction" method="post"> 
 	<input type="hidden" name="purchaseNum" th:value="${dto.purchaseDTO.purchaseNum}"/>
@@ -98,6 +99,7 @@ $(function(){
 	</table>
 	</form>
 	</div>
+</th:block>
 </div>
 <button type="button" id="btn">닫기</button>
 </body>

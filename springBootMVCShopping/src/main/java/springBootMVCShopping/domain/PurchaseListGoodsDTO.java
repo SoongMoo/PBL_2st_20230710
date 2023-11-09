@@ -10,6 +10,6 @@ import lombok.Data;
 
 public class PurchaseListGoodsDTO {
 	PurchaseListDTO purchaseList;
-	
 	GoodsDTO goods;
+	ReviewDTO review;
 }

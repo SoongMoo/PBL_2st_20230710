@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+        url : "goodsReviewUpdate",
+        type: "post",
+        data : { "reviewNum" : "[[${reviewNum}]]" },
+        success : function(responseData){
+            var data = JSON.parse(responseData);
+            if(!data){
+                alert("존재하지 않는 ID입니다");
+                return false;
+            }
+            var html = '<table align="center" width="600"><tr><td>';
+            html += '<form action="goodsReviewUpdate" method="post" >';
+            html += '리뷰 번호 : <input type="text"  name="reviewNum" value="'+data.reviewNum+'" ><br />';
+            html += '리뷰 내용 : <textarea rows="5" cols="30" name="reviewContent">'+data.reviewContent+'</textarea><br />';
+            html += '리뷰 등록일 : <input type="Date"  name="reviewDate" value="'+data.reviewDate+'"><br />';
+            html += '<input type="submit" value="리뷰등록" />';
+            html += '</form>';
+            html += '</td></tr></table>';
+            $("#container").html(html);
+        }
+    });
+});
+</script>
+</head>
+<body>
+<div id="container"></div>
+<table align="center" width="600">
+<caption>상품 상세보기</caption>
+<tr><th width="150">상품번호</th><td>[[${goodsCommand.goodsNum }]]</td></tr>
+<tr><th>상품명</th><td>[[${goodsCommand.goodsName }]]</td></tr>
+<tr><th>상품가격</th><td>[[${goodsCommand.goodsPrice }]]</td></tr>
+<tr><th>배송비</th><td>[[${goodsCommand.deliveryCost }]]</td></tr>
+<tr><th>상품설명</th><td>
+<span th:utext="${#strings.replace(goodsCommand.goodsContent,newLine,'&lt;br /&gt;')}"></span>
+</td></tr>
+<tr><th>조회수</th><td>[[${goodsCommand.visitCount }]]</td></tr>
+<tr><td colspan="2">
+	<img th:src="|/static/upload/${goodsCommand.goodsMainStore }|" />
+</td></tr>
+<tr><td colspan="2">
+	<th:block th:each="goodsImage : ${#strings.arraySplit(goodsCommand.goodsImages,'-') }">
+	<img th:src="|/static/upload/${goodsImage}|" /><br />
+	</th:block>
+</td></tr>
+</table>
+</body>
+</html>
