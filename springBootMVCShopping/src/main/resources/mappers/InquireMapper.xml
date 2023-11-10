@@ -3,7 +3,7 @@
 	"-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="InquireMapper">
-<select id="inquireList" parameterType="string" resultType="inquire">
+<select id="inquireList" parameterType="inquire" resultType="inquire">
 	select inquire_num inquireNum, i.goods_num goodsNum, i.member_num memberNum
 		  , inquire_subject inquireSubject, inquire_content inquireContent, inquire_kind inquireKind
 		  ,inquire_date inquireDate, inquire_answer inquireAnswer, inquire_answer_date inquireAnswerDate
@@ -11,7 +11,14 @@
 	from goods_inquire i join goods g 
 	on i.goods_num = g.goods_num join members m
 	on i.member_num = m.member_num
-	where i.goods_num = #{goodsNum}
+	<trim prefix="where" prefixOverrides="AND | OR">
+		<if test="goodsNum != null">
+			i.goods_num = #{goodsNum}
+		</if>
+		<if test="inquireNum != null">
+			i.inquire_Num = #{inquireNum}
+		</if>
+	</trim>
 </select>
 <insert id="inquireInsert" parameterType="inquire">
 insert into goods_inquire(MEMBER_NUM, GOODS_NUM,INQUIRE_SUBJECT,INQUIRE_KIND

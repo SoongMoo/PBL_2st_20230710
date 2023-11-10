@@ -14,9 +14,12 @@ public class InquireRepository {
 	SqlSession sqlSession;
 	String namespace = "InquireMapper";
 	String statement;
-	public List<InquireDTO> inquireList(String goodsNum){
+	public List<InquireDTO> inquireList(String goodsNum, Integer inquireNum){
+		InquireDTO dto = new InquireDTO();
+		dto.setGoodsNum(goodsNum);
+		dto.setInquireNum(inquireNum);
 		statement = namespace + ".inquireList";
-		return sqlSession.selectList(statement, goodsNum);
+		return sqlSession.selectList(statement, dto);
 	}
 	public Integer inquireInsert(InquireDTO dto) {
 		statement = namespace + ".inquireInsert";

@@ -10,11 +10,11 @@ import springBootMVCShopping.domain.InquireDTO;
 import springBootMVCShopping.repository.InquireRepository;
 
 @Service
-public class InquireListService {
+public class GoodsInquireDetailService {
 	@Autowired
 	InquireRepository inquireRepository;
-	public void execute(String goodsNum, Model model) {
-		List<InquireDTO> list = inquireRepository.inquireList(goodsNum, null);
-		model.addAttribute("list", list);
+	public void execute(Integer inquireNum, Model model) {
+		List<InquireDTO> list = inquireRepository.inquireList(null,inquireNum);
+		
 	}
 }
