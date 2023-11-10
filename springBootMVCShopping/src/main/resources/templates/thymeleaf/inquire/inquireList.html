@@ -19,6 +19,16 @@ function inquireUpdate(inquireNum){
 	window.open("/inquire/inquireUpdate?inquireNum="+inquireNum, "", 
 			"width=700, height=650, top=100, left=100")
 }
+function inquireDelete(inquireNum){
+	$.ajax({
+		type:'post',
+		url:'/inquire/inquireDelete',
+		data: {'inquireNum':inquireNum},
+		success:function(){
+			inquire();
+		}
+	});
+}
 </script>
 </head>
 <body>
@@ -35,9 +45,11 @@ function inquireUpdate(inquireNum){
 	
 	<tr><td colspan="6">
 		<span th:utext="${#strings.replace(dto.inquireContent,newLineChar,'&lt;br /&gt;')}"></span><br />
-		<th:block th:if="${session.auth.userId == dto.memberId}">
-		<button type="button" th:attr="onclick=|inquireUpdate('${dto.inquireNum}');|">문의수정</button> | 
-		<button type="button" th:attr="onclick=|inquireDelete('${dto.inquireNum}');|">문의삭제</button>
+		<th:block th:if="${session.auth != null}">
+			<th:block th:if="${session.auth.userId == dto.memberId}">
+				<button type="button" th:attr="onclick=|inquireUpdate('${dto.inquireNum}');|">문의수정</button> | 
+				<button type="button" th:attr="onclick=|inquireDelete('${dto.inquireNum}');|">문의삭제</button>
+			</th:block>
 		</th:block>
 		</td></tr>
 

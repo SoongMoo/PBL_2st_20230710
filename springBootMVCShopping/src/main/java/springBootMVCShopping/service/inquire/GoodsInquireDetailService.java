@@ -15,6 +15,6 @@ public class GoodsInquireDetailService {
 	InquireRepository inquireRepository;
 	public void execute(Integer inquireNum, Model model) {
 		List<InquireDTO> list = inquireRepository.inquireList(null,inquireNum);
-		
+		model.addAttribute("list", list);
 	}
 }

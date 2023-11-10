@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table width="800" border=1 align="center">
+	<caption>문의 리스트</caption>
+	<tr><td>번호</td><td>상품명</td><td>종류</td><td>제목</td><td>작성자</td><td>상태</td></tr>
+	
+	<tr th:each="dto  , idx : ${list}">
+		<td>[[${idx.count}]]</td><td>[[${dto.goodsName}]]</td>
+		<td>[[${dto.inquireKind}]]</td>
+		<td><a th:href="|goodsInquireDetail/${dto.inquireNum}|">[[${dto.inquireSubject]]</a></td>
+		<td>[[${dto.memberId}]]</td>
+		<td>
+			<span th:if="${dto.inquireAnswer == null}">답변준비중</span>
+			<span th:if="${dto.inquireAnswer != null}">답변완료</span>
+		</td>
+	</tr>
+	
+</table>
+</body>
+</html>

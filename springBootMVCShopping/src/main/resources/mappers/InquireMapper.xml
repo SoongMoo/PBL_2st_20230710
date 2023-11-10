@@ -26,6 +26,15 @@ insert into goods_inquire(MEMBER_NUM, GOODS_NUM,INQUIRE_SUBJECT,INQUIRE_KIND
 values(#{memberNum},#{goodsNum},#{inquireSubject},#{inquireKind}
 					,#{inquireContent},now())
 </insert>
-
-
+<update id="inquireUpdate" parameterType="inquire">
+update goods_inquire
+set INQUIRE_SUBJECT = #{inquireSubject}
+   ,INQUIRE_CONTENT = #{inquireContent}
+   ,INQUIRE_KIND = #{inquireKind}
+where  INQUIRE_NUM = #{inquireNum}
+</update>
+<delete id="inquireDelete" parameterType="integer">
+	delete from goods_inquire
+	where  INQUIRE_NUM = #{inquireNum}
+</delete>
 </mapper>

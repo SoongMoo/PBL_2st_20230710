@@ -25,6 +25,14 @@ public class InquireRepository {
 		statement = namespace + ".inquireInsert";
 		return sqlSession.insert(statement, dto);
 	}
+	public Integer inquireUpdate(InquireDTO dto) {
+		statement = namespace + ".inquireUpdate";
+		return sqlSession.update(statement, dto);
+	}
+	public Integer inquireDelete(Integer inquireNum) {
+		statement = namespace + ".inquireDelete";
+		return sqlSession.delete(statement, inquireNum);
+	}
 }
 
 
