@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="inquireWrite" method="post">
+<input type="hidden" name="goodsNum" th:value="${goodsNum}">
+<table width="800" align="center">
+	<colgroup>
+		<col style="width:20%">
+		<col >
+	</colgroup>
+	<thead>
+	<tr><th colspan="2"><h1 class="fl"> 판매자에게 문의하기</h1></th></tr>
+	</thead>
+	<tfoot>
+	<tr><th colspan="2">
+			<input type="submit" value="문의등록"/>
+		</th></tr>
+	</tfoot>
+	<tbody>
+	<tr>
+		<th>문의 유형</th>
+		<th>
+			<select name="inquireKind">
+				<option>상품(성능/사이즈)</option>
+				<option>배송</option>
+				<option>교환</option>
+				<option>반품/취소/환불</option>
+				<option>기타</option>
+			</select>
+		</th>
+	</tr>
+	<tr><th>제목</th>
+		<td><input type="text" name="inquireSubject"/></td></tr>
+	<tr><th>내용</th>
+		<td><textarea rows="10" cols="50" name="inquireContent"></textarea> </td></tr>
+	</tbody>
+</table>
+</form>
+</body>
+</html>
