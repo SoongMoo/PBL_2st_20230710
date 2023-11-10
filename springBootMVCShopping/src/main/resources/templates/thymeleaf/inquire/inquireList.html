@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table width="600" align="center" border="1">
+	<tr><td align="right" colspan="6" ><button type="button">문의하기</button></td></tr>
+
+<th:block th:each=" dto , idx : ${list}">	
+	<tr><td>[[${idx.count}]]</td>
+		<td><span th:if="${dto.inquireAnswer == null}" >검토중</span>
+			<span th:if="${dto.inquireAnswer != null}" th:text="답변완료"></span>
+		</td><td>[[${dto.memberId}]]</td>
+			<td>[[${#dates.format(dto.inquireDate,'yyyy-MM-dd')}]]</td><td>[[${dto.inquireKind}]]</td>
+			 <td>[[${dto.inquireSubject}]]</td></tr>
+	
+	<tr><td colspan="6"><span th:utext="${#strings.replace(dto.inquireContent,newLineChar,'&lt;br /&gt;')}"></span>
+		</td></tr>
+
+	<tr th:if="${dto.inquireAnswer != null}"><td colspan="6">
+			답변날짜 : [[${#dates.format(dto.inquireAnswerDate,'yyyy-MM-dd')}]]<br />
+			<span th:utext="${#strings.replace(dto.inquireAnswer,newLineChar,'&lt;br /&gt;')}"></span>
+		</td></tr>
+</th:block>
+</table>
+</body>
+</html>
