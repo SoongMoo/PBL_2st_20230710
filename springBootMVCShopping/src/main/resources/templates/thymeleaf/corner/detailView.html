@@ -82,21 +82,24 @@ $(function(){
 		goodsDescript();
 	});
 	$("#inquire").click(function(){
-		$.ajax({
-			type : "post" ,
-			url : "/inquire/inquireList",
-			dataType : "html",
-			data : {"goodsNum" : "[[${list[0].goodsNum}]]"},
-			success : function(result){
-				$("#notice").html(result);
-			},
-			error : function(){
-				alert("서버오류!!!!");
-				return false;
-			}
-		});
+		inquire();
 	});
 });
+function inquire(){
+	$.ajax({
+		type : "post" ,
+		url : "/inquire/inquireList",
+		dataType : "html",
+		data : {"goodsNum" : "[[${list[0].goodsNum}]]"},
+		success : function(result){
+			$("#notice").html(result);
+		},
+		error : function(){
+			alert("서버오류!!!!");
+			return false;
+		}
+	});
+}
 function goodsDescript(){
 	//location.href="../goodsDescript?goodsNum=[[${list[0].goodsNum}]]";
 	$.ajax({

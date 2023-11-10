@@ -29,7 +29,12 @@ $(function(){
 			<td>[[${#dates.format(dto.inquireDate,'yyyy-MM-dd')}]]</td><td>[[${dto.inquireKind}]]</td>
 			 <td>[[${dto.inquireSubject}]]</td></tr>
 	
-	<tr><td colspan="6"><span th:utext="${#strings.replace(dto.inquireContent,newLineChar,'&lt;br /&gt;')}"></span>
+	<tr><td colspan="6">
+		<span th:utext="${#strings.replace(dto.inquireContent,newLineChar,'&lt;br /&gt;')}"></span><br />
+		<th:block th:if="${session.auth.userId == dto.memberId}">
+		<button type="button" th:attr="onclick=|inquireUpdate('${dto.inquireNum}');|">문의수정</button> | 
+		<button type="button" th:attr="onclick=|inquireDelete('${dto.inquireNum}');|">문의삭제</button>
+		</th:block>
 		</td></tr>
 
 	<tr th:if="${dto.inquireAnswer != null}"><td colspan="6">

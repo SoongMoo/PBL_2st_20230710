@@ -5,7 +5,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="inquireWrite" method="post">
+<form action="inquireWrite" method="post" th:object="${inquireCommand}">
 <input type="hidden" name="goodsNum" th:value="${goodsNum}">
 <table width="800" align="center">
 	<colgroup>
@@ -34,9 +34,11 @@
 		</th>
 	</tr>
 	<tr><th>제목</th>
-		<td><input type="text" name="inquireSubject"/></td></tr>
+		<td><input type="text" name="inquireSubject" th:field="*{inquireSubject}"/><br />
+<span style="color:red" th:if="${#fields.hasErrors('inquireSubject')}" th:errors="*{inquireSubject}"></span></td></tr>
 	<tr><th>내용</th>
-		<td><textarea rows="10" cols="50" name="inquireContent"></textarea> </td></tr>
+		<td><textarea rows="10" cols="50" name="inquireContent">[[${inquireCommand.inquireContent}]]</textarea><br />
+<span style="color:red" th:if="${#fields.hasErrors('inquireContent')}" th:errors="*{inquireContent}"></span></td></tr>
 	</tbody>
 </table>
 </form>

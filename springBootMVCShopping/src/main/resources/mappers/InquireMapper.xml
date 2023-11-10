@@ -13,4 +13,12 @@
 	on i.member_num = m.member_num
 	where i.goods_num = #{goodsNum}
 </select>
+<insert id="inquireInsert" parameterType="inquire">
+insert into goods_inquire(MEMBER_NUM, GOODS_NUM,INQUIRE_SUBJECT,INQUIRE_KIND
+					, INQUIRE_CONTENT, INQUIRE_DATE )
+values(#{memberNum},#{goodsNum},#{inquireSubject},#{inquireKind}
+					,#{inquireContent},now())
+</insert>
+
+
 </mapper>
