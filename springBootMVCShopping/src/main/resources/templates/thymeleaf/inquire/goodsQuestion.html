@@ -12,7 +12,8 @@
 	<tr th:each="dto  , idx : ${list}">
 		<td>[[${idx.count}]]</td><td>[[${dto.goodsName}]]</td>
 		<td>[[${dto.inquireKind}]]</td>
-		<td><a th:href="|goodsInquireDetail/${dto.inquireNum}|">[[${dto.inquireSubject]]</a></td>
+		<td><a th:href="|goodsInquireDetail/${dto.inquireNum}|">[[${dto.inquireSubject}]]</a></td>
+
 		<td>[[${dto.memberId}]]</td>
 		<td>
 			<span th:if="${dto.inquireAnswer == null}">답변준비중</span>

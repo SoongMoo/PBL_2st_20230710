@@ -19,6 +19,7 @@ function inquireUpdate(inquireNum){
 	window.open("/inquire/inquireUpdate?inquireNum="+inquireNum, "", 
 			"width=700, height=650, top=100, left=100")
 }
+
 function inquireDelete(inquireNum){
 	$.ajax({
 		type:'post',
@@ -28,6 +29,15 @@ function inquireDelete(inquireNum){
 			inquire();
 		}
 	});
+}
+function contentOpen(id){
+	if($("."+id).css("display") == "none"){
+		$("."+id).css("display", "");
+		$("#"+id).text("답변닫기");
+	}else{
+		$("."+id).css("display", "none");
+		$("#"+id).text("답변열기");
+	}
 }
 </script>
 </head>
@@ -48,15 +58,18 @@ function inquireDelete(inquireNum){
 		<th:block th:if="${session.auth != null}">
 			<th:block th:if="${session.auth.userId == dto.memberId}">
 				<button type="button" th:attr="onclick=|inquireUpdate('${dto.inquireNum}');|">문의수정</button> | 
-				<button type="button" th:attr="onclick=|inquireDelete('${dto.inquireNum}');|">문의삭제</button>
+				<button type="button" th:attr="onclick=|inquireDelete('${dto.inquireNum}');|">문의삭제</button> |
+				<button type="button" th:id="inq_+${dto.inquireNum}" th:attr="onclick=|contentOpen('inq_${dto.inquireNum}');|">답변열기</button>			
 			</th:block>
 		</th:block>
 		</td></tr>
 
-	<tr th:if="${dto.inquireAnswer != null}"><td colspan="6">
+	<tr th:if="${dto.inquireAnswer != null}" style="display:none;" th:class="inq_+${dto.inquireNum}" >
+			<td colspan="6" >
 			답변날짜 : [[${#dates.format(dto.inquireAnswerDate,'yyyy-MM-dd')}]]<br />
 			<span th:utext="${#strings.replace(dto.inquireAnswer,newLineChar,'&lt;br /&gt;')}"></span>
-		</td></tr>
+		</td>
+	</tr>
 </th:block>
 </table>
 </body>

@@ -33,6 +33,10 @@ public class InquireRepository {
 		statement = namespace + ".inquireDelete";
 		return sqlSession.delete(statement, inquireNum);
 	}
+	public Integer inquireAnswerUpdate(InquireDTO dto) {
+		statement = namespace + ".inquireAnswerUpdate";
+		return sqlSession.update(statement, dto);
+	}
 }
 
 

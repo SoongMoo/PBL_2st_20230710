@@ -1,7 +1,5 @@
 package springBootMVCShopping.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -23,6 +21,7 @@ import springBootMVCShopping.command.InquireCommand;
 import springBootMVCShopping.domain.InquireDTO;
 import springBootMVCShopping.repository.InquireRepository;
 import springBootMVCShopping.service.inquire.GoodsInquireDetailService;
+import springBootMVCShopping.service.inquire.InquireAnswerWriteService;
 import springBootMVCShopping.service.inquire.InquireListService;
 import springBootMVCShopping.service.inquire.InquireModifyService;
 import springBootMVCShopping.service.inquire.InquireWriteService;
@@ -116,6 +115,13 @@ public class InquireController {
 		model.addAttribute("list", list);
 		model.addAttribute("newLineChar", "\n");
 		return "thymeleaf/inquire/goodsInquireDetail"; 
+	}
+	@Autowired
+	InquireAnswerWriteService inquireAnswerWriteService;
+	@PostMapping("answerWrite")
+	public String answerWrite(InquireCommand inquireCommand, HttpSession  session) {
+		inquireAnswerWriteService.execute(inquireCommand, session);
+		return "redirect:goodsQuestion";
 	}
 }
 

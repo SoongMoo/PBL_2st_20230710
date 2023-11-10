@@ -11,4 +11,5 @@ public class InquireCommand {
 	String inquireSubject;
 	String inquireContent;
 	String inquireAnswer;
+	String memberNum;
 }

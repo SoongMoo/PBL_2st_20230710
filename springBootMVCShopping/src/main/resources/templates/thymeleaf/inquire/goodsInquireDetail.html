@@ -12,7 +12,7 @@
 제목 : [[${list[0].inquireSubject}]] <br />
 내용 : <span th:utext="${#strings.replace(list[0].inquireContent,newLineChar,'&lt;br /&gt;')}"></span><br />
 작성자 : [[${list[0].memberId}]] <br />
-작성일 : [[${#dates.format(list[0].inquireRegiDate,'yyyy-MM-dd')}]] <br />
+작성일 : [[${#dates.format(list[0].inquireDate,'yyyy-MM-dd')}]] <br />
 <h2>답변</h2>
 <form action="../answerWrite" method="post">
 <input type="hidden" name="inquireSubject" th:value="${list[0].inquireSubject}">

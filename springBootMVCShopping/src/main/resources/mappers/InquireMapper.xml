@@ -37,4 +37,24 @@ where  INQUIRE_NUM = #{inquireNum}
 	delete from goods_inquire
 	where  INQUIRE_NUM = #{inquireNum}
 </delete>
+<update id="inquireAnswerUpdate" parameterType="inquire">
+update goods_inquire
+set   EMP_NUM = #{empNum}
+	, INQUIRE_ANSWER = #{inquireAnswer} 
+	, inquire_answer_date = now()
+where INQUIRE_NUM = #{inquireNum}
+</update>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </mapper>
