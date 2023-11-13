@@ -18,16 +18,20 @@ public class CartInsertService {
 	CartWishMapper cartWishMapper;
 	public String execute(String goodsNum, Integer qty, HttpSession session) {
 		AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
-		if(auth.getGrade().equals("mem")) {
-			MemberDTO  memDto = memberMyMapper.memberInfo(auth.getUserId());
-			CartDTO dto = new CartDTO();
-			dto.setCartQty(qty);
-			dto.setGoodsNum(goodsNum);
-			dto.setMemberNum(memDto.getMemberNum());
-			cartWishMapper.cartInsert(dto);
-			return "200";
+		if(auth != null) {
+			if(auth.getGrade().equals("mem")) {
+				MemberDTO  memDto = memberMyMapper.memberInfo(auth.getUserId());
+				CartDTO dto = new CartDTO();
+				dto.setCartQty(qty);
+				dto.setGoodsNum(goodsNum);
+				dto.setMemberNum(memDto.getMemberNum());
+				cartWishMapper.cartInsert(dto);
+				return "200";
+			}else {
+				return "999";
+			}
 		}else {
-			return "999";
+			return "000";
 		}
 	}
 }

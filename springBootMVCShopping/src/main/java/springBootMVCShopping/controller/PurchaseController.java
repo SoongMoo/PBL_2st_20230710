@@ -31,7 +31,7 @@ public class PurchaseController {
 	GoodsOrderService goodsOrderService;
 	@Autowired
 	OrderProcessListService orderProcessListService;
-	@RequestMapping(value="goodsBuy", method=RequestMethod.POST)
+	@RequestMapping(value="goodsBuy")
 	public String goodsBuy(
 			@RequestParam(value="prodCk") String [] prodCk,
 			HttpSession session, Model model) {

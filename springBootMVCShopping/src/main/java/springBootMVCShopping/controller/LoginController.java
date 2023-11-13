@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import springBootMVCShopping.command.LoginCommand;
@@ -30,14 +31,19 @@ public class LoginController {
 	UserLoginService userLoginService;
 	
 	@GetMapping("logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletResponse response) {
+		Cookie cookie = new Cookie("autoLogin", "");
+		cookie.setPath("/");
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);	
+		
 		session.invalidate();
 		return "redirect:/";
 	}
 	@PostMapping("login")
 	public String login(@Validated LoginCommand loginCommand, BindingResult result 
-			, HttpSession session) {
-		userLoginService.execute(loginCommand, session, result);
+			, HttpSession session, HttpServletResponse response) {
+		userLoginService.execute(loginCommand, session, result, response);
 		if(result.hasErrors()) {
 			return "thymeleaf/index";
 		}
@@ -60,7 +66,7 @@ public class LoginController {
 	@RequestMapping(value="item.login",method= RequestMethod.POST)
 	public String item(@Validated LoginCommand loginCommand, BindingResult result, 
 			HttpSession session, HttpServletResponse response) {
-		userLoginService.execute(loginCommand, session, result);
+		userLoginService.execute(loginCommand, session, result, response);
 		if(result.hasErrors()) {
 			return "thymeleaf/login";
 		}

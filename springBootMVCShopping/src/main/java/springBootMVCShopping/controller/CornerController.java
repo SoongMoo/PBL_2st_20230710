@@ -1,6 +1,7 @@
 package springBootMVCShopping.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -137,6 +138,28 @@ public class CornerController {
 			Model model) {
 		goodsDetailService.execute(goodsNum, model);
 		return "thymeleaf/corner/goodsDescript";
+	}
+	@GetMapping("buyItem")
+	public String buyItem(
+			@RequestParam(value="goodsNum") String goodsNum,
+			@RequestParam(value="qty") Integer qty,
+			HttpSession session,HttpServletResponse response) {
+		String result = cartInsertService.execute(goodsNum, qty, session);
+		if(result == "999") {
+			response.setContentType("text/html; charset=utf-8");
+			try {
+				PrintWriter out = response.getWriter();
+				String str = "<script>"
+						+ "alert('관리자는 구매할 수 없습니다.');"
+						+ "location.href='/corner/detailView/"+goodsNum+"';"
+						+ "</script>";
+				out.print(str);
+				out.close();
+			}catch(Exception e) {}
+		}else if(result == "000") {
+			return "redirect:/";
+		}
+		return "redirect:/purchase/goodsBuy?prodCk="+goodsNum;
 	}
 }
 
