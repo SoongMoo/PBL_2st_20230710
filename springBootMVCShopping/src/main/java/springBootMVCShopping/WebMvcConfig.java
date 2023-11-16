@@ -28,9 +28,10 @@ public class WebMvcConfig  implements WebMvcConfigurer{
 		excludeList.add("/help/**/*");
 		excludeList.add("/login/**/*");
 		excludeList.add("/corner/**/*");
+		excludeList.add("/corner/detailView/*");
 		
 		registry.addInterceptor(inteceptorConfig)
-				.addPathPatterns(addList)    ///  session이 없으면 로그인페이지로
+				.addPathPatterns("/**/*")    ///  session이 없으면 로그인페이지로
 				.excludePathPatterns(excludeList); /// session이 없어도 해당 페이지그대로 사용		
 	}
 }
